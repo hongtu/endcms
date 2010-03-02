@@ -1,0 +1,30 @@
+<form action="admin.php?m=new_config&p=config" method="post">
+	<table cellpadding="0" cellspacing="5" border="0" style="width:400px;">
+    	<tr>
+        	<td>{CONFIG_NAME}</td>
+        	<td><input type="text" class="inputtext" maxlength=200 name="name" value="{thisconfig.name}" />*</td>
+       	</tr>
+
+        <tr>
+        	<td valign="top">{CONFIG_DESCRIPTION}</td>
+            <td><input type="text" name="description" class="inputtext" value="{thisconfig.description}" />*</td>
+        </tr>
+        <tr>
+        	<td valign="top">{CONFIG_TYPE}</td>
+            <td><select name="type">
+            	<option value="text">{SINGLE_LINE}</option>
+            	<option value="textarea">{MULTI_LINE}</option>
+            </select></td>
+        </tr>
+        <tr>
+        	<td>&nbsp;</td>
+        	<td align="center">
+            <input type="submit" value="{CONFIG_SUBMIT}" />
+            &nbsp;
+            <input type="button" onclick="cancel_new_config(); return false;" value="{CANCEL}" />
+            </td>
+        </tr>
+     </table>
+     
+        
+   </form>

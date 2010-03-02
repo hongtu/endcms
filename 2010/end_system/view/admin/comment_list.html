@@ -1,0 +1,51 @@
+
+<table cellpadding="0" cellspacing="1" border="0" class="align_center list_table" id="admin_table">
+            	<thead>
+                   	<tr>
+                		<th width="150" order="username">用户名</th>
+                        <th width="150" order="created_at">时间</th>
+                   		<th order="content">内容</th>
+                   		<th order="status">状态</th>
+                        <th width="100">操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                
+          		  	<!-- BEGIN comments -->
+            		<tr>
+               		 	<td>{username}</td>
+                        <td>{preg_replace("/(^20)|(\:\d\d$)/","",created_at)}</td>
+               		    <td>{content}</td>
+                        <td style="width:50px">{show_status:status}</td>
+                        <td>
+                        <!-- IF status!="1" -->
+                        <a href="javascript:;" onclick="delete_user({comment_id},1,this)">通过</a> 
+                        <!-- ENDIF -->
+                        <!-- IF status!="2" -->
+                        <a href="javascript:;" onclick="delete_user({comment_id},2,this)">删除</a>
+                        <!-- ENDIF -->
+                        </td>
+                       
+               		</tr>
+                    <!-- END -->
+                    
+                </tbody>
+                
+</table>
+
+<script type="text/javascript">
+
+function delete_user(id,value,o)
+{
+	$(o).attr('to_be_delete','yes').html('{DELETING}').unbind('click');
+	$.post('admin.php?p=ajax&m=update&column=status&table=comment&id='+id,{ value:value },delete_callback);
+}
+
+function delete_callback(s)
+{
+	if(parseInt(s)>0)
+		$('[to_be_delete=yes]').parent().parent().fadeOut();
+		else
+			alert(s);
+}
+</script>

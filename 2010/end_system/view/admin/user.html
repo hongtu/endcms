@@ -1,0 +1,178 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" lang="zh-CN"> 
+<head>
+	<!-- INCLUDE meta.html -->
+	<script src="end_system/view/admin/jquery/ui.datepicker.js" ></script>
+	<script src="end_system/view/admin/jquery/ui.datepicker-zh-CN.js"></script>
+	<link rel="stylesheet" href="end_system/view/admin/jquery/ui.datepicker.css" media="screen" />
+</head>
+
+
+<body>
+<div class='maindiv'>
+
+<div class="headerdiv">
+	<!-- INCLUDE header.html -->
+</div>
+
+<div id='contentdiv'>
+	<div id='left'>
+    	<div style="margin:10px;margin-top:30px;">
+
+			<div style="margin:10px;">
+				<h2>注册时间</h2>
+			从<input type="text" id="date_from" class="textinput" value="{from}" style="width:100px;font-size:10px;" /> <br />
+			到<input type="text" id="date_to" class="textinput" style="width:100px;font-size:10px;" value='{to}' /><br />
+			&nbsp;&nbsp;&nbsp;&nbsp;<input type="button" onclick="go_time_range()" value="搜索" />
+			</div>
+
+			<div style="margin:10px;">
+				<h2>内容</h2>
+				<form onsubmit="go_search();return false;">
+				<table cellpadding="0" cellspacing="0" border="0">
+					<tr>
+						<td>用户名</td>
+						<td><input type="text" id="search_username" class="textinput" style="width:100px;" value="{search_username}" /></td>
+					</tr>
+					<tr>
+						<td>Email</td>
+						<td><input type="text" id="search_email" class="textinput" style="width:100px;"  value="{search_email}" /></td>
+					</tr>
+					<tr>
+						<td colspan="2">
+							&nbsp;&nbsp;<input type="submit" value="搜索" />&nbsp;&nbsp;
+						</td>
+					</tr>
+				</table>
+				</form>
+			</div>
+
+			<script>
+			$(function()
+			{
+				$("[id^=date_]").datepicker();
+			});
+
+			function go_time_range()
+			{
+				var from = $('#date_from').val();
+				var to = $('#date_to').val();
+				var url = window.location.href.toString();
+				url = url.replace(/&from=[^&]+/,'').replace(/&time=[^&]+/,'').replace(/&to=[^&]+/,'');
+				if (from && to && from > to)
+				{
+					alert("起始时间必须小于结束时间");
+					return;
+				}
+				else
+				{
+					window.location.href = url+"&from="+from+"&to="+to;
+				}
+			}
+
+			function go_search()
+			{
+				var url = window.location.href.toString();
+				url = url.replace(/&search_username=[^&]+/,'').replace(/&search_email=[^&]+/,'');
+				if($('#search_username').val()) url+='&search_username='+encodeURIComponent($('#search_username').val());
+				if ($('#search_email').val()) url+='&search_email='+encodeURIComponent($('#search_email').val());
+				window.location.href = url;
+			}
+			</script>
+        </div>
+    </div>
+    <div id='maindiv'>
+    	<div class="description">
+			{page_description}
+        </div>
+        
+        <!-- IF err_msg -->
+        <div class="err_msg pad">
+        	{err_msg}
+        </div>
+        <!-- ENDIF -->
+        
+        <!-- IF success_msg -->
+        <div class="success_msg pad">
+        	{success_msg}
+        </div>
+        <!-- ENDIF -->
+        
+        <div class="real_content">
+			<!-- IF page_content -->
+				{page_content}
+			<!-- ELSE -->
+			<div class="nav_wrapper">
+				&nbsp;{DISPLAY}:
+				<a 
+					href="admin.php?p=user"  
+					class="nav <!-- IF current_status_all -->nav_on<!-- ENDIF -->">{SHOW_ALL}</a>
+				<!-- BEGIN statuses -->
+				<a 
+					href="admin.php?p=user&status={index}" 
+					class="nav <!-- IF index=parent.status -->nav_on<!-- ENDIF -->">{strip_tags:value}</a>
+				<!-- END -->
+				
+			</div>
+            <!-- INCLUDE user_list.html -->
+			<br />
+			{pager}
+			<!-- ENDIF -->
+        </div>
+        
+    </div>
+</div>
+
+<div id="change_password" style="display:none;position:absolute;background-color:#FFFF99;width:200px;">
+        	 <table>
+             	<tr>
+                	<td valign="top">{USER_NAME}</td>
+                    <td><input type="text" class="inputtext" style="width:100px;" id='change_password_user' disabled="disabled" /></td>
+                </tr>
+                <tr>
+                	<td valign="top">{USER_PASSWORD}</td>
+                    <td><input type="password" class="inputtext" password="1"  style="width:100px;" /></td>
+                </tr>
+          
+                <tr>
+                	<td valign="top">{USER_PASSWORD_CONFIRM}</td>
+                    <td><input type="password" class="inputtext" password="2"  style="width:100px;" /></td>
+                </tr>
+                <tr>
+                	<td colspan="2" align="center">
+                    	<input type="button" value="{USER_SUBMIT}" onclick="do_change_password(); return false;" />
+                        <input type="button" value="{CANCEL}" onclick="$('#change_password').slideUp(200); return false;" />
+                    </td>
+                </tr>
+             </table>
+</div>
+
+
+<script>
+
+function delete_user(id,o)
+{
+	$(o).attr('to_be_delete','yes').html('{DELETING}').unbind('click');
+	$.post('admin.php?p=ajax&m=delete&table=user&id='+id,{ },delete_callback);
+}
+
+function delete_callback(s)
+{
+	if (s != 'success')
+	{
+		alert(s);
+		return false;
+	}
+	$('[to_be_delete=yes]').parent().parent().fadeOut();
+}
+
+<?php if (!$_SESSION['login_user']['rights']['user_update']) {?>
+can_not_update = true;
+<?php }?>
+</script>
+
+<!-- INCLUDE footer.html -->
+
+</div>
+</body>
+</html>

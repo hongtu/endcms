@@ -1,0 +1,81 @@
+
+{RIGHTS_GROUP}:{this_group.name}<br />
+<a href="javascript:checkall()">{SELECT_ALL}</a>&nbsp;<a href="javascript:inverse()">{SELECT_INVERSE}</a>
+<form action="admin.php?p=rights&m=config&rights_id={this_group.rights_id}" method="post">
+<table style="margin:10px;width:500px;" class="list_table" cellspacing="0">
+<?php $this_rights=$_obj['this_rights'];?>
+<!-- BEGIN rights -->
+<tr>
+	<td width="150"><?php echo lang('rights_'.$_obj['name']);?></td>
+	<td>
+	<?php foreach($_obj['rights'] as $rgiht)
+	{
+		$_obj['this_name'] = $_obj['name'].'_'.$rgiht;
+		?>
+	<input 
+		type="checkbox" 
+		right="action"
+		name="{this_name}" 
+		id="{this_name}" 
+		<?php if ($this_rights[$_obj['this_name']]) {?>
+		checked="checked"
+		<?php }?>
+	><label for="{this_name}"><?php echo trim(lang('rights_'.$rgiht));?></label>
+	<?php }?>
+	</td>
+</tr>
+<!-- END -->
+</table>
+	<input type="checkbox" name="limit_category_id" onclick="change_slide(this)" id="limit_category_id"><label for="limit_category_id">{LIMIT_CATEGORY_ID}</label>
+
+	<br />
+	<div id="categories" style="display:none;margin:0 10px;">
+		<a href="javascript:;" onclick="$('[right=category]').attr('checked','checked');">{SELECT_ALL}</a> 
+		<a href="javascript:;" onclick="$('[right=category]').each(function(){ this.checked=!this.checked; });">{SELECT_INVERSE}</a>
+		<br />
+		<!-- BEGIN categories -->
+		{print_space:depth}
+		<input type="checkbox" right="category" name="category_{category_id}" id="category_{category_id}" <?php
+		if ($this_rights['category_'.$_obj['category_id']])
+		{
+			echo 'checked="checked" ';
+			$some_checked = true;
+		}
+		?> />
+		<label for="category_{category_id}">{name}</label><br />
+		<!-- END -->
+	</div>
+	<input type="submit" value="{SUBMIT}" />
+</form>
+
+<script>
+$(function()
+{
+	<?php if ($some_checked) { ?>
+	$('#limit_category_id').trigger('click');
+	<?php }?>
+});
+function change_slide(o)
+{
+	if (o.checked)
+	{
+		$('#categories').slideDown();
+	}
+	else
+	{
+		$('#categories').slideUp();
+		$('[right=category]').attr('checked','');
+	}
+}
+function checkall()
+{
+	$('[right=action]').attr('checked','checked');
+}
+function inverse()
+{
+	$('[right=action]').each(function()
+	{
+		this.checked = !this.checked;
+	});
+}
+</script>
