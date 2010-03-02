@@ -1,0 +1,19 @@
+
+TITLE = 修改密码
+USER_NAME = 用户名
+EMAIL = E-mail
+USER_PASSWORD = 密码
+USER_PASSWORD_CONFIRM = 重复密码
+PASSWORD_NOT_THE_SAME = 密码不一致！
+USER_SUBMIT = 提交
+IF_NOT_CHANGE = 如果不修改密码，请不要填写此项
+ADMIN_UPDATE_SUCCESS = 更新成功!
+ADMIN_UPDATE_ERR = 填写错误!
+INPUT_ALL = 请填写所有带*的项!
+MODIFY_HEAD = 修改头像
+UPLOAD_HEAD = 上传头像
+HEADS = 头像
+USER_NICKNAME = 昵称
+CHANGES_SAVED = 保存成功!
+PROFILE_PAGE = 个人简介地址
+PROFILE_PAGE_HELP = 你可以写一篇个人简介的日志，然后把日志地址复制到这里

@@ -1,0 +1,61 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" lang="zh-CN"> 
+<head>
+	<!-- INCLUDE meta.html -->
+</head>
+
+
+<body>
+<div class='maindiv'>
+
+	<div class="headerdiv">
+		<!-- INCLUDE header.html -->
+	</div>
+	
+	<div id='contentdiv'>
+		<div id='left'>
+	    	<div style="margin:10px;margin-top:30px;">
+				
+	        	<ul>
+	                
+	            </ul>
+	    		
+	        </div>
+	    </div>
+	    <div id='maindiv'>
+			<div class="description">
+				公告管理
+	        </div>
+	
+	        <div class="real_content">
+				<form style="margin:10px;" action="admin.php?p=programannounce&program_id={program_id}&action=add" method="post">
+					<h1>"{program.title}" 的公告</h1>
+					<?php if (check_show('add')){?>
+					<h3>添加公告</h3>
+					<textarea style="width:700px;height:100px;" name="content" id="editor_content" rich="true"></textarea>
+					<input type="submit" value="提交" />
+					<?php }?>
+				</form>
+					
+				
+	            <!-- INCLUDE programannounce_list.html -->
+				<div style="text-align:center">{pager}</div>
+				
+	        </div>
+	        
+	    </div>
+	</div>
+	
+	
+	
+	
+	<!-- INCLUDE footer.html -->
+<script>
+$(function()
+{
+	$('#announce_content').focus();
+});
+</script>
+</div>
+</body>
+</html>

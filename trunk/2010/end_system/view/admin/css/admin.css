@@ -1,0 +1,43 @@
+body {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	line-height:20px;
+	margin: 0;
+	padding: 0;
+	background:#BCCD6F url(indexbt0.jpg) repeat-x bottom; 
+}
+td {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	line-height:20px;
+}
+a:link,
+a:visited
+ {
+	text-decoration: none;
+	color: #ffffff;
+}
+a:hover {
+	text-decoration: underline;
+	color: #2582A4;
+}
+input{
+	
+	font-size: 12px;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+}
+.button{
+	background:none; 
+	border: #ffffff solid 1px;
+	color: #ffffff;
+	font-size: 12px;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	padding-top:3px;
+	padding-bottom:2px;
+	padding-left:2px;
+}
+
+.index_font{
+	color: #ffffff;
+}
+

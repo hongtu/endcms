@@ -1,0 +1,9 @@
+<?php
+define('END_CONTROLLER_DIR','controller/js/');
+define('END_VIEWER_DIR','view/js/');
+define('END_LANGUAGE_DIR','language/js/');
+define('END_MODULE','js');
+define('END_VIEWER_EXT','js');
+chdir('end_system');
+include("index.php");
+?>
