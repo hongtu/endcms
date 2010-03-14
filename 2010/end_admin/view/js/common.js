@@ -12,13 +12,13 @@ function getOuterHTML(obj)
 
 function load_admin()
 {
-	load('end_system/view/js/admin.js.css');
+	load('lz_system/view/js/admin.js.css');
 	load('js.php?p=admin');
 }
 
 function load_login()
 {
-	load('end_system/view/js/login.js.css');
+	load('lz_system/view/js/login.js.css');
 	load('js.php?p=login');
 }
 
