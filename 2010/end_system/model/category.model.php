@@ -1,7 +1,7 @@
 <?php
-class END_Category extends END_Model
+class MODEL_CATEGORY extends MODEL
 {
-	function END_Category()
+	function MODEL_CATEGORY()
 	{
 		$this->table = END_MYSQL_PREFIX.'category';
 		$this->order_id = 'order_id';
@@ -10,37 +10,28 @@ class END_Category extends END_Model
 
 	function delete($id)
 	{
-		global $cache;
 		check_allowed_category($id,END_RESPONSE == 'text');
-		$re = parent::delete($id);
-		$cache->clear_uri('#admin/category');
-		return $re;
+		return parent::delete($id);
 	}
 	
 	function add($data)
 	{
-		global $cache;
 		$re = parent::add($data);
-		$cache->clear_uri('#admin/category');
 		return $re;
 	}
 
 	function update($id,$data)
 	{
-		global $cache;
 		check_allowed_category($id,END_RESPONSE == 'text');
 		if ($data['status'])
 		{
 			$data['list'] = (preg_match('/_list$/',$data['status']))?'1':'0';
 		}
-		$re = parent::update($id,$data);
-		$cache->clear_uri('#admin/category');
-		return $re;
+		return parent::update($id,$data);
 	}
 
 	function position_category($id)
 	{
-		global $db;
 		$cond = is_array($id)?$id:array($this->id=>$id); 
 		$re = array();
 		while($cond[$this->id])
@@ -67,29 +58,15 @@ class END_Category extends END_Model
 	
 	function tree_category($parent_id = 0,$status = false)
 	{
-		global $cache;
-		$cache_uri = '#admin/category/'.$_SESSION['login_user']['user_id'].'/'.$parent_id.'/'.$status;
-		/*
-		if ($cache->exists($cache_uri))
-		{
-			$s = '$re = '.$cache->get($cache_uri,$ttl).';';
-			eval($s);
-			return $re;
-		}
-		*/
 		$re = $this->_tree_category($parent_id,0,$status);
-		//$cache->add(array('content'=>var_export($re,1),'uri'=>$cache_uri,'ttl'=>30000000));
 		return $re;
 	}
 	
 	function _tree_category($parent_id = 0,$depth = 0, $status = false)
 	{
-		//check_allowed_category($parent_id,END_RESPONSE == 'text');
 		$re = array();
 		$with_children = true;
-		$data = array(
-			//'select'=>'order_id,longname,parent_id,url,category_id,name,description,status'
-			);
+		$data = array();
 		if (END_MODULE == 'admin' && $_SESSION['login_user']['rights']['limit_category_id'] && $_SESSION['login_user']['allowed_categories'])
 		{
 			$data['where'] = 'category_id IN ('.$_SESSION['login_user']['allowed_categories'].')';

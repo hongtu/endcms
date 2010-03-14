@@ -74,49 +74,6 @@ function html_pager($url,$total_page,$page = 1)
 		$pager .= ' <a href="javascript:;" class="grey">'.LANG_PAGER_LAST.'</a> ';
 	return $pager;
 }
-/*
-get page indexes html
-*/
-function index_html_pager($url,$total_page,$page = 1)
-{
-	$page_span = 4;
-	$pager = '';
-	if ($page>1)
-		$pager .= ' <a href="'.$url.'index.html" class="black_11">'.LANG_PAGER_FIRST.'</a> ';
-	else
-		$pager .= ' <a href="javascript:;" class="grey">'.LANG_PAGER_FIRST.'</a> ';
-	if ($page>1)
-		$pager.= ' <a href="'.$url.($page-1).'.html" class="black_11">'.LANG_PAGER_PREV.'</a> ';
-	else
-		$pager.= ' <a href="javascript:;" class="grey">'.LANG_PAGER_PREV.'</a> ';
-	
-	if ($page>$page_span)
-		$pager.= '...';
-	
-	for($i=$page-$page_span+1;$i<$page+$page_span;$i++)
-	{
-		if ($i<=0 || $i>$total_page) continue;
-		$_urlname = $i==1?'index':$i;
-		if ($page == $i)
-			$pager.= " [{$i}] ";
-		else
-			$pager.= ' <a href="'.$url.$_urlname.'.html" class="black_11">'.$i.'</a> ';
-	}
-	
-	if ($total_page-$page>$page_span)
-		$pager.= '...';
-	
-	
-	if ($page<$total_page)
-		$pager.= ' <a href="'.$url.($page+1).'.html" class="black_11">'.LANG_PAGER_NEXT.'</a> ';
-	else
-		$pager .= ' <a href="javascript:;" class="grey">'.LANG_PAGER_NEXT.'</a> ';
-	if ($page<$total_page)
-		$pager .= ' <a href="'.$url.$total_page.'.html" class="black_11">'.LANG_PAGER_LAST.'</a> ';
-	else
-		$pager .= ' <a href="javascript:;" class="grey">'.LANG_PAGER_LAST.'</a> ';
-	return $pager;
-}
 
 
 function end_page($obj,$cond = array(),$per_page)
@@ -145,35 +102,6 @@ function end_page($obj,$cond = array(),$per_page)
 	return $obj->get_list( $cond );
 }
 
-function end_index_page($obj,$cond = array(),$per_page,$url='',&$info=array())
-{
-	global $view_data;
-	$info = array();
-	$cond['select'] = 'count(*)';
-	$total = $obj->get_list( $cond );
-	$total = $total[0]['count(*)'];
-	$page = intval($_GET['page']);
-	$per_page <= 0 && $per_page = 20;
-	!$page && $page=1;
-	$total_page = ceil($total/$per_page);
-	$info['total_page'] = $total_page;
-	!$total_page && $total_page=1;
-	$page>$total_page && $page = $total_page;
-	$cond['select'] = '*';
-	$cond['from'] = ($page-1)*$per_page;
-	$cond['total'] = $per_page;
-	//$pager = LANG_PAGER_TOTAL.$total.LANG_PAGER_ITEMS.$total_page.LANG_PAGER_PAGE.'<br />';
-	if (!$url)
-	{
-		$url = $_SERVER['REQUEST_URI'];
-		$url = preg_replace('/&?page=[0-9]{1,}/','',$url);
-		$pager.= html_pager($url,$total_page,$page);
-	}
-	else $pager.=index_html_pager($url,$total_page,$page);
-	$view_data['pager'] = $pager;
-	return $obj->get_list( $cond );
-}
-
 /*
 make empty folder only
 */
@@ -186,71 +114,6 @@ function end_mkdir($path)
 		if (!is_dir($p)) mkdir($p);
 	}
 	return $p;
-}
-
-
-/*
-check url name
-*/
-function ck_url_name($s)
-{
-	if (!preg_match('/^[0-9a-zA-Z_]{1,}$/',$s)) return false;
-	return $s;
-}
-
-
-/*
-get blog item url path
-*/
-function get_item_path($data)
-{
-	if (!is_array($data) && @intval($data) > 0)	$data = array('item_id'=>$data);
-	if (!$data['url_name'] && $data['item_id'])
-	{
-		include_once('model/item.php');
-		$item = new END_Item;
-		$_arr = $item->get_one($data['item_id']);
-		$data['url_name'] = $_arr['url_name'];
-		$data['publish_time'] = $_arr['publish_time'];
-	}
-	if ($data['url_name'] && $data['publish_time'])
-	{
-		return date('Y',$data['publish_time'])
-			.'/'.date('m',$data['publish_time']).'/'.$data['url_name'].'/';
-	}
-	else return '';
-}
-
-/*
-mv item folder
-*/
-function end_mv($p1,$p2)
-{
-	$p1 = END_TOPPATH.$p1;
-	$p2 = END_TOPPATH.end_mkdir($p2);
-	rename($p1,$p2);
-}
-
-/*
-delete item folder
-*/
-function end_delete($path)
-{
-	unlink(END_TOPPATH.$path.'/index.html');
-	unlink(END_TOPPATH.$path.'/index.php');
-	return rmdir(END_TOPPATH.$path);
-}
-
-/*
-update 
-*/
-function end_update($p = '')
-{
-	$f = END_TOPPATH.$p.'index.html';
-	if (file_exists($f)) 
-		return unlink($f);
-	//else
-	//	die('update error! '.$f);
 }
 
 /*
@@ -274,14 +137,6 @@ function download_file($filepath, $filename = '')
 	header('Content-length: '.$filesize);
 	readfile($filepath);
 	exit;
-}
-
-/*
-replace <br /> or <br> with \n
-*/
-function clean_br($s,$to = ' ')
-{
-	return preg_replace('/<br\s*\/?>/i',$to,$s);
 }
 
 function print_space($length = 1)

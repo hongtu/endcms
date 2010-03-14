@@ -21,13 +21,12 @@ set_magic_quotes_runtime(0);
 @ini_set('magic_quotes_sybase', 0);
 
 //default time zone
-function_exists('date_default_timezone_set') && date_default_timezone_set('Etc/GMT-8');
+function_exists('date_default_timezone_set') && @date_default_timezone_set('Etc/GMT-8');
 
-//for no cookie client to handle session_id via GET or POST 
-//( e.g. flash post data )
+
 if (!defined('SESSION_STARTED'))
 {
-	$_REQUEST['PHPSID'] && session_id($_REQUEST['PHPSID']);
+	isset($_REQUEST['PHPSID']) && session_id($_REQUEST['PHPSID']);
 	session_start();
 	define('SESSION_STARTED','true');
 }
@@ -44,8 +43,6 @@ if(!function_exists('iconv'))
 		function iconv() { die("<div style='color:red;font-size:20px;'>no convert encoding function found!</div>"); }
 	}
 }
-
-
 
 //cancle global variables
 if (ini_get('register_globals'))

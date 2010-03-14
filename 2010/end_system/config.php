@@ -1,11 +1,11 @@
 <?php
-///////////////////////////////////
-//     EndCMS
-// Longbill(longbill.cn@gmail.com)
-//       www.endcms.com
-//         @2008-2009
-// under Creative Commons License
-///////////////////////////////////
+/**********************************
+*     		EndCMS
+*       www.endcms.com
+*         ©2008-now
+* under Creative Commons License
+**********************************/
+
 /*
 ./config.php:
   system configuration
@@ -21,12 +21,7 @@ define('END_CHARSET','UTF-8');
 //allowed upload file types, separated by comma
 define('END_UPLOAD_FILE_TYPES',',jpg,jpeg,gif,bmp,png,doc,rar,pdf,zip,ppt,docx,xls,');
 
-//default model name of data config entry
-define('END_DEFAULT_CONFIG_MODEL','item');
-
-
-
-define('END_UPLOAD_PATH','public/uploadfiles/');
+define('END_UPLOAD_PATH','public/'.date('Y/m/'));
 
 //site language
 define('END_LANGUAGE','cn');
@@ -42,8 +37,7 @@ define('END_THEME_PATH',END_TOPPATH.'end_themes/');
 
 
 //open debug mode
-$_debug = 1;
-if ($_debug) define('END_DEBUG','yes');
+define('END_DEBUG',true);
 
 //mysql table name prefix
 define('END_MYSQL_PREFIX','end_');
@@ -66,35 +60,6 @@ $config = array(
 	'smtp_password'=>'',
 	'mail_from'=>'',
 	'mail_fromname'=>''
-	);
-
-$end_models = array();
-
-//autoload files before controller
-$_preload = array(
-
-	'library' => array(
-		'mysql.php',	
-		'class.quickskin.php',	//the template engine
-	),
-
-	'helper' => array(
-		'common.php', 
-		'html.php'
-	),
-
-	'language' => array(
-		'common',	
-	),
-
-	'model' => array(
-		'model.php',
-		'cache.php'
-	),
-
-	'controller' => array(
-		'common.php'
-	),
 );
 
 $end_rights = array
