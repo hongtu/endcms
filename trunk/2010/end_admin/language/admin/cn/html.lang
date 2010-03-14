@@ -1,0 +1,5 @@
+title = 静态页面
+make_index = 生成首页
+make_category = 生成栏目页
+make_item = 生成新闻页
+make_pop_soft = 生成最受欢迎新闻部分

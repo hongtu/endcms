@@ -1,0 +1,55 @@
+
+TITLE = 内容管理
+paper_INDEX = 文章列表
+USERS = 授权用户
+
+//新建分类
+NEW_CATEGORY = 新建分类
+PLEASE_SELECT = 请选择...
+CATEGORY_NAME = 分类名
+CATEGORY_ROOT = 根分类
+CATEGORY_CHILD = 子分类
+
+//分类列表
+CHECK_BOX = 
+CATEGORIES_TREE=分类
+
+DELETE_CONFIRM = 确定要删除吗？
+ROOT_CATEGORY = 根分类
+MANAGE = 管理
+paper_LIST = 申请列表
+OPTIONS = 操作
+DEFAULT_CATEGORY = 未分类
+
+SHOW_ALL=所有申请
+SHOW_IMAGE_paperS=有图片申请
+
+//新项目
+current_position=当前位置
+display=显示
+function=功能
+paper_CATEGORY = 所属分类
+NEW_paper = 添加申请
+paper_NAME = 申请标题
+paper_DESCRIPTION = 申请描述
+CHECK_BOX = 
+PUB_DATE = 发布时间
+paper_SUBMIT = 发布
+paper_UNKNOWN_ERROR = 未知错误
+paper_FILL_ALL = 请填写所有必需的内容
+paper_SUBTITLE = 副标题
+EDIT_paper = 编辑申请
+EDIT_PAGE = 编辑页面
+NEW_paper_SUCCESS = 保存成功
+SAVE_SUCCESS =申请保存成功
+paper_DELETE_SUCCESS = 删除申请成功
+paper_EDIT_SUCCESS = 编辑申请成功
+paper_FILL_ALL = 请填写所有要求的内容
+paper_NEW_ERROR = 新建申请出错，原因未知
+paper_DELETE_ERROR = 删除申请出错，原因未知
+paper_ORDER = 优先级
+paper_TITLE_ADVICE = 建议标题长度保持在15个汉字以内
+PUBLISHED = 发布成功
+PUBLISHED_ERROR=发布失败
+
+BELONG_TO_CATEGORY=所属分类
