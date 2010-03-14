@@ -1,0 +1,131 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" lang="zh-CN"> 
+<head>
+	<!-- INCLUDE meta.html -->
+</head>
+<body>
+<div class='main'>
+
+<div class="headerdiv">
+	<!-- INCLUDE header.html -->
+</div>
+
+<div id='content'>
+	<div id='left'>
+    	<div style="margin:10px;margin-top:30px;">
+        	<ul>
+				<li>
+					<a href="admin.php?p=rights">{RIGHTS_GROUP}</a>
+				</li>
+				<?php if (check_show('add')):?>
+				<li>
+					<a href="javascript:new_rights()">{RIGHTS_GROUP_NEW}</a>
+				</li>
+				<?php endif;?>
+            </ul>
+    		
+        </div>
+    </div>
+    <div id='maindiv'>
+    	<div class="description">
+			{page_description}
+        </div>
+        
+        <!-- IF err_msg -->
+        <div class="err_msg pad">
+        	{err_msg}
+        </div>
+        <!-- ENDIF -->
+        
+        <!-- IF success_msg -->
+        <div class="success_msg pad">
+        	{success_msg}
+        </div>
+        <!-- ENDIF -->
+        
+        <div class="real_content">
+		
+			<div id="new_rights" style="display:<!-- IF thisrights --><!-- ELSE -->none<!-- ENDIF -->;margin:20px;background-color:#FFFF99;width:400px;">
+            	<h2>{NEW_RIGHTS_GROUP}</h2>
+        		<!-- INCLUDE rights_new.html -->
+            </div>
+			<!-- IF this_group -->
+				<!-- INCLUDE rights_content.html -->
+			<!-- ELSE -->
+			<table cellpadding="0" cellspacing="0" border="0" class="list_table" style="width:750px;">
+				<tr>
+	        		<th style="width:7%">{RIGHTS_ORDER_ID}</th>
+	        		<th style="width:25%">{RIGHTS_NAME}</th>
+	                <th style="width:45%">{RIGHTS_DESCRIPTION}</th>
+	                <th style="width:23%">{RIGHTS_OPTIONS}</th>
+	            </tr>
+				<!-- BEGIN groups -->
+				<tr>
+					<td valign="top">
+						<div admin_type="text"
+	                	admin_para="m=update&table=rights&column=order_id&id={rights_id}"  
+	                    admin_trigger="click" style="text-align:center">{order_id}</div>
+					</td>
+					<td valign="top">
+						<div  rightsname="name"  admin_type="text"
+	            		admin_para="m=update&table=rights&column=name&id={rights_id}"  
+	                	admin_trigger="click">{name}</div>
+					</td>
+					<td valign="top">
+						<div admin_type="text"
+		            	admin_para="m=update&table=rights&column=description&id={rights_id}"  
+		                admin_trigger="click" >{description}</div>
+					</td>
+					<td valign="top">
+						<?php if (check_show('update')):?>
+						<a href="admin.php?p=rights&rights_id={rights_id}">{CONFIG_RIGHTS}</a>
+						<?php endif;?> 
+						<?php if (check_show('delete')):?>
+						<a href="javascript:;" onclick="if (confirm('{DELETE_CONFIRM}')) delete_rights({rights_id},this)">{DELETE}</a> 
+						<?php endif;?>
+					</td>
+				</tr>
+				<!-- END -->
+			</table>
+			<!-- ENDIF -->
+			<br />
+			<br />
+        </div>
+        
+    </div>
+</div>
+
+<script>
+
+
+
+function new_rights()
+{
+	$('#new_rights').fadeTo(10,0).slideDown(200).fadeTo('fast',1);
+}
+function cancel_new_rights()
+{
+	$('#new_rights').fadeTo('fast',0).slideUp(200);
+}
+function delete_rights(id,o)
+{
+	$(o).attr('to_be_delete','yes').html('{DELETING}').unbind('click');
+	$.post('admin.php?p=ajax&m=delete&table=rights&id='+id,{ },delete_callback);
+}
+function delete_callback(s)
+{
+	if (s == 'error')
+	{
+		alert('{DELETE_ERROR}');
+		return false;
+	}
+	$('[to_be_delete=yes]').parent().parent().fadeOut();
+}
+
+</script>
+
+<!-- INCLUDE footer.html -->
+
+</div>
+</body>
+</html>

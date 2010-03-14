@@ -1,0 +1,91 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" lang="zh-CN"> 
+<head>
+	<!-- INCLUDE meta.html -->
+    
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /></head>
+<body>
+<div class='main'>
+
+<div class="headerdiv">
+	<!-- INCLUDE header.html -->
+</div>
+
+<div id='content'>
+	<div id='left'>
+    	<div style="margin:10px;margin-top:30px;">
+        	<ul>
+
+            </ul>
+    		
+        </div>
+    </div>
+    <div id='maindiv'>
+    	<div class="description">
+			关联创业视频
+        </div>
+        
+        <!-- IF err_msg -->
+        <div class="err_msg pad">
+        	{err_msg}
+        </div>
+        <!-- ENDIF -->
+        
+        <!-- IF success_msg -->
+        <div class="success_msg pad">
+        	{success_msg}
+        </div>
+        <!-- ENDIF -->
+        
+        <div class="real_content">
+        
+           
+          <form action="admin.php?p=chuangye&m=edit&video_id={video.video_id}" method="post" >
+              <table>
+                <tr>
+                	<td valign="top">创业视频ID</td>
+                    <td>{video.video_id}</td>
+                </tr>
+				<tr>
+                	<td valign="top">创业视频标题</td>
+                    <td>{video.title}</td>
+                </tr>
+				<tr>
+                	<td valign="top">点评状态</td>
+                    <td><select  name="dianping" >
+                    	<option value="0">未点评</option>
+						<option value="1" <!-- IF chuangye.dianping="1" -->selected="selected"<!-- ENDIF -->>已点评</option>
+                    </select><span style="color:red">如果已经点评，点评内容请只填写点评视频ID</span></td>
+                </tr>
+				<tr>
+					<td></td>
+					<td>点评内容可以写HTML：标题请用&lt;h1&gt;标签，换行请用&lt;br&gt;标签。</td>
+				</tr>
+				<tr>
+                	<td valign="top">点评内容</td>
+                    <td><textarea name="content" style="width:600px;height:300px;">{htmlspecialchars(chuangye.content)}</textarea></td>
+                </tr>
+				
+                
+                <tr>
+					<td></td>
+                	<td ><input type="submit" value="提交"  /></td>
+                </tr>
+             </table>
+             
+                
+           </form>
+
+		
+			<br />
+        </div>
+    </div>
+	<div style="clear:both;"></div>
+</div>
+
+
+<!-- INCLUDE footer.html -->
+
+</div>
+</body>
+</html>
