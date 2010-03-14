@@ -1,7 +1,7 @@
 <?php
 class MODEL_CONFIG extends MODEL
 {
-	function END_Config()
+	function MODEL_CONFIG()
 	{
 		$this->table = END_MYSQL_PREFIX.'config';
 		$this->id = 'config_id';

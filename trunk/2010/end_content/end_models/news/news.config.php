@@ -5,6 +5,13 @@
  * @author Liu Longbill
  */
 $end_models['news'] = array();
+$end_models['news']['name'] = '新闻';
+$end_models['news']['status'] = array
+(
+	0 => '草稿',
+	1 => '已发布',
+	-1 => '已删除'
+);
 $end_models['news']['fields'] = array
 (
 	//数据从数据库中读取出来，但在显示数据之前的操作函数

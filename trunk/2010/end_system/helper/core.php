@@ -41,9 +41,9 @@ function model($f)
  */
 function template($f,$viewdir = false)
 {
-	global $_debug;
+	include_once(END_BASEPATH.'library/class.quickskin.php');
 	$_template = new QuickSkin($f);
-	$_template->set( 'reuse_code', !$_debug );
+	$_template->set( 'reuse_code', !END_DEBUG );
 	$_template->set( 'extensions_dir', 'library/quickskin_extensions/' );	
 	$_template->set( 'template_dir', $viewdir?$viewdir:END_VIEWER_DIR );
 	$_template->set( 'temp_dir', 'cache/template/' );
@@ -158,4 +158,20 @@ function lang($key)
 		//here do some thing log
 		return $key;
 	}
+}
+
+
+
+
+
+function end_gzip($s)
+{ 
+	if( !headers_sent() && extension_loaded("zlib") && strstr($_SERVER["HTTP_ACCEPT_ENCODING"],"gzip"))
+	{
+		$s = gzencode($s,9);
+		header("Content-Encoding: gzip"); 
+		header("Vary: Accept-Encoding");
+		header("Content-Length: ".strlen($s));
+	}
+	return $s;
 }

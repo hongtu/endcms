@@ -11,7 +11,7 @@ function end_on_begin()
 
 function end_on_after_db()
 {
-	global $db,$_time_start,$config,$cache,$loader;
+	global $db,$config;
 	
 	//get config from database
 	if (!is_array($config)) $config = array();
@@ -25,7 +25,6 @@ function end_on_after_db()
 
 function end_on_ready()
 {
-	global $loader;
 	if (END_MODULE == 'admin' && $_GET['p'] != 'login')
 	{
 		if (!$_SESSION['login_user'])
@@ -62,14 +61,24 @@ function end_on_ready()
 
 function end_on_template_begin()
 {
-	global $all_view_data; 
-	$all_view_data['login_user'] = $_SESSION['login_user'];
-	$all_view_data['now'] = array(
+	global $view_data,$config; 
+	$view_data['login_user'] = $_SESSION['login_user'];
+	$view_data['now'] = array(
 		'time' => date('H:i'),
 		'year' => date('Y'),
 		'month' => date('m'),
 		'day' => date('d')
 		);
+	
+	$r_path = dirname($_SERVER['REQUEST_URI']);
+	if (!$r_path || $r_path == '/') $r_path = '.';
+	$_url_base = str_replace('/./','/','http://'.$_SERVER['HTTP_HOST'].'/'.$r_path.'/');
+	$view_data['url_base'] = $_url_base;
+	$view_data['_get'] = $_GET;
+	$view_data['_post'] = $_POST;
+	$view_data['_session'] = $_SESSION;
+	$view_data['config'] = $config;
+	$view_data['debug'] = END_DEBUG;
 }
 
 function end_on_end()

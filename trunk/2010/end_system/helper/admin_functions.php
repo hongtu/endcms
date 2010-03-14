@@ -368,3 +368,16 @@ function is_ie()
 	return false;
 }
 
+
+function load_models()
+{
+	global $end_models;
+	$end_models = array();
+	$_h = opendir(END_MODEL_PATH);
+	while($v = readdir($_h))
+	{
+		if (is_dir(END_MODEL_PATH.$v) && file_exists($_c_file = END_MODEL_PATH.$v.'/'.$v.'.config.php'))
+			include($_c_file);
+	}
+	closedir($_h);
+}

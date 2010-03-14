@@ -1,7 +1,7 @@
 <?php
 class MODEL_RIGHTS extends MODEL
 {
-	function END_Rights()
+	function MODEL_RIGHTS()
 	{
 		$this->table = END_MYSQL_PREFIX.'rights';
 		$this->id = 'rights_id';
