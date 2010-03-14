@@ -1,6 +1,13 @@
 <?php
+/**********************************
+*     		EndCMS
+*       www.endcms.com
+*         ©2008-now
+* under Creative Commons License
+**********************************/
+
 END_MODULE != 'admin' && die('Access Denied');
-$rights = new Rights;
+$rights = model('rights');
 $m = $_GET['m'];
 $category = model('category');
 

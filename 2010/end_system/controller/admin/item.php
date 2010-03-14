@@ -5,7 +5,7 @@ END_MODULE != 'admin' && die('Access Denied');
 filter_array($_GET,'m,action,intval:item_id,intval:category_id,status',true);
 
 
-$category = $loader->model('category');
+$category = model('category');
 $err_msg = '';
 $success_msg = '';
 /* 必须传入 category_id*/

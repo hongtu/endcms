@@ -6,7 +6,7 @@ get fragment content from item table by name
 function fragment($name)
 {
 	global $loader;
-	$obj = $loader->model('category');
+	$obj = model('category');
 	$obj = $obj->get_one( array('alias'=>$name) );
 	return $obj['content'];
 }

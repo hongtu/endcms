@@ -1,8 +1,8 @@
 <?php
 
-class END_Admin extends END_Model
+class MODEL_ADMIN extends MODEL
 {
-	function END_Admin()
+	function MODEL_ADMIN()
 	{
 		$this->table = END_MYSQL_PREFIX.'admin';
 		$this->id = 'admin_id';

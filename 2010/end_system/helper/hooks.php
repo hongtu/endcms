@@ -1,11 +1,13 @@
 <?php
-/*
+
 function end_on_begin()
 {
-
+	if (END_MODULE == 'admin')
+	{
+		include_once(END_BASEPATH.'helper/admin_functions.php');
+	}
 }
 
-*/
 
 function end_on_after_db()
 {
@@ -58,7 +60,6 @@ function end_on_ready()
 }
 
 
-
 function end_on_template_begin()
 {
 	global $all_view_data; 
@@ -83,17 +84,3 @@ function end_on_end()
 	else
 		echo $view_html;
 }
-
-/*
-function end_on_end()
-{
-	global $view_html;
-	//if called cache_this_page() then cache this page ^_^
-	if (END_CACHE_VIEW == 'yes' && defined('END_CACHE_TTL') && intval(END_CACHE_TTL) > 0)
-	{
-		$cache = new END_Cache;
-		$cache->add( array('content'=>$view_html,'ttl'=>END_CACHE_TTL) );
-	}
-	echo $view_html;
-}
-*/

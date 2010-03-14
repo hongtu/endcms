@@ -36,6 +36,9 @@ define('END_CONTROLLER_DIR','controller/default/');
 define('END_VIEWER_DIR','view/default/');
 define('END_VIEWER_EXT','html');
 
+define('END_MODEL_PATH',END_TOPPATH.'end_models/');
+define('END_PLUGIN_PATH',END_TOPPATH.'end_plugins/');
+define('END_THEME_PATH',END_TOPPATH.'end_themes/');
 
 
 //open debug mode
@@ -59,11 +62,13 @@ $config = array(
 	'smtp_port'=>465,
 	'smtp_secure'=>'ssl',
 	'smtp_host'=>'smtp.gmail.com',
-	'smtp_username'=>'longbill.cn@gmail.com',
-	'smtp_password'=>'wodxmima',
-	'mail_from'=>'longbill.cn@gmail.com',
-	'mail_fromname'=>'Longbill'
+	'smtp_username'=>'',
+	'smtp_password'=>'',
+	'mail_from'=>'',
+	'mail_fromname'=>''
 	);
+
+$end_models = array();
 
 //autoload files before controller
 $_preload = array(
@@ -135,7 +140,6 @@ $end_rights = array
 		'rights'=>array('view','update','delete')
 	)
 );
-
 
 
 

@@ -9,7 +9,7 @@
 END_MODULE != 'admin' && die('Access Denied');
 $m = $_GET['m'];
 
-$_config = $loader->model('config');
+$_config = model('config');
 $config_id = intval($_GET['config_id']);
 
 

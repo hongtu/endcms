@@ -28,7 +28,7 @@ if ($table)
 {
 	if (strpos(",$_allowed,",",$table,") !== false)
 	{
-		$obj = $loader->model($table);
+		$obj = model($table);
 	}
 }
 

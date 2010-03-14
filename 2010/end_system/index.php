@@ -6,28 +6,29 @@
 * under Creative Commons License
 **********************************/
 
-/*
-./index.php:
-  system core
-*/
-//timer start 
+/**
+ * MVC核心处理过程
+ * @author Longbill
+ * 2010-03-13
+ */
+
+//页面执行时间计时开始
 error_reporting(E_ALL ^ E_NOTICE);
 list($_usec, $_sec) = explode(' ', microtime()); 
 $_time_start = (float)$_usec + (float)$_sec;
 
 
-//get system root path
+//获得并设置系统执行的路径
 $_system_folder = dirname(__FILE__);
 $_system_folder = str_replace("\\", "/", $_system_folder);
 define('END_BASEPATH',$_system_folder.'/');
 define('END_TOPPATH',preg_replace('/\/end_system\/?$/','/',$_system_folder));
 
-
-//load hooks
-include_once(END_BASEPATH.'helper/hooks.php');
+//基础函数
 include_once(END_BASEPATH.'helper/core.php');
+//钩子函数
+include_once(END_BASEPATH.'helper/hooks.php');
 
-//hook
 function_exists('end_on_begin') && end_on_begin();
 
 if (!defined('END_MODULE')) define('END_MODULE','index');
@@ -117,14 +118,11 @@ if (!$view_html)
 	$_viewer_dir = END_VIEWER_DIR;
 	function_exists('end_on_template_begin') && end_on_template_begin();
 	$_template = template($_viewer);
-
 	//total output array by controllers
 	$_template->assign($all_view_data);
-	$r_path = str_replace(str_replace('\\','/',$_SERVER['DOCUMENT_ROOT']),'',str_replace('\\','/',__FILE__));
-	$r_path = preg_replace('/\/?end_system.*$/','',$r_path);
-	if (!$r_path) $r_path = '.';
+	$r_path = dirname($_SERVER['REQUEST_URI']);
 	$_template->assign('viewroot','end_system/'.$_viewer_dir);
-	if ($r_path == './') $r_path = '';
+	if (!$r_path || $r_path == '/') $r_path = '.';
 	$_url_base = str_replace('/./','/','http://'.$_SERVER['HTTP_HOST'].'/'.$r_path.'/');
 	$_template->assign('url_base',$_url_base);
 	$_template->assign('config',$config);

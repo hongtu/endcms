@@ -1,5 +1,5 @@
 <?php
-class END_Config extends END_Model
+class MODEL_CONFIG extends MODEL
 {
 	function END_Config()
 	{

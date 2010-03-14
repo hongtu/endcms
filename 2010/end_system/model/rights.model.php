@@ -1,5 +1,5 @@
 <?php
-class END_Rights extends END_Model
+class MODEL_RIGHTS extends MODEL
 {
 	function END_Rights()
 	{

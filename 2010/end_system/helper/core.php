@@ -1,128 +1,63 @@
 <?php
-/*
-create a template object
-*/
+/**********************************
+*     		EndCMS
+*       www.endcms.com
+*         ©2008-now
+* under Creative Commons License
+**********************************/
+
+/**
+ * 载入一个model
+ *
+ * @param string $f 
+ * @return model class
+ */
+function model($f)
+{
+	//缓存
+	if (isset($GLOBALS['end_model_instance_'.$f])) return $GLOBALS['end_model_instance_'.$f];
+	
+	//优先使用end_models目录下的model
+	if (file_exists($_file = END_MODEL_PATH.$f.'/'.$f.'.model.php'))
+		include_once($_file);
+	//其次是end_system/model目录下的
+	else if (file_exists($_file = END_BASEPATH.'model/'.$f.'.model.php'))
+		include_once($_file);
+	else
+		die("load model error! Model file not found: $f.model.php");
+	
+	if (class_exists($_class_name = 'MODEL_'.strtoupper($f)))
+		return $GLOBALS['end_model_instance_'.$f] = new $_class_name;
+	else
+		die("Load model error! Class '$_class_name' not found in file $_file");
+}
+
+/**
+ * 创建一个模板对象
+ *
+ * @param string $f 
+ * @param string [$viewdir]
+ * @return template class
+ */
 function template($f,$viewdir = false)
 {
 	global $_debug;
 	$_template = new QuickSkin($f);
 	$_template->set( 'reuse_code', !$_debug );
-	$_template->set( 'extensions_dir', 'library/quickskin_extensions/' );
-	if ($viewdir)
-	{
-		$_template->set( 'template_dir', $viewdir );
-	}
-	else
-	{
-		$_template->set( 'template_dir', END_VIEWER_DIR );
-	}
+	$_template->set( 'extensions_dir', 'library/quickskin_extensions/' );	
+	$_template->set( 'template_dir', $viewdir?$viewdir:END_VIEWER_DIR );
 	$_template->set( 'temp_dir', 'cache/template/' );
 	$_template->set( 'cache_dir', 'cache/' );
 	//$_template->set( 'cache_lifetime', 200 );
 	return $_template;
 }
 
-/*
-get some data arrays from a config file
-*/
-function config_data($f)
-{
-	global $view_data,$config;
-	if (strpos($f,'.config') === false) $f .= '.config';
-	//config file path
-	$filepath = END_BASEPATH.END_VIEWER_DIR.$f;
-	//cached file path
-	$cfilepath = END_BASEPATH.'cache/data_config/'.$f.'.php';
-	if (!file_exists($filepath))
-	{
-		if (file_exists($filepath.'.php'))
-			$filepath .= '.php';
-		else
-		{
-			echo '<div style="color:red">Config File ERROR:config file not found:'.$f.'</div>';
-			die;
-		}
-	}
-	//check cache file first
-	if (file_exists($cfilepath) && filemtime($cfilepath) > filemtime($filepath))
-	{
-		include($cfilepath);
-		return;
-	}
-	//if no cache or cache expired,then rebuild the cache file
-	$lines = file($filepath);
-	$vars = array();
-	foreach($lines as $line)
-	{
-		if (preg_match('/<(\w+)\s+(\w+\s*=\s*"[^"]*"\s*)+\s*\/>/i',$line,$ms))
-		{
-			$varname = $ms[1];
-			preg_match_all('/(\w+)="([^"]*)"/i',$line,$ms);
-			$data = array();
-			for($i=0;$i<count($ms[1]);$i++)
-			{
-				if ($ms[2][$i] !== '')
-				{
-					$data[$ms[1][$i]] = $ms[2][$i];
-				}
-			}
-			$model = $data['model']?$data['model']:END_DEFAULT_CONFIG_MODEL;
-			!$vars[$model] && $vars[$model] = array();
-			//check if the model file exists
-			if (!file_exists(END_BASEPATH.'model/'.$model.'.php'))
-			{
-				echo '<div style="color:red">Config File ERROR:model file not found:'.$model.'.php</div>';
-				die;
-			}
-			unset($data['model']);
-			$vars[$model][] = array('varname'=>$varname,'data'=>$data);
-		}
-	}
-	//generate a cache file which could be included
-	$s = '<'.'?php'."\n";
-	$s.= '!defined("END_BASEPATH") && die("this is just a cache!");'."\n";
-	foreach($vars as $model=>$arr)
-	{
-		$s.= 'include_once(END_BASEPATH."model/'.$model.'.php");'."\n";
-		$s.= '$obj = new END_'.$model.";\n";
-		foreach($arr as $_arr)
-		{
-			$s.= '$view_data["'.$_arr['varname'].'"] = $obj->get_list( array(';
-			foreach($_arr['data'] as $key=>$val) $s.= "'$key'=>'".str_replace( array('<php>','</php>'),array("'.",".'"),addslashes($val))."',";
-			$s.= ') );'."\n";
-		}
-	}
-	$s.= '?'.'>';
-	file_put_contents($cfilepath,$s)?include($cfilepath):eval($s);
-}
-
-/*
-register this page to be cached
-*/
-function cache_this_page($t = 120)
-{
-	define('END_CACHE_VIEW','yes');
-	define('END_CACHE_TTL',$t);
-}
-
-
-/*
-add the second array to the first array
-*/
-function array_add(&$arr1,$arr2,$assoc = true)
-{
-	foreach($arr2 as $key=>$val)
-	{
-		if ($assoc)
-			$arr1[$key] = $val;
-		else
-			$arr1[] = $val;
-	}
-}
-
-/*
-encode a string (usually a password)
-*/
+/**
+ * 非对称加密
+ *
+ * @param string $s 
+ * @return string encoded string
+ */
 function end_encode($s)
 {
 	$s = md5($s).$s.'something very very very very very very very very long';
@@ -130,13 +65,14 @@ function end_encode($s)
 }
 
 
-/*filter an array
- 	input example: md5:key1,key2,base64_encode:key3!,intval:key4
-	! represents must, if it equals null then return false
-	function_name:key, handle key to function_name
-	key2=key1, rename key1 to key2
-	
-	e.g. id=intval:item_id!
+/**
+ *过滤数组
+ *	input example: md5:key1,key2,base64_encode:key3!,intval:key4
+ *	! represents must, if it equals null then return false
+ *	function_name:key, handle key to function_name
+ *	key2=key1, rename key1 to key2
+ *	
+ * 	e.g. id=intval:item_id!
 */
 function filter_array($arr,$keys,$write_global = false)
 {
@@ -167,8 +103,8 @@ function filter_array($arr,$keys,$write_global = false)
 			$key = $_arr[1];
 		}
 		!$_key && $_key = $key;
-		if ($_func && function_exists($_func))
-			if (@eval('$arr[$key] = '.$_func.'($arr[$key]);') === false) return false;
+		if ($_func)
+			$arr[$key] = $_func($arr[$key]);
 		if ($_must && !$arr[$key]) 
 			return false;
 		else
@@ -184,9 +120,12 @@ function filter_array($arr,$keys,$write_global = false)
 	return $re;
 }
 
-/*
-load and parse language file
-*/
+/**
+ * 载入一个语言文件
+ *
+ * @param string $path 
+ * @return void
+ */
 function language($path)
 {
 	if (strpos($path,'.') === false) $path.= '.lang';
@@ -203,9 +142,12 @@ function language($path)
 	}
 }
 
-/*
-get language item
-*/
+/**
+ * 获得一个语言字符串
+ *
+ * @param string $key 
+ * @return string language string
+ */
 function lang($key)
 {
 	$name = 'LANG_'.strtoupper($key);

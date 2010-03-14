@@ -14,6 +14,12 @@
 //not support php version less than 4.1.0
 PHP_VERSION < "4.1.0" && die('Sorry! Your PHP version is too old!');
 
+if ( function_exists('memory_get_usage') && ( intval(@ini_get('memory_limit')) < 32 ) )
+	@ini_set('memory_limit', '32M');
+
+set_magic_quotes_runtime(0);
+@ini_set('magic_quotes_sybase', 0);
+
 //default time zone
 function_exists('date_default_timezone_set') && date_default_timezone_set('Etc/GMT-8');
 
@@ -40,18 +46,6 @@ if(!function_exists('iconv'))
 }
 
 
-if (!function_exists('new_stripslashes'))
-{
-	function new_stripslashes($string)
-	{
-		if(!is_array($string)) return stripslashes($string);
-		foreach($string as $key => $val)
-		{
-			$string[$key] = new_stripslashes($val);
-		}
-		return $string;
-	}
-}
 
 //cancle global variables
 if (ini_get('register_globals'))
@@ -71,15 +65,41 @@ if (ini_get('register_globals'))
 	unset($_notunset);
 }
 
+
+if (!function_exists('strip_magic_quotes'))
+{
+	function strip_magic_quotes($string)
+	{
+		if(!is_array($string)) return stripslashes($string);
+		foreach($string as $key => $val)
+		{
+			$string[$key] = strip_magic_quotes($val);
+		}
+		return $string;
+	}
+}
+
+if (!function_exists('add_magic_quotes'))
+{
+	function add_magic_quotes($string)
+	{
+		if(!is_array($string)) return addslashes($string);
+		foreach($string as $key => $val)
+		{
+			$string[$key] = add_magic_quotes($val);
+		}
+		return $string;
+	}
+}
+
 //magic gpc
 if(get_magic_quotes_gpc())
 {
-	$_GET = new_stripslashes($_GET);
-	$_POST = new_stripslashes($_POST);
-	$_COOKIE = new_stripslashes($_COOKIE);
-	$_REQUEST = new_stripslashes($_REQUEST);
+	$_GET = strip_magic_quotes($_GET);
+	$_POST = strip_magic_quotes($_POST);
+	$_COOKIE = strip_magic_quotes($_COOKIE);
 }
-
+$_REQUEST = array_merge($_GET,$_POST);
 
 if (!function_exists("file_get_contents"))
 {
@@ -138,4 +158,6 @@ if (!function_exists('json_encode'))
 		return $json;
 	}
 }
+
+
 
