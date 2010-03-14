@@ -21,7 +21,7 @@ function model($f)
 	if (file_exists($_file = END_MODEL_PATH.$f.'/'.$f.'.model.php'))
 		include_once($_file);
 	//其次是end_system/model目录下的
-	else if (file_exists($_file = END_MODULE_DIR.'model/'.$f.'.model.php'))
+	else if (file_exists($_file = END_TOPPATH.END_MODULE_DIR.'model/'.$f.'.model.php'))
 		include_once($_file);
 	else
 		die("load model error! Model file not found: $f.model.php");

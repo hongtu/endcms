@@ -4,7 +4,7 @@ body {
 	line-height:20px;
 	margin: 0;
 	padding: 0;
-	background:#BCCD6F url(indexbt0.jpg) repeat-x bottom; 
+	background:#BCCD6F; 
 }
 td {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
