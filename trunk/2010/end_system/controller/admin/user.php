@@ -5,7 +5,7 @@ $user_id = intval($_GET['user_id']);
 $m = $_GET['m'];
 $action = $_GET['action'];
 $status = $_GET['status'];
-$user = new User;
+$user = model('user');
 
 
 //状态处理

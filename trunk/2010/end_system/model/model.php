@@ -1,12 +1,12 @@
 <?php
-/*
-LoveZhi MVC
-Model Prototype
-by: Longbill 
-created:2009-3-10
-last modified:2009-4-13
-*/
-class END_Model extends DB
+/**********************************
+*     		EndCMS
+*       www.endcms.com
+*         ©2008-now
+* under Creative Commons License
+**********************************/
+
+class MODEL
 {
 	var $table; // table name
 	var $id;  //unique id
@@ -15,13 +15,12 @@ class END_Model extends DB
 	//add one row, returns the new row's id if insert succeed
 	function add( $data = array())
 	{
-		check_allowed(str_replace(END_MYSQL_PREFIX,'',$this->table),'add',END_RESPONSE == 'text');
 		$table = $data['table']?$data['table']:$this->table;
 		unset($data['table']);
 		$sql = $this->make_insert_sql($table,$data); 
-		if ($this->query($sql))
+		if ($GLOBALS['db']->query($sql))
 		{
-			return $this->insert_id();
+			return $GLOBALS['db']->insert_id();
 		}
 		else return false;
 	}
@@ -29,28 +28,25 @@ class END_Model extends DB
 	//delete one record by its id
 	function delete($id)
 	{
-		check_allowed(str_replace(END_MYSQL_PREFIX,'',$this->table),'delete',END_RESPONSE == 'text');
 		$sql = "DELETE FROM $this->table WHERE $this->id = '$id' LIMIT 1";
-		return ($this->query($sql));
+		return ($GLOBALS['db']->query($sql));
 	}
 	
 	//check if one record exists, input an array,such as : array('name'=>'xxx','sex'=>'M')
 	function exists($arr)
 	{
-		//$sql = $this->make_select_sql($this->table,$arr,'count(*) as total');
 		$arr['select'] = 'count(1) as total';
-		$r = $this->get_one($arr);
+		$r = $GLOBALS['db']->get_one($arr);
 		return intval($r['total'])>0;
 	}
 	
 	//update a row by its id
 	function update( $id, $data = array())
 	{
-		check_allowed(str_replace(END_MYSQL_PREFIX,'',$this->table),'update',END_RESPONSE == 'text');
 		$table = $data['table']?$data['table']:$this->table;
 		unset($data['table']);
 		$sql = $this->make_update_sql($table,$data, array($this->id => $id)); 
-		return ($this->query($sql));
+		return ($GLOBALS['db']->query($sql));
 	}
 	
 	//get one row
@@ -67,7 +63,7 @@ class END_Model extends DB
 		{
 			$sql = "SELECT * FROM $this->table WHERE $this->id = '$id' LIMIT 1";
 		}
-		return parent::get_one($sql);
+		return $GLOBALS['db']->get_one($sql);
 	}
 	
 	//get rows of one page
@@ -109,17 +105,7 @@ class END_Model extends DB
 		
 		$sql = $this->make_select_sql($_table,$data,$_select).$sql;
 		
-		//echo $sql.'<br />';
-		if ($get_one)
-		{
-			$sql.=" LIMIT 1";
-			die;
-			return $this->get_one($sql);
-		}
-		else
-		{
-			return $this->get_all($sql);
-		}
+		return $GLOBALS['db']->get_all($sql);
 	}
 	
 	function make_table_sql($table)
