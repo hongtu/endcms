@@ -71,7 +71,7 @@ $view_data = array();
 $view_html = '';
 
 //load the main controller
-$_c_filename = END_CONTROLLER_DIR.$_controller;
+$_c_filename = END_TOPPATH.END_CONTROLLER_DIR.$_controller;
 file_exists($_c_filename) && include($_c_filename);
 
 if (!$view_html)

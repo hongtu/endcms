@@ -31,9 +31,9 @@ define('END_CONTROLLER_DIR','controller/default/');
 define('END_VIEWER_DIR','view/default/');
 define('END_VIEWER_EXT','html');
 
-define('END_MODEL_PATH',END_TOPPATH.'end_content/end_models/');
-define('END_PLUGIN_PATH',END_TOPPATH.'end_plugins/');
-define('END_THEME_PATH',END_TOPPATH.'end_themes/');
+define('END_MODEL_PATH',END_TOPPATH.'end_content/models/');
+define('END_PLUGIN_PATH',END_TOPPATH.'plugins/');
+define('END_THEME_PATH',END_TOPPATH.'themes/');
 
 
 //open debug mode
