@@ -34,9 +34,13 @@ include_once(END_BASEPATH.'helper/html.php');
 function_exists('end_on_begin') && end_on_begin();
 
 if (!defined('END_MODULE')) define('END_MODULE','index');
+if (!defined('END_MODULE_DIR')) define('END_MODULE_DIR','end_system/');
 include_once(END_BASEPATH.'config.php');
 include_once(END_BASEPATH.'library/mysql.php');
 include_once(END_BASEPATH.'library/model.php');
+
+//载入对应模块的config.php
+if (END_MODULE != 'index' && file_exists(END_MODULE_DIR.'config.php')) include_once(END_MODULE_DIR.'config.php');
 
 //连接数据库
 $db = new DB;
