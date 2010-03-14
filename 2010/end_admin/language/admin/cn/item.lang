@@ -1,0 +1,53 @@
+
+TITLE = 内容管理
+ITEM_INDEX = 文章列表
+USERS = 授权用户
+
+//栏目列表
+CATEGORIES_TREE=栏目
+category_root=根栏目
+
+DELETE_CONFIRM = 确定要删除吗？
+ROOT_CATEGORY = 根栏目
+MANAGE = 管理
+ITEM_LIST = 内容列表
+OPTIONS = 操作
+DEFAULT_CATEGORY = 未栏目
+
+SHOW_ALL=所有
+
+//新项目
+current_position=当前位置
+display=显示
+function=功能
+ITEM_CATEGORY = 所属栏目
+NEW_ITEM = 添加内容
+ITEM_NAME = 标题
+ITEM_DESCRIPTION = 描述
+item_keywords=关键词
+CHECK_BOX = 
+item_create_time =发布时间
+ITEM_publish =直接发布
+item_saveonly=存草稿
+return=返回
+return_alert=是否确定要放弃修改？
+
+ITEM_UNKNOWN_ERROR = 未知错误
+ITEM_FILL_ALL = 请填写所有必需的内容
+ITEM_SUBTITLE = 副标题
+EDIT_ITEM = 编辑内容
+EDIT_PAGE = 编辑页面
+NEW_ITEM_SUCCESS = 保存成功
+SAVE_SUCCESS =内容保存成功
+ITEM_DELETE_SUCCESS = 删除内容成功
+ITEM_SAVE_SUCCESS = 保存成功
+ITEM_FILL_ALL = 请填写所有要求的内容
+ITEM_NEW_ERROR = 新建内容出错，原因未知
+ITEM_DELETE_ERROR = 删除内容出错，原因未知
+ITEM_ORDER = 优先级
+PUBLISHED = 发布成功
+PUBLISHED_ERROR=发布失败
+item_status=状态
+
+click_to_edit_category=此栏目不是一个列表型栏目，要编辑此栏目内容
+click_here=请点击这里
