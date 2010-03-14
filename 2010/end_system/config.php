@@ -31,7 +31,7 @@ define('END_CONTROLLER_DIR','controller/default/');
 define('END_VIEWER_DIR','view/default/');
 define('END_VIEWER_EXT','html');
 
-define('END_MODEL_PATH',END_TOPPATH.'end_models/');
+define('END_MODEL_PATH',END_TOPPATH.'end_content/end_models/');
 define('END_PLUGIN_PATH',END_TOPPATH.'end_plugins/');
 define('END_THEME_PATH',END_TOPPATH.'end_themes/');
 
@@ -50,67 +50,8 @@ $mysql = array(
 );
 
 //global config ( could be overwritten by end_config entries in database ) 
-$config = array(
-	'mail_method'=>'smtp',
-	'smtp_auth'=>true,
-	'smtp_port'=>465,
-	'smtp_secure'=>'ssl',
-	'smtp_host'=>'smtp.gmail.com',
-	'smtp_username'=>'',
-	'smtp_password'=>'',
-	'mail_from'=>'',
-	'mail_fromname'=>''
-);
+$config = array();
 
-$end_rights = array
-(
-	array(
-		'name'=>'category',
-		'rights'=> array('add','update','delete')
-	),
-	array( 
-		'name'=>'item',
-		'rights'=> array('add','update','delete')
-	),
-	array(
-		'name'=>'account',
-		'rights'=> array('update')
-	),
-	array(
-		'name'=>'HTML',
-		'rights'=>array('update')
-	),
-	array(
-		'name'=>'config',
-		'rights'=> array('add','update','delete')
-	),
-	array(
-		'name'=>'guestbook',
-		'rights'=> array('update','delete')
-	),
-	array(
-		'name'=>'upload',
-		'rights'=>array('add')
-	),
-	array(
-		'name'=>'user',
-		'rights'=>array('add','update','update_password','delete')
-	),
-	array(
-		'name'=>'rights',
-		'rights'=>array('add','update','delete')
-	),
-	array(
-		'name'=>'paper',
-		'rights'=>array('view','update','delete')
-	)
-);
-
-
-
-/* 
-other config
-*/
 
 
 

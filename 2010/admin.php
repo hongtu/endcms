@@ -1,7 +1,8 @@
 <?php
-define('END_CONTROLLER_DIR','controller/admin/');
-define('END_VIEWER_DIR','view/admin/');
-define('END_LANGUAGE_DIR','language/admin/');
+define('END_CONTROLLER_DIR','end_admin/controller/');
+define('END_VIEWER_DIR','end_admin/view/');
+define('END_LANGUAGE_DIR','end_admin/language/');
+define('END_MODULE_DIR','end_admin/');
 define('END_MODULE','admin');
 chdir('end_system');
 include("index.php");
