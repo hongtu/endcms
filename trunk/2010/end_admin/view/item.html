@@ -103,13 +103,13 @@ $(function()
 		{
 			if (li.next('li').children('ul').children('li').length > 0 )
 			{
-				$('<img src="lz_system/view/admin/images/plus.png" border="0" class="expand_button" />')
+				$('<img src="end_admin/view/images/plus.png" border="0" class="expand_button" />')
 				.click(function()
 				{
 					var exp_bt = this;
 					li.next('li').slideToggle(300,function()
 					{
-						$(exp_bt).attr('src',$(this).is(':visible')?'lz_system/view/admin/images/minus.png':'lz_system/view/admin/images/plus.png');
+						$(exp_bt).attr('src',$(this).is(':visible')?'end_admin/view/images/minus.png':'end_admin/view/images/plus.png');
 					});
 					
 				}).prependTo(li);
@@ -126,7 +126,7 @@ $(function()
 	});
 	
 	var tree_on = root.find('a.tree_on');
-	tree_on.parent('li').find('.expand_button').attr('src','lz_system/view/admin/images/minus.png');
+	tree_on.parent('li').find('.expand_button').attr('src','end_admin/view/images/minus.png');
 	if (tree_on.length > 0)
 	{
 		var li = tree_on.parents('li').show();
@@ -135,7 +135,7 @@ $(function()
 		{
 			li = li.parents('li');
 			li.show();
-			li.prev('li').find('.expand_button').attr('src','lz_system/view/admin/images/minus.png');
+			li.prev('li').find('.expand_button').attr('src','end_admin/view/images/minus.png');
 		}
 	}
 	

@@ -43,12 +43,12 @@ $(function()
 			if (/asc\=true/.test(url)) //如果倒序
 			{
 				new_url += '&desc=true';
-				extra = $('<img src="lz_system/view/admin/images/asc.gif" />');
+				extra = $('<img src="end_admin/view/images/asc.gif" />');
 			}
 			else
 			{
 				new_url += '&asc=true';
-				extra = $('<img src="lz_system/view/admin/images/desc.gif" />');
+				extra = $('<img src="end_admin/view/images/desc.gif" />');
 			}			
 		}
 		$(this).append($('<a href="'+new_url+'">'+text+'</a>')).append(extra);

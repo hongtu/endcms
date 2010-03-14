@@ -21,7 +21,7 @@ function model($f)
 	if (file_exists($_file = END_MODEL_PATH.$f.'/'.$f.'.model.php'))
 		include_once($_file);
 	//其次是end_system/model目录下的
-	else if (file_exists($_file = END_BASEPATH.'model/'.$f.'.model.php'))
+	else if (file_exists($_file = END_MODULE_DIR.'model/'.$f.'.model.php'))
 		include_once($_file);
 	else
 		die("load model error! Model file not found: $f.model.php");
@@ -42,12 +42,14 @@ function model($f)
 function template($f,$viewdir = false)
 {
 	include_once(END_BASEPATH.'library/class.quickskin.php');
+	if (!$viewdir) $viewdir = END_VIEWER_DIR;
+	$viewdir = END_TOPPATH.$viewdir;
 	$_template = new QuickSkin($f);
 	$_template->set( 'reuse_code', !END_DEBUG );
-	$_template->set( 'extensions_dir', 'library/quickskin_extensions/' );	
-	$_template->set( 'template_dir', $viewdir?$viewdir:END_VIEWER_DIR );
-	$_template->set( 'temp_dir', 'cache/template/' );
-	$_template->set( 'cache_dir', 'cache/' );
+	$_template->set( 'extensions_dir', END_BASEPATH.'library/quickskin_extensions/' );	
+	$_template->set( 'template_dir', $viewdir );
+	$_template->set( 'temp_dir', END_BASEPATH.'cache/template/' );
+	$_template->set( 'cache_dir', END_BASEPATH.'cache/' );
 	//$_template->set( 'cache_lifetime', 200 );
 	return $_template;
 }
@@ -129,7 +131,7 @@ function filter_array($arr,$keys,$write_global = false)
 function language($path)
 {
 	if (strpos($path,'.') === false) $path.= '.lang';
-	$_f = END_LANGUAGE_DIR.END_LANGUAGE.'/'.$path;
+	$_f = END_TOPPATH.END_LANGUAGE_DIR.END_LANGUAGE.'/'.$path;
 	if (file_exists($_f))
 	{
 		$lines = file($_f);
@@ -139,6 +141,10 @@ function language($path)
 			if (preg_match('/^([a-zA-Z]{1}[a-zA-Z0-9_]*)\s*=(.*)$/',$line,$ms))
 				define('LANG_'.strtoupper($ms[1]),$ms[2]);
 		}
+	}
+	else
+	{
+		die('language file not found:'.$_f);
 	}
 }
 

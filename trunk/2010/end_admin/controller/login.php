@@ -3,7 +3,7 @@
 $module = $_GET['module'];
 $m = $_GET['m'];
 $back_url = $_REQUEST['backurl']?$_REQUEST['backurl']:'admin.php';
-
+echo 'a';
 if ($m == 'login')
 {
 	$admin = model('admin');
