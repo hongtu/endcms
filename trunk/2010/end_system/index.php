@@ -21,23 +21,22 @@ $_time_start = (float)$_usec + (float)$_sec;
 //获得并设置系统执行的路径
 $_system_folder = dirname(__FILE__);
 $_system_folder = str_replace("\\", "/", $_system_folder);
-define('END_BASEPATH',$_system_folder.'/');
-define('END_TOPPATH',preg_replace('/\/end_system\/?$/','/',$_system_folder));
-
+define('END_SYSTEM_DIR',$_system_folder.'/');
+define('END_ROOT',preg_replace('/\/end_system\/?$/','/',$_system_folder));
+define('END_MODULE_DIR',END_ROOT.'end_'.END_MODULE.'/');
 //基础函数
-include_once(END_BASEPATH.'helper/core.php');
+include_once(END_SYSTEM_DIR.'helper/core.php');
 //钩子函数
-include_once(END_BASEPATH.'helper/hooks.php');
+helper('hooks');
 //处理输出相关函数
-include_once(END_BASEPATH.'helper/html.php');
+helper('html');
 
 function_exists('end_on_begin') && end_on_begin();
 
-if (!defined('END_MODULE')) define('END_MODULE','index');
-if (!defined('END_MODULE_DIR')) define('END_MODULE_DIR','end_system/');
-include_once(END_BASEPATH.'config.php');
-include_once(END_BASEPATH.'library/mysql.php');
-include_once(END_BASEPATH.'library/model.php');
+define('END_ENABLE_LANGUAGE',false);
+include_once(END_SYSTEM_DIR.'config.php');
+include_once(END_SYSTEM_DIR.'library/mysql.php');
+include_once(END_SYSTEM_DIR.'library/model.php');
 
 //载入对应模块的config.php
 if (END_MODULE != 'index' && file_exists(END_MODULE_DIR.'config.php')) include_once(END_MODULE_DIR.'config.php');
@@ -62,7 +61,7 @@ language('common');
 language($_page);
 
 //common scripts
-include_once('common.php');
+include_once(END_SYSTEM_DIR.'common.php');
 //hook
 function_exists('end_on_ready') && end_on_ready();
 
@@ -71,7 +70,7 @@ $view_data = array();
 $view_html = '';
 
 //load the main controller
-$_c_filename = END_TOPPATH.END_CONTROLLER_DIR.$_controller;
+$_c_filename = END_CONTROLLER_DIR.$_controller;
 file_exists($_c_filename) && include($_c_filename);
 
 if (!$view_html)

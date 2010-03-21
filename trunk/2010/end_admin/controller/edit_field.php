@@ -41,8 +41,8 @@ foreach($_fields as $name=>$attr)
 				}
 				if (!$attr['saveto'])
 				{
-					end_mkdir(END_UPLOAD_PATH);
-					$file_url = END_UPLOAD_PATH.$file_url;
+					end_mkdir(END_UPLOAD_DIR);
+					$file_url = END_UPLOAD_DIR.$file_url;
 				}
 				else
 				{
@@ -52,7 +52,7 @@ foreach($_fields as $name=>$attr)
 				
 				
 				
-				if (@move_uploaded_file($file["tmp_name"],END_TOPPATH.$file_url))
+				if (@move_uploaded_file($file["tmp_name"],END_ROOT.$file_url))
 				{
 					if ($attr['filter']) $file_url  = $attr['filter']($file_url);
 					$data[$name] = $file_url;

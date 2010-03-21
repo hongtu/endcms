@@ -64,7 +64,7 @@
 			foreach($data['options'] as $_val=>$_name)
 			{
 				echo "<option ";
-				if ($_obj['content']['b'][$name] == $_val) echo " selected='selected' ";
+				if ($_obj['content'][$name] == $_val) echo " selected='selected' ";
 				echo " value='$_val'>$_name</option>";
 			}
 			echo "</select>";
@@ -94,7 +94,7 @@
 					?></textarea>
 					</td></tr>
 					<tr>
-						<Td>{UPLOAD_ATTACHMENT}</td>
+						<Td>{END_UPLOAD_DIR_ATTACHMENT}</td>
 							<td><iframe src="admin.php?p=upload&for=<?php echo $name;?>" style="width:700px;height:30px;border:0;text-align:left;" border="0" frameborder="no" scrolling="no"></iframe>
 			<?php
 		}
