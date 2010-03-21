@@ -37,7 +37,7 @@ else if ($m == 'edit_category')
 	$_category = $category->get_one($category_id);
 	$data = array('category_id'=>$category_id);
 	$errors = array();
-	$_fields = $end_category_config[$_category['status']];
+	$_fields = $end_models[$_category['status']]['category_fields'];
 	
 	if ( intval($_POST['parent_id']) < 0 )
 	{
@@ -54,7 +54,6 @@ else if ($m == 'edit_category')
 
 	if (count($data)>0 && count($errors) == 0)
 	{
-		$data['update_time'] = time();
 		$re = $category->update( $category_id, $data);
 		if ( $re )
 		{ 
@@ -100,10 +99,11 @@ if ($action == "edit_category")
 	{
 		$__category = $_category;
 	}
+
 	$temp->assign( array(
 		'content' => $__category,
 		'err_msg' => $err_msg,
-		'fields'=>$end_category_config[$_category['status']],
+		'fields'=>$end_models[$_category['status']]['category_fields'],
 		'category_id' => $category_id,
 		'login_user' => $_SESSION['login_user'],
 		'category_tree' => print_category_tree($category->tree_category(0),$_category['parent_id'],$category_id),
@@ -128,7 +128,10 @@ unset($view_data['position'][count($view_data['position'])-1]);
 $view_data['this_category'] = $category->get_one($category_id);
 
 $statuses = array();
-foreach($end_models as $key=>$val) $statuses[] = array('index'=>$key,'value'=>$val['name']);
+foreach($end_models as $key=>$val)
+{
+	$statuses[] = array('index'=>$key,'value'=>$val['name']);
+}
 $view_data['statuses'] = $statuses;
 
 

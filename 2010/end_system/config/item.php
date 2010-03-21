@@ -27,7 +27,7 @@ $end_item_config = array
 			'allowed_exts'=>array('jpg','jpeg','png','gif'),
 			'rename'=>true,
 			'filter'=>null,
-			//'saveto'=> 'public/'.date('Y').'/', //如果不配置此项，那么存到 END_UPLOAD_PATH 下 
+			//'saveto'=> 'public/'.date('Y').'/', //如果不配置此项，那么存到 END_UPLOAD_DIR 下 
 			'null'=>true
 		),
 		'persons'=>array //非数据表字段，编辑后会有函数program_after_edit()处理

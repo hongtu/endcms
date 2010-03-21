@@ -5,7 +5,7 @@ class END_Loader
 	
 	function model($f)
 	{
-		$_file = END_BASEPATH.'model/'.$f;
+		$_file = END_SYSTEM_DIR.'model/'.$f;
 		if (strpos($f,'.php') === false) $_file.='.php';
 		if ($this->loaded['model/'.$_file]) return $this->loaded['model/'.$_file];
 		if (file_exists($_file))
@@ -27,7 +27,7 @@ class END_Loader
 	
 	function helper($f)
 	{
-		$_file = END_BASEPATH.'helper/'.$f;
+		$_file = END_SYSTEM_DIR.'helper/'.$f;
 		if (strpos($f,'.php') === false) $_file.='.php';
 		if ($this->loaded['helper/'.$_file]) return true;
 		if (file_exists($_file))
@@ -42,7 +42,7 @@ class END_Loader
 	
 	function library($f)
 	{
-		$_file = END_BASEPATH.'library/'.$f;
+		$_file = END_SYSTEM_DIR.'library/'.$f;
 		if (strpos($f,'.php') === false) $_file.='.php';
 		if ($this->loaded['library/'.$_file]) return true;
 		if (file_exists($_file))

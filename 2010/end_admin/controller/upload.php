@@ -3,7 +3,7 @@ END_MODULE != 'admin' && die('Access Denied');
 $action = $_GET['action'];
 $m = $_GET['m'];
 $file = $_FILES['upfile'];
-if (!is_dir(END_TOPPATH.END_UPLOAD_PATH)) end_mkdir(END_TOPPATH.END_UPLOAD_PATH,0777);
+if (!is_dir(END_ROOT.END_UPLOAD_DIR)) end_mkdir(END_ROOT.END_UPLOAD_DIR,0777);
 $err = true;
 
 //权限检查
@@ -22,9 +22,9 @@ if ($file['tmp_name'])
 	}
 	else
 	{
-		//$file_url = END_UPLOAD_PATH.basename($file['name']);
-		$file_url = END_UPLOAD_PATH.date('m_d_H_i_s_').rand(1111,9999).'.'.$ftype;
-		if (@move_uploaded_file($myfile,END_TOPPATH.$file_url))
+		//$file_url = END_UPLOAD_DIR.basename($file['name']);
+		$file_url = END_UPLOAD_DIR.date('m_d_H_i_s_').rand(1111,9999).'.'.$ftype;
+		if (@move_uploaded_file($myfile,END_ROOT.$file_url))
 		{
 			$err = false;
 			$msg = lang('success');
@@ -39,7 +39,7 @@ if ($file['tmp_name'])
 		$view_data['is_img'] = true;
 		include_once('library/image.php');
 		$img = new Image;
-		$img->filepath = END_TOPPATH.$file_url;
+		$img->filepath = END_ROOT.$file_url;
 		$img->resize_width($config['max_image_width']?$config['max_image_width']:500);
 	}
 	$view_data['file_url'] = $file_url;
@@ -48,18 +48,18 @@ if ($file['tmp_name'])
 	$view_data['msg'] = $msg;
 }
 
-$handler = @opendir(END_TOPPATH.END_UPLOAD_PATH);
+$handler = @opendir(END_ROOT.END_UPLOAD_DIR);
 $recent = array();
 while(($val = readdir($handler)) !== false)
 {
-	if ($val == '.' || $val == '..' || !is_file(END_TOPPATH.END_UPLOAD_PATH.$val)) continue;
+	if ($val == '.' || $val == '..' || !is_file(END_ROOT.END_UPLOAD_DIR.$val)) continue;
 	$fname = $val;
 	$ftype = strtolower(getext($val));
 	$encode = (preg_replace('/[a-zA-Z0-9_\.\{\}\[\]\(\)]*/i','',$val) != '');
 	$recent[] = array( 
 		'name'=>$fname,
-		'filepath'=>END_UPLOAD_PATH.$val,
-		'mtime'=>filemtime(END_TOPPATH.END_UPLOAD_PATH.$val),
+		'filepath'=>END_UPLOAD_DIR.$val,
+		'mtime'=>filemtime(END_ROOT.END_UPLOAD_DIR.$val),
 		'ftype'=>$ftype,
 		'encode'=>$encode?'yes':'no',
 		'isimg'=>(strpos(',jpg,jpeg,gif,png,bmp',','.$ftype.',') === false)?'no':'yes'

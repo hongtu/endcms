@@ -21,19 +21,19 @@ define('END_CHARSET','UTF-8');
 //allowed upload file types, separated by comma
 define('END_UPLOAD_FILE_TYPES',',jpg,jpeg,gif,bmp,png,doc,rar,pdf,zip,ppt,docx,xls,');
 
-define('END_UPLOAD_PATH','public/'.date('Y/m/'));
+define('END_UPLOAD_DIR','public/'.date('Y/m/'));
 
 //site language
 define('END_LANGUAGE','cn');
 //define directories
-define('END_LANGUAGE_DIR','language/default/');
-define('END_CONTROLLER_DIR','controller/default/');
-define('END_VIEWER_DIR','view/default/');
+define('END_LANGUAGE_DIR',END_MODULE_DIR.'language/');
+define('END_CONTROLLER_DIR',END_MODULE_DIR.'controller/');
+define('END_VIEWER_DIR',END_MODULE_DIR.'view/');
 define('END_VIEWER_EXT','html');
 
-define('END_MODEL_PATH',END_TOPPATH.'end_content/models/');
-define('END_PLUGIN_PATH',END_TOPPATH.'plugins/');
-define('END_THEME_PATH',END_TOPPATH.'themes/');
+define('END_MODEL_DIR',END_ROOT.'end_content/models/');
+define('END_PLUGIN_DIR',END_ROOT.'end_content/plugins/');
+define('END_THEME_DIR',END_ROOT.'end_content/themes/');
 
 
 //open debug mode

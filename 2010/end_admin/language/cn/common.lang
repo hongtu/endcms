@@ -23,7 +23,7 @@ REAL_INDEX = 首页
 CATEGORIES = 分类
 DELETE = 删除
 DELETING = ...
-UPLOAD = 上传
+END_UPLOAD_DIR = 上传
 IMAGE = 图片
 MANAGE = 管理
 DELETE = 删除
@@ -86,4 +86,4 @@ paper=申请
 
 
 
-UPLOAD_ATTACHMENT=上传附件
+END_UPLOAD_DIR_ATTACHMENT=上传附件

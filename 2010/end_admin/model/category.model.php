@@ -16,17 +16,19 @@ class MODEL_CATEGORY extends MODEL
 	
 	function add($data)
 	{
+		if ($data['parent_id'])
+		{
+			check_allowed_category($data['parent_id'],END_RESPONSE == 'text');
+		}
 		$re = parent::add($data);
+		if (!$data['create_time']) $data['create_time'] = time();
 		return $re;
 	}
 
 	function update($id,$data)
 	{
 		check_allowed_category($id,END_RESPONSE == 'text');
-		if ($data['status'])
-		{
-			$data['list'] = (preg_match('/_list$/',$data['status']))?'1':'0';
-		}
+		if (!$data['update_time']) $data['update_time'] = time();
 		return parent::update($id,$data);
 	}
 
@@ -42,14 +44,10 @@ class MODEL_CATEGORY extends MODEL
 			if (END_MODULE == 'admin' && $_SESSION['login_user']['rights']['limit_category_id'] && $_SESSION['login_user']['allowed_categories'])
 			{
 				if (strpos(','.$_SESSION['login_user']['allowed_categories'].',',','.$id.',') !== false)
-				{
 					$re[] = $arr;
-				}
 			}
 			else
-			{
 				$re[] = $arr;
-			}
 			$cond[$this->id] = $arr['parent_id'];
 		}
 		$re = array_reverse($re);
@@ -94,7 +92,6 @@ class MODEL_CATEGORY extends MODEL
 	{
 		foreach($tree as $c)
 		{
-			//$c['depth'] = $depth;
 			$re[] = $c;
 			$re[count($re)-1]['children'] = null;
 			if (count($c['children'])>0) $this->flat_tree($c['children'],$re);

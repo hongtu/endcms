@@ -1,10 +1,4 @@
 <?php
-/**********************************
-*     		EndCMS
-*       www.endcms.com
-*         ©2008-now
-* under Creative Commons License
-**********************************/
 
 /**
  * 载入一个model
@@ -18,10 +12,10 @@ function model($f)
 	if (isset($GLOBALS['end_model_instance_'.$f])) return $GLOBALS['end_model_instance_'.$f];
 	
 	//优先使用end_models目录下的model
-	if (file_exists($_file = END_MODEL_PATH.$f.'/'.$f.'.model.php'))
+	if (file_exists($_file = END_MODEL_DIR.$f.'/'.$f.'.model.php'))
 		include_once($_file);
 	//其次是end_system/model目录下的
-	else if (file_exists($_file = END_TOPPATH.END_MODULE_DIR.'model/'.$f.'.model.php'))
+	else if (file_exists($_file = END_MODULE_DIR.'model/'.$f.'.model.php'))
 		include_once($_file);
 	else
 		die("load model error! Model file not found: $f.model.php");
@@ -32,6 +26,24 @@ function model($f)
 		die("Load model error! Class '$_class_name' not found in file $_file");
 }
 
+function helper($f)
+{
+	$loaded = false;
+
+	if (file_exists($_file = END_MODULE_DIR.'helper/'.$f.'.php'))
+	{
+		include_once($_file);
+		$loaded = true;
+	}
+	if (file_exists($_file = END_SYSTEM_DIR.'helper/'.$f.'.php'))
+	{
+		include_once($_file);
+		$loaded = true;
+	}
+	if (!$loaded) die("load helper error! File not found: $f.php");
+}
+
+
 /**
  * 创建一个模板对象
  *
@@ -41,15 +53,14 @@ function model($f)
  */
 function template($f,$viewdir = false)
 {
-	include_once(END_BASEPATH.'library/class.quickskin.php');
+	include_once(END_SYSTEM_DIR.'library/class.quickskin.php');
 	if (!$viewdir) $viewdir = END_VIEWER_DIR;
-	$viewdir = END_TOPPATH.$viewdir;
 	$_template = new QuickSkin($f);
 	$_template->set( 'reuse_code', !END_DEBUG );
-	$_template->set( 'extensions_dir', END_BASEPATH.'library/quickskin_extensions/' );	
+	$_template->set( 'extensions_dir', END_SYSTEM_DIR.'library/quickskin_extensions/' );	
 	$_template->set( 'template_dir', $viewdir );
-	$_template->set( 'temp_dir', END_BASEPATH.'cache/template/' );
-	$_template->set( 'cache_dir', END_BASEPATH.'cache/' );
+	$_template->set( 'temp_dir', END_SYSTEM_DIR.'cache/template/' );
+	$_template->set( 'cache_dir', END_SYSTEM_DIR.'cache/' );
 	//$_template->set( 'cache_lifetime', 200 );
 	return $_template;
 }
@@ -130,8 +141,10 @@ function filter_array($arr,$keys,$write_global = false)
  */
 function language($path)
 {
+	if (!END_ENABLE_LANGUAGE) return;
 	if (strpos($path,'.') === false) $path.= '.lang';
-	$_f = END_TOPPATH.END_LANGUAGE_DIR.END_LANGUAGE.'/'.$path;
+	$_f = END_LANGUAGE_DIR.END_LANGUAGE.'/'.$path;
+
 	if (file_exists($_f))
 	{
 		$lines = file($_f);

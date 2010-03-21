@@ -4,6 +4,7 @@ END_MODULE != 'admin' && die('Access Denied');
 //过滤数据，并写入全局变量
 filter_array($_GET,'m,action,intval:item_id,intval:category_id,status',true);
 
+load_models();
 
 $category = model('category');
 $err_msg = '';
@@ -16,8 +17,9 @@ if ($category_id)
 	{
 		/*内容类型*/
 		$item_type = preg_replace('/_list$/i','',$this_category['status']);
-		$item = new $item_type;
-		$_fields = $end_item_config[$item_type];
+		$item = model($item_type);
+		$_fields = $end_models[$item_type.'_list']['fields'];
+
 		define('ITEM_TYPE',$item_type);
 		if ($m == 'edit_item')
 			check_allowed($item_type,'update');
@@ -38,12 +40,16 @@ if ($category_id)
 			{
 				$data['category_id'] = intval($_POST['category_id']);
 			}
+			/*
+				TODO 保存状态
+			*/
+			/*
 			//点击保存草稿或者直接发布按钮
 			if ($_POST['publish'] && $item->status['shown'])
 				$data['status'] = $item->status['shown']?$item->status['shown']['id']:$item->status['ready']['id'];
 			else if ($_POST['saveonly'] && $item->status['auditing']) 
 				$data['status'] = $item->status['auditing']['id'];
-		
+			*/
 			//处理提交的数据
 			include('edit_field.php');
 			
@@ -119,7 +125,7 @@ if ($category_id)
 				'item_id' => $item_id,
 				'categories' => $category->get_list(),
 				'category_id' => $category_id,
-				'fields'=>$end_item_config[$item_type],
+				'fields'=>$_fields,
 				'this_category' => $this_category,
 				'category_name' => $this_category['name'],
 				'login_user' => $_SESSION['login_user'],
@@ -202,7 +208,7 @@ if ($category_id)
 		$view_data['status'] = $view_data['current_status_all']?'-1':$status;
 		$view_data['table'] = $item_type;
 		$view_data['category_id'] = $category_id;
-		$list_tmp = template($item_type.'_list.html');
+		$list_tmp = template($item_type.'_list.html',END_MODEL_DIR.$item_type.'/');
 		$list_tmp->assign($view_data);
 		$view_data['list_content'] = $list_tmp->result();
 	}
