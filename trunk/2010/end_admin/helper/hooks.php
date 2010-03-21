@@ -2,12 +2,8 @@
 
 function end_on_begin()
 {
-	if (END_MODULE == 'admin')
-	{
-		include_once(END_BASEPATH.'helper/admin_functions.php');
-	}
+	helper('common');
 }
-
 
 function end_on_after_db()
 {
@@ -25,7 +21,7 @@ function end_on_after_db()
 
 function end_on_ready()
 {
-	if (END_MODULE == 'admin' && $_GET['p'] != 'login')
+	if ($_GET['p'] != 'login')
 	{
 		if (!$_SESSION['login_user'])
 		{
@@ -79,17 +75,4 @@ function end_on_template_begin()
 	$view_data['_session'] = $_SESSION;
 	$view_data['config'] = $config;
 	$view_data['debug'] = END_DEBUG;
-}
-
-function end_on_end()
-{
-	global $view_html,$end_make_html_path,$end_make_html_status,$end_all_time_used;
-	if ($end_make_html_path)
-	{
-		end_mkdir(dirname($end_make_html_path));
-		$end_make_html_status = file_put_contents($end_make_html_path,$view_html);
-		$end_all_time_used += $end_time_used;
-	}
-	else
-		echo $view_html;
 }
