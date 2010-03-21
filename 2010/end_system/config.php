@@ -43,8 +43,8 @@ define('END_DEBUG',true);
 define('END_MYSQL_PREFIX','end_');
 //mysql information
 $mysql = array(
-	'username' => "wap",
-	'password' => "wap",
+	'username' => "endcms",
+	'password' => "2012",
 	'server' => "localhost",
 	'database' => "endcms",
 );
