@@ -5,13 +5,38 @@
  * @author Liu Longbill
  */
 
+$blog_status = array( 
+	0 => '草稿',
+	1 => '已发布',
+	-1 => '已删除'
+);
+
 $end_models['blog'] = array(
 	'type' => 'list', //表示这是一个列表型的模型，对应一个数据库的表
 	'name' => '博客列表',	//某型的名字，可以把一个栏目配置成某个模型
-	'status' => array( //数据表里每条记录有几种状态，一般大于0的是可以显示在前台的，
-		0 => '草稿',
-		1 => '已发布',
-		-1 => '已删除'
+	'status' => $blog_status,
+	'list_fields'=>array(
+		'order_id'=>array(
+			'name'=>'优先级',
+			'type'=>'text',
+			'width'=>50,
+			'edit'=>true,
+			'sort'=>true,
+		),
+		'name'=>array(
+			'name'=>'标题',
+			'type'=>'text',
+			'edit'=>true,
+			'search'=>true,
+			'sort'=>true,
+		),
+		'status'=>array(
+			'name'=>'状态',
+			'type'=>'select',
+			'edit'=>true,
+			'options'=>$blog_status
+		),
+		'options'
 	),
 	'category_fields'=> array(
 		'name'=>array(
@@ -52,3 +77,12 @@ $end_models['blog'] = array(
 		)
 	)
 );
+// 
+// 
+// $end_rights[] = array(
+// 	'name'=>'blog',
+// 	'rights'=>array('view','add','update','delete')
+// );
+
+
+

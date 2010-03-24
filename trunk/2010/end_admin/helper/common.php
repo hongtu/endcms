@@ -371,7 +371,7 @@ function is_ie()
 
 function load_models()
 {
-	global $end_models;
+	global $end_models,$end_rights;
 	$_h = opendir(END_MODEL_DIR);
 	while($v = readdir($_h))
 	{

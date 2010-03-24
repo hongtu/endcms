@@ -60,11 +60,11 @@ function get_display_html(url,fname)
 	
 	if (',jpg,jpeg,gif,png,bmp,'.indexOf(','+ftype+',') != -1)
 	{
-		html = '<img src="/'+url+'" />';
+		html = '<img src="'+url+'" />';
 	}
 	else
 	{
-		html = '<br />{ATTACHMENT}:<a href="/'+url+'" >'+fname+'</a>';
+		html = '<br />{ATTACHMENT}:<a href="'+url+'" >'+fname+'</a>';
 	}
 	return html;
 }
