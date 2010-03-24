@@ -10,6 +10,8 @@ END_MODULE != 'admin' && die('Access Denied');
 $rights = model('rights');
 $m = $_GET['m'];
 $category = model('category');
+load_models();
+
 
 $rights_id = $_GET['rights_id'];
 if ($m == 'new_group')

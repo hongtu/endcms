@@ -150,12 +150,12 @@ function print_category_tree($arr,$category_id=0,$excluded=array(),$depth=0)
 {
 	$re = '';
 	if (!is_array($arr)) return;
-	if (!is_array($excluded)) $excluded = array($excluded);
+	if ($excluded && !is_array($excluded)) $excluded = array($excluded);
 	if ($depth > 100) return;
 	foreach($arr as $c)
 	{
 		if ($c['category_id'] && in_array($c['category_id'],$excluded)) continue;
-		if ($c['status'] == 'folder')
+		if ($c['status'] == 'folder' && END_CONTROLLER != 'category')
 		{
 			$re.="<optgroup label='".print_space($depth).$c['name']."'>";
 			$re.=print_category_tree($c['children'],$category_id,$excluded,$depth+1);
