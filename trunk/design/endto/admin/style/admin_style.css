@@ -1,0 +1,87 @@
+@charset "utf-8";
+/* 易思cms后台样式 */
+@import url("../../style/layout.css");
+
+/* top */
+#admin_logo{ width:100%; height:81px; overflow:hidden; background:url(../images/admin_logo_bg.png) repeat-x;}
+#admin_logo h1{ background: url(../images/admin_logo.png) no-repeat; width:209px; height:58px; margin:8px 0 0 9px;}
+#admin_logo h1 a{ display:block; height:57px; text-indent:-9999px;}
+
+#admin_menu { background: url(../images/admin_menu_bg.png) repeat-x; height:35px;}
+#admin_menu ul li { float:left; background:url(../images/admin_menu_li.png) right center no-repeat; line-height:35px; text-align:center; width:96px; font-size:14px;}
+#admin_menu ul li a{ font-weight:bold; color:#FFF; text-decoration:none; display:block;}
+#admin_menu ul li a:hover{ font-weight:bold; color:#000; background:url(../images/admin_menu_li_hover.png) center center no-repeat;}
+
+/*left*/
+#admin_left_b,.module h2{ margin:0 auto;}
+#admin_left{ width:208px; background:url(../images/admin_xs_bg.png) left top repeat-x; overflow:hidden; }
+#admin_left_b{border:1px solid #033c71; border-top:0; margin-top:8px; width:200px; }
+.module{}
+.module h2{ background:url(../images/admin_left_titbg.png) no-repeat; width:188px; height:25px; padding-left:12px; color:#FFF;  line-height:25px; font-size:14px; font-weight:bold;}
+.module h2 span{ float:right; margin-right:10px; margin:10px 10px 0 0;}
+.module table{ border-color:#BCDEF4; border-style:solid; border-width:1px 0 0 1px; margin:5px  auto 25px}
+.module table td{ border-color:#BCDEF4; border-style:solid; border-width:0 1px 1px 0; text-align:center; height:25px;}
+.module table td a{color:#045294; text-decoration:none;}
+.module table td a:hover{color:#FF6666; text-decoration:none;}
+
+.module p{ margin-left:8px; margin-bottom:11px;}
+.module p span{ margin-right:22px;}
+.search_i{ width:125px; height:18px; line-height:18px; border:1px solid #0A4577; border-right:0;}
+.search_s{ background: url(../images/left_search_bg.png) no-repeat; width:60px; height:20px; border:0; color:#FFF; margin-top:-3px;vertical-align:middle;}
+
+.module dl{ width:170px; margin:0 auto; overflow:hidden;}
+.module dl dt{ background:url(../images/left_lm_file.png) left center no-repeat; height:22px;  line-height:22px; padding-left:18px;}
+.module dl dt a{ color:#045394; text-decoration:none;}
+.module dl dd{ margin-left:40px;}
+.module dl dd ul li{background:url(../images/left_lm_file.png) left center no-repeat;height:22px; line-height:22px; padding-left:18px;}
+.module dl dd ul li a{ text-decoration:none; color:#045394;}
+
+/*welcome*/
+#main{ width:100%; background:url(../images/admin_xs_bg.png) left top repeat-x; overflow:hidden;}
+#main_b{margin-top:8px;}
+#main_kj{  border-bottom:2px solid #033C71; height:25px;}
+#main_kj ul li{ height:25px; line-height:25px; width:60px; text-align:center; float:left; margin-right:8px;}
+#main_kj ul li a{ color:#045294; display:block; background: url(../images/main_kj_a.jpg) center center no-repeat; text-decoration:none; font-weight:bold;}
+#main_kj ul li a:hover{color:#FFF;background: url(../images/main_kj_hover.jpg) center center no-repeat;}
+
+#position{ height:26px; line-height:26px; width:100%; border:1px solid #bcd1e0; color:#045294; background:url(../images/position_icon.jpg) 10px center no-repeat; padding-left:28px;}
+#position a{ color:#045294; text-decoration:none;}
+#position a:hover{ color:#CC3333;}
+
+#sys_table table{ border-color:#C4CED4; border-style:solid; border-width:1px 0 0 1px; margin:5px  auto 5px}
+#sys_table table td,th{ border-color:#C4CED4; border-style:solid; border-width:0 1px 1px 0; height:25px; text-align:left;}
+.sys_date table th{ font-weight:bold; text-align:center; color:#045294;}
+.sys_date table td{ text-align:center;}
+
+.sys_tit_bg{ background: url(../images/sys_tit_bg.png) center center repeat-x;}
+.sys_h2{ background:url(../images/system_info_bg.jpg) no-repeat; width:80px; height:26px; line-height:26px; color:#045294; font-weight:bold; text-align:center; margin-left:15px; font-size:14px;}
+.sys_logo { float:left; background:url(../images/sys_logo.jpg) center center no-repeat; width:57px; height:99px;  margin:0 15px 0 20px; display:block; text-indent:-9999px;}
+.sys_p{ line-height:22px; color:#045294; margin-top:15px;}
+.sys_p a{ color:#045294;}
+.sys_p a:hover{ color:#FF6666;}
+
+.admin_contact{ float:right; margin-right:8px; width:160px;}
+.admin_contact ul li{ border:1px solid #BCDEF4; background:#ECF6FF; height:23px; margin-top:5px;line-height:23px;}
+.admin_contact ul li a{color:#045294; text-decoration:none;}
+.admin_contact ul li a#con_icon1,a#con_icon2,a#con_icon3{ padding-left:25px;}
+.admin_contact ul li a#con_icon1{ background:url(../images/con_icon1.jpg) 5px center no-repeat;}
+.admin_contact ul li a#con_icon2{ background:url(../images/con_icon2.jpg) 5px center no-repeat;}
+.admin_contact ul li a#con_icon3{ background:url(../images/con_icon3.jpg) 5px center no-repeat;}
+.admin_contact ul li a:hover{ color:#FF6666;}
+
+.sys_map{ float:right; margin-right:5px; line-height:26px; color:#045294;}
+.sys_kjcd{ padding:5px;}
+.sys_kjcd h4{ color:#666666; float:left;}
+.sys_kjcd ul li{ float:left; margin-left:15px;}
+.sys_kjcd ul li a{ color:#666666; text-decoration:none;}
+.sys_kjcd ul li a:hover{ color:#CC6600;}
+
+.sys_server{ width:385px; overflow:hidden; padding:13px 0 13px 100px;}
+.sys_server ul li{ width:180px; margin-left:5px; float:left; line-height:20px; height:20px; color:#666;}
+
+.sys_date{ width:100%; overflow:hidden; margin:0 auto;}
+.sys_date p{ float:left;}
+
+/*footer*/
+
+.admin_footer{ text-align:center; line-height:25px; height:25px; color:#045294; margin:5px 0;}
