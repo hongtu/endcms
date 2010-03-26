@@ -19,7 +19,7 @@
 .text_input
 {
 	border:1px solid #FF8000;
-	padding:1px 0px 1px 0px;
+	/*padding:1px 0px 1px 0px;*/
 	font-size:12px;
 	margin:0px;
 	overflow:hidden;

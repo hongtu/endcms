@@ -130,7 +130,7 @@ if ($category_id)
 				'category_name' => $this_category['name'],
 				'login_user' => $_SESSION['login_user'],
 				'category_tree' => print_category_tree(
-					$category->tree_category(),
+					$category->tree_category(array('status'=>$this_category['status'])),
 					$category_id),
 			));
 			if($action == 'view_item') {
@@ -195,20 +195,28 @@ if ($category_id)
 
 		//nav buttons
 		$statuses = array();
-		if (is_array($item->status))
-		{
-			foreach($item->status as $val) $statuses[$val['id']] = array('index'=>$val['id'],'value'=>$val['name']);
-		}
+		foreach($end_models[$item_type.'_list']['status'] as $_key=>$_val) $statuses[] = array('index'=>$_key,'value'=>$_val);
+		
 		$view_data['statuses'] = $statuses;
 		$view_data['category_tree'] = print_category_tree($category->tree_category(0));
 		$view_data['current_status_all'] = isset($_GET['status'])?false:true;
 		$view_data['err_msg'] = $err_msg;
 		$view_data['success_msg'] = $success_msg;
 		$view_data['position'] = $category->position_category($category_id);
-		$view_data['status'] = $view_data['current_status_all']?'-1':$status;
+		$view_data['status'] = $view_data['current_status_all']?'-999':$status;
 		$view_data['table'] = $item_type;
 		$view_data['category_id'] = $category_id;
-		$list_tmp = template($item_type.'_list.html',END_MODEL_DIR.$item_type.'/');
+		if (file_exists(END_MODEL_DIR.$item_type.'/end_admin_item_list.html'))
+		{
+			$list_tmp = template('end_admin_item_list.html',END_MODEL_DIR.$item_type.'/');
+		}
+		else
+		{
+			$list_tmp = template('item_list.html');
+			$list_tmp->assign('item_model',$item);
+			$list_tmp->assign('list_fields',$end_models[$item_type.'_list']['list_fields']);
+		}
+		
 		$list_tmp->assign($view_data);
 		$view_data['list_content'] = $list_tmp->result();
 	}
@@ -223,31 +231,4 @@ function show_status($s)
 {
 	global $statuses;
 	return $statuses[$s]?$statuses[$s]['value']:lang('UNKNOWN');
-}
-
-function showChannelName($ch) {
-	$r = explode(',', $ch);
-	$ch = '';
-	foreach($r as $n) {
-		switch($n) {
-			case 0: 
-				$ch .='情感 '; break;
-			case 1: 
-				$ch .='职场 '; break;
-			case 2: 
-				$ch .='创业 '; break;
-		}
-	}
-	return $ch;
-}
-
-function showGender($g) {
-	if(empty($g) && $g != 0) return '';	
-	if($g == 1) {
-		return '男';
-	} else return '女';
-}
-
-function showProvince($p) {
-	return ProvinceInfo::format_province($p);
 }

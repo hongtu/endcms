@@ -387,3 +387,14 @@ function load_models()
 	}
 	$end_models = $_models;
 }
+
+
+function end_show_edit_button($id)
+{
+	echo ' <a href="admin.php?p=item&action=edit&item_id='.$id.'">'.LANG_EDIT.'</a> ';
+}
+function end_show_delete_button($id)
+{
+	echo ' <a href="admin.php?p=item&action=edit&item_id='.$id.'">'.LANG_DELETE.'</a> ';
+}
+

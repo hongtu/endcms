@@ -75,14 +75,69 @@ $end_models['blog'] = array(
 			'type'=>'datetime',
 			'null'=>false,
 		)
+	),
+	'list_fields' => array(
+		'blog_id'=>array(
+			'name'=>'ID',
+			'width'=>'30',
+			'sort'=>true,
+		),
+		'order_id'=>array(
+			'name'=>'优先级',
+			'width'=>'50',
+			'edit'=>true,
+			'sort'=>true
+		),
+		
+		'name'=>array(
+			'name'=>'标题',
+			'width'=>'auto',
+			'sort'=>true,
+			'search'=>true,
+			'edit'=>true
+		),
+		'create_time'=>array(
+			'name'=>'创建日期',
+			'width'=>150,
+			'filter'=>'show_blog_date',
+			'search'=>true,
+			'sort'=>true
+		),
+		'status'=>array(
+			'name'=>'状态',
+			'width'=>50,
+			'filter'=>'show_blog_status',
+			'edit'=>true,
+			'type'=>'select',
+			'options'=>$blog_status
+		),
+		'_options'=>array(
+			'name'=>'操作',
+			'width'=>100,
+			'filter'=>'show_blog_options'
+		)
 	)
 );
-
 
 $end_rights[] = array(
 	'name'=>'blog',
 	'rights'=>array('view','add','update','delete')
 );
 
+function show_blog_status($status,$statuses)
+{
+	$status = intval($status);
+	return $statuses[$status]?$statuses[$status]:'unkown';
+}
 
+function show_blog_date($t)
+{
+	return date('Y-m-d H:i:s',$t);
+}
 
+function show_blog_options($blog)
+{
+	end_show_edit_button($blog['blog_id']);
+	end_show_delete_button($blog['blog_id']);
+	echo ' <a href="admin.php?p=item&item_type=comment&blog_id='.$blog['blog_id'].'">评论</a> ';
+}

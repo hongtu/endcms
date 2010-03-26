@@ -28,16 +28,17 @@
     <div id='main'>
 	
         <div id="main_b">
-        <!-- IF page_content -->
-        	{page_content}
-			<br />
-        <!-- ELSE -->
 			<div id="position">
 				{CURRENT_POSITION}:{NAVI_ITEM} > <a href="admin.php?p=item">{CATEGORY_ROOT}</a> > 
 				<!-- BEGIN position -->
 				 <a href="admin.php?p=item&category_id={category_id}">{name}</a> > 
 				<!-- END -->
 			</div>
+  	      <!-- IF page_content -->
+	        	{page_content}
+				<br />
+	        <!-- ELSE -->
+			
 			
 			<div id="admin_content">
 			<!-- IF this_category.is_list -->
@@ -57,7 +58,7 @@
 					<!-- BEGIN statuses -->
 					<a 
 						href="admin.php?p=item&status={index}&category_id={parent.category_id}" 
-						class="nav <!-- IF index=parent.status -->nav_on<!-- ENDIF -->">{strip_tags:value}</a>
+						class="nav <!-- IF index==parent.status -->nav_on<!-- ENDIF -->">{strip_tags:value}</a>
 					<!-- END -->
 				</div>
 			

@@ -3,7 +3,7 @@
 @import url("../style/layout.css");
 
 /* global */
-body { font-size:12px; line-height:20px;}
+body { font-size:12px; line-height:20px;color:#666;}
 a { color:#3462A4; text-decoration:none; }
 a:hover { color:#c60;}
 
@@ -44,7 +44,7 @@ a:hover { color:#c60;}
 
 /*welcome*/
 #main{ margin-left:210px; background:url(../images/admin_xs_bg.png) left top repeat-x; overflow:hidden;}
-#main_b{margin-top:8px; border:1px solid #bcd1e0;}
+#main_b{margin-top:8px; border:0px solid #bcd1e0;}
 #main_kj{  border-bottom:2px solid #033C71; height:25px;}
 #main_kj ul li{ height:25px; line-height:25px; width:60px; text-align:center; float:left; margin-right:8px;}
 #main_kj ul li a{ color:#045294; display:block; background: url(../images/main_kj_a.jpg) center center no-repeat; text-decoration:none; font-weight:bold;}
@@ -52,24 +52,28 @@ a:hover { color:#c60;}
 
 #admin_content { padding:10px;}
 
-#position{ height:26px; line-height:26px; width:100%; border-bottom:1px solid #bcd1e0; color:#045294; background:url(../images/position_icon.gif) 10px center no-repeat; padding-left:28px;}
+#position{ height:26px; line-height:26px; width:100%; border:1px solid #bcd1e0; color:#045294; background:url(../images/position_icon.gif) 10px center no-repeat; padding-left:28px;}
 #position a{ color:#045294; text-decoration:none;}
 #position a:hover{ color:#CC3333;}
 
-#sys_table table{ border-color:#C4CED4; border-style:solid; border-width:1px 0 0 1px; margin:5px  auto 5px}
+
+#sys_table table{ border-color:#C4CED4; border-style:solid; border-width:1px 0 0 1px; margin:5px  auto 5px; width:100%;}
 #sys_table table td,#sys_table table th{ border-color:#C4CED4; border-style:solid; border-width:0 1px 1px 0; height:25px; text-align:left;}
+#sys_table table td { padding:3px; }
 table.list_table { border-color:#C4CED4; border-style:solid; border-width:1px 0 0 1px; margin:5px  auto 5px; width:100%;}
 table.list_table th{ padding:0 3px; border-right:1px solid #c4ced4;border-bottom:1px solid #c4ced4;background:url(../images/sys_tit_bg.png) repeat-x; color:#666;  font-weight:bold; }
 table.list_table th a { color:#3462a4; }
 table.list_table td{ border-color:#C4CED4; border-style:solid; border-width:0 1px 1px 0; text-align:left;}
-table.list_table td div { width:100%; height:100%;}
+table.list_table td div {height:100%;}
+
+td div.table-cell { padding:0 3px; }
 .small_popup {position:absolute;background-color:#ffffbb;padding:5px;border:1px solid #aaaa66;}
 
 .sys_date table th{ font-weight:bold; text-align:center; color:#045294;}
 .sys_date table td{ text-align:center;}
 
 .sys_tit_bg{ background: url(../images/sys_tit_bg.png) center center repeat-x;}
-.sys_h2{ background:url(../images/system_info_bg.jpg) no-repeat; width:80px; height:26px; line-height:26px; color:#045294; font-weight:bold; text-align:center; margin-left:15px; font-size:14px;}
+.sys_h2{ background:url(../images/system_info_bg.jpg) no-repeat; width:80px; height:24px; line-height:24px; color:#045294; font-weight:bold; text-align:center; margin-left:15px; font-size:14px;}
 .sys_logo { float:left; background:url(../images/sys_logo.jpg) center center no-repeat; width:57px; height:99px;  margin:0 15px 0 20px; display:block; text-indent:-9999px;}
 .sys_p{ line-height:22px; color:#045294; margin-top:15px;}
 .sys_p a{ color:#045294;}
@@ -123,3 +127,5 @@ table.list_table td div { width:100%; height:100%;}
 #category_tree ul li img {  }
 #category_tree ul li a { font-size:12px; margin-left:3px; line-height:18px; padding:3px 7px 3px 20px; background:transparent url(../images/folder.gif) no-repeat 4px 45%;}
 #category_tree ul li a.tree_on { background-color:#999; color:#fff; }
+
+a.nav_on { background-color:#084578;color:#fff; padding:3px; }
