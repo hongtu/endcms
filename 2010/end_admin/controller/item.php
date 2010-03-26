@@ -130,7 +130,7 @@ if ($category_id)
 				'category_name' => $this_category['name'],
 				'login_user' => $_SESSION['login_user'],
 				'category_tree' => print_category_tree(
-					$category->tree_category(0,$this_category['status']),
+					$category->tree_category(),
 					$category_id),
 			));
 			if($action == 'view_item') {
@@ -200,7 +200,7 @@ if ($category_id)
 			foreach($item->status as $val) $statuses[$val['id']] = array('index'=>$val['id'],'value'=>$val['name']);
 		}
 		$view_data['statuses'] = $statuses;
-		$view_data['category_tree'] = print_category_tree($category->tree_category(0,$this_category['status']));
+		$view_data['category_tree'] = print_category_tree($category->tree_category(0));
 		$view_data['current_status_all'] = isset($_GET['status'])?false:true;
 		$view_data['err_msg'] = $err_msg;
 		$view_data['success_msg'] = $success_msg;

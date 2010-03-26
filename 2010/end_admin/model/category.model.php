@@ -1,6 +1,7 @@
 <?php
 class MODEL_CATEGORY extends MODEL
 {
+	var $categories_list;
 	function MODEL_CATEGORY()
 	{
 		$this->table = END_MYSQL_PREFIX.'category';
@@ -54,36 +55,32 @@ class MODEL_CATEGORY extends MODEL
 		return $re;
 	}
 	
-	function tree_category($parent_id = 0,$status = false)
+	function tree_category($data=0)
 	{
-		$re = $this->_tree_category($parent_id,0,$status);
-		return $re;
+		if (!is_array($data)) $data = array('parent_id'=>intval($data));
+		$parent_id = intval($data['parent_id']);
+		unset($data['parent_id']);
+		$_all = $this->get_list($data);
+		$all_categories = array();
+		foreach($_all as $_cat)
+		{
+			$all_categories[$_cat['category_id']] = $_cat;
+		}
+		unset($_all);
+		return $this->_tree_category($all_categories,$parent_id);
 	}
 	
-	function _tree_category($parent_id = 0,$depth = 0, $status = false)
+	function _tree_category($all_categories,$parent_id,$depth = 0)
 	{
 		$re = array();
-		$with_children = true;
-		$data = array();
-		if (END_MODULE == 'admin' && $_SESSION['login_user']['rights']['limit_category_id'] && $_SESSION['login_user']['allowed_categories'])
+		foreach($all_categories as $cat)
 		{
-			$data['where'] = 'category_id IN ('.$_SESSION['login_user']['allowed_categories'].')';
-			if ($status !== false)	$data['status'] = $status;
-			$arr = $this->get_list($data);
-			$with_children = false;
-		}
-		else
-		{
-			$data['parent_id'] = $parent_id;
-			if ($status !== false)	$data['status'] = $status;
-			$arr = $this->get_list( $data);
-		}
-		
-		for($i=0;$i<count($arr);$i++)
-		{
-			$arr[$i]['depth'] = $depth;
-			$re[$arr[$i]['category_id']] = $arr[$i];
-			if ($with_children) $re[$arr[$i]['category_id']]['children'] = $this->_tree_category($arr[$i]['category_id'],$depth+1,$status);
+			if ($cat['parent_id'] == $parent_id)
+			{
+				$re[$cat['category_id']] = $cat;
+				$re[$cat['category_id']]['depth'] = $depth;
+				$re[$cat['category_id']]['children'] = $this->_tree_category($all_categories,$cat['category_id'],$depth+1);
+			}
 		}
 		return $re;
 	}

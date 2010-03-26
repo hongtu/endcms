@@ -2,7 +2,7 @@
 END_MODULE != 'admin' && die('Access Denied');
 define('END_RESPONSE','text');
 $m = $_GET['m'];
-$admin = new Admin;
+$admin = model('admin');
 
 if ($m == 'edit')
 {
