@@ -312,28 +312,4 @@ function text_ajax_callback(s)
 }
 
 
-
-
-
-//退出登录
-function run_logout()
-{
-	$.post('login.php?module=ajax&m=logout',{},logout_callback,'json');
-}
-
-function logout_callback(data)
-{
-	if (data.msg) 
-		alert(data.msg);
-	if (data.eval)
-		try{ eval(data.eval); } catch(e) {  }
-	if (data.success)
-	{
-		unadmin();
-		$('[id^=footer_]').css('display','none');
-		$('#footer_login').fadeIn();
-	}
-}
-
-
 init_admin();
