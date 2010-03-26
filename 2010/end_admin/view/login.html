@@ -1,115 +1,22 @@
-<html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>{config.site_name} {TITLE_LOGIN}</title>
-<style>
-body
-{
-	margin:0;
-	padding:0;
-	background-color:#BCCD6F; 
-	overflow:hidden;
-	font-size:12px;
-	height:100%;
-	color:#fff;
-}
-#upper
-{
-	background:#7bbed8 url(end_admin/view/images/login_bg_top.jpg) repeat-x 100% 0;
-	height:50%;
-	margin:0;
-	padding:0;
-}
-table.full
-{
-	width:100%;
-	height:100%;
-}
-h1.title
-{
-	display:block;
-	width:80%;
-	float:right;
-	margin:0;
-	margin-bottom:20px;
-}
-.form
-{
-	width:80%;
-	text-align:right;
-	margin-top:20px;
-}
-.copyright
-{
-	width:80%;
-	text-align:right;
-	margin-top:50px;
-}
-#err_msg
-{
-	color:red;
-}
-a:link,
-a:visited
-{
-	text-decoration: none;
-	color: #ffffff;
-}
-a:hover {
-	text-decoration: underline;
-	color: #2582A4;
-}
-input{
-	height:18px;
-	background:none; 
-	border:none;
-	color: #ffffff;
-	font-size: 12px;
-	border-bottom: solid 1px; 
-}
-.button{
-	height:23px;
-	background:none; 
-	border: #ffffff solid 1px;
-	color: #ffffff;
-	font-size: 12px;
-	padding-top:3px;
-	padding-bottom:2px;
-	padding-left:2px;
-}
-</style>
-<script>
-setTimeout(function()
-{
-	document.getElementById('err_msg').style.display='none';
-},10000);
-</script>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>易思CMS后台登录</title>
+<link href="end_admin/view/style/admin_style.css" rel="stylesheet" type="text/css" />
 </head>
+
 <body>
-	<div id="upper">
-		<table class="full" cellpadding="0" cellspacing="0" border="0">
-			<tr>
-				<td valign="bottom">
-					<h1 class="title">{config.site_name} {TITLE_LOGIN}</h1>
-				</td>
-			</tr>
-		</table>
-	</div>
-	<form name="myform" method="post" action="admin.php?p=login&module=admin&m=login&backurl={urlencode:backurl}" >
-		<div class="form">
-			<span id="err_msg">{err_msg}&nbsp;&nbsp;&nbsp;</span>
-			{USERNAME}:
-			<input name="name" id="username" type="text" size="15" value="" /> 
-			{PASSWORD}:
-			<input name="password" type="password" size="15" value="" />
-			<input type="submit" name="dosubmit" value="{LOGIN}" class="button" /> 
-		</div>
-	</form>
- 	<div class="copyright">
-		Copyright &copy; <a href="http://www.longbill.cn" target="_blank">Longbill</a>
-	</div>
-	<script>
-	document.getElementById('username').focus();
-	</script>
+<div id="login_logo">
+<h1 class="f_l">易思CM</h1><h2 class="f_l">{config.site_name}</h2>
+</div>
+<form action="admin.php?p=login&module=admin&m=login&backurl={urlencode:backurl}" method="post">
+<div id="login">
+<div id="login_s"><label>账户：<input type="text" name="name" id="username" class="login_i" /></label><label>密码：<input type="password" name="password" class="login_i" /></label><label><input type="submit" class="login_s" name="username" value="登录" /></label></div>
+</div>
+</form>
+<script>
+document.getElementById('username').focus();
+</script>
 </body>
 </html>

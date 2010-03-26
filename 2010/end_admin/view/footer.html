@@ -1,16 +1,21 @@
-<div class="footer">
+<div id="footer">
 Copyright @ <a href="http://longbill.cn" target="_blank">Longbill</a> ({time_used}s) ({total_query})
 </div>
 <script src="end_system/plugin/ckeditor/ckeditor.js"></script>
 <script>
 $(function()
 {
+	var gap = $(window).height() - $(document.body).height() - 2;
+	if (gap > 0)
+	{
+		//$('#main_b').height($('#main_b').height() + gap);
+		//$('#admin_left_b').height($('#admin_left_b').height() + gap);
+	}
 	//是否启动点击编辑功能
 	if (!can_not_update) load_admin();
 	//替换富文本编辑框
 	if ($('textarea[rich]').length > 0)
 	{
-	
 		$('textarea[rich]').each(function()
 		{
 			CKEDITOR.replace( this.id,
