@@ -14,7 +14,8 @@ if ($m == 'login')
 		if ($u['admin_id'])
 		{
 			$_SESSION['login_user'] = $u;
-			end_exit(lang('LOGIN_SUCCESS'),$back_url,1);
+			header('Location:'.$back_url);
+			//end_exit(lang('LOGIN_SUCCESS'),$back_url,1);
 		}
 		else
 		{
@@ -30,6 +31,4 @@ else if ($m == 'logout')
 
 $view_data['backurl'] = $back_url;
 $view_data['err_msg'] = $err_msg;
-
-
 
