@@ -77,12 +77,12 @@ $end_models['blog'] = array(
 		)
 	)
 );
-// 
-// 
-// $end_rights[] = array(
-// 	'name'=>'blog',
-// 	'rights'=>array('view','add','update','delete')
-// );
+
+
+$end_rights[] = array(
+	'name'=>'blog',
+	'rights'=>array('view','add','update','delete')
+);
 
 
 
