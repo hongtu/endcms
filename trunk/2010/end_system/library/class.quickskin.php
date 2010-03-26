@@ -609,6 +609,7 @@ class QuickSkinParser
               . "\$$block"."['ROWCNT']=(\$rowcounter); "
               . "\$$block"."['ALTROW']=\$rowcounter%2; "
               . "\$$block"."['ROWBIT']=\$rowcounter%2; "
+              . "\$$block"."['_key']=\$rowcnt; "
               . "\$rowcounter++;"
               . "\$_obj=&\$$block; ?>";
         $page  =  str_replace("<!-- BEGIN $tag -->",  $code,  $page);

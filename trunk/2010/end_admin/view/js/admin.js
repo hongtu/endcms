@@ -14,7 +14,7 @@ function init_admin()
 	$("[admin_type=button_item_list]")
 		.addClass('admin_button')
 		.html("{NEW_ITEM_BUTTON}");
-		
+	
 	window.edit_input = false;
 }
 
@@ -139,7 +139,10 @@ function text_edit(o)
 		left:(+left-1)+'px',
 		height:$(this).height(),
 		width:$(this).width(),
-		padding:0,
+		paddingLeft:$(this).css('padding-left'),
+		paddingTop:$(this).css('padding-top'),
+		paddingRight:$(this).css('padding-right'),
+		paddingBottom:$(this).css('padding-bottom'),
 		margin:0,
 		top:(+top-1)+'px',
 		textAlign:$(this).css('text-align'),
@@ -208,9 +211,8 @@ function select_edit(o)
 	{
 		position:'absolute',
 		left:(+left-1)+'px',
-		height:$(this).height(),
-		width:$(this).width(),
-		padding:0,
+		height:$(this).height() + parseInt($(this).css('padding-top')) + parseInt($(this).css('padding-bottom')),
+		width:$(this).width() + parseInt($(this).css('padding-left')) + parseInt($(this).css('padding-right')),
 		margin:0,
 		top:(+top-1)+'px',
 		//zIndex:parseInt(parseInt(this.style.zIndex)+1),

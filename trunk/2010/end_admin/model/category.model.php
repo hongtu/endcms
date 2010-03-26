@@ -58,8 +58,15 @@ class MODEL_CATEGORY extends MODEL
 	function tree_category($data=0)
 	{
 		if (!is_array($data)) $data = array('parent_id'=>intval($data));
+		if (!$data['parent_id']) $data['parent_id'] = 0;
 		$parent_id = intval($data['parent_id']);
 		unset($data['parent_id']);
+		if ($data['status'])
+		{
+			if (!$data['where']) $data['where'] = ' 1=1 ';
+			$data['where'] .= " AND (status='".$data['status']."' OR status='folder') ";
+			unset($data['status']);
+		}
 		$_all = $this->get_list($data);
 		$all_categories = array();
 		foreach($_all as $_cat)

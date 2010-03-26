@@ -1,9 +1,15 @@
+<div id="sys_table">
 <!-- IF item_id -->
 <form action="admin.php?m=edit_item&p=item&item_id={item_id}&category_id={category_id}" method="post" enctype="multipart/form-data">
 <!-- ELSE -->
 <form action="admin.php?m=new_item&p=item&category_id={category_id}" method="post"  enctype="multipart/form-data" >
 <!-- ENDIF -->
 	<table >
+		<tr>
+			<th class="sys_tit_bg" colspan="2">
+				<h2 class="sys_h2">添加内容</h2>
+			</th>
+		</tr>
     	<tr>
         	<td valign="top">
 				{ITEM_CATEGORY}<span style="color:red">*</span>
@@ -31,3 +37,4 @@
      
         
    </form>
+</div>
