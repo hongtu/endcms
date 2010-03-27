@@ -67,7 +67,7 @@ table.list_table td{ border-color:#C4CED4; border-style:solid; border-width:0 1p
 table.list_table td div {height:100%;}
 
 td div.table-cell { padding:0 3px; }
-.small_popup {position:absolute;background-color:#ffffbb;padding:5px;border:1px solid #aaaa66;}
+
 
 .sys_date table th{ font-weight:bold; text-align:center; color:#045294;}
 .sys_date table td{ text-align:center;}
@@ -129,3 +129,4 @@ td div.table-cell { padding:0 3px; }
 #category_tree ul li a.tree_on { background-color:#999; color:#fff; }
 
 a.nav_on { background-color:#084578;color:#fff; padding:3px; }
+.small_popup {position:absolute;background-color:#ffffbb;padding:0px 5px;border:1px solid #aaaa66;}

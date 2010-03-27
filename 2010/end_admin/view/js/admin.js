@@ -98,8 +98,7 @@ function text_edit(o)
 		.attr('old_value',val)
 		.attr('editing','yes')
 		.unbind();
-		//.css('display','none');
-	if (debug) alert('3');
+
 	if ($(this).attr('admin_type') == 'textarea')
 	{
 		var input = document.createElement('textarea');
@@ -115,28 +114,14 @@ function text_edit(o)
 	{
 		var input = document.createElement('input');
 	}
-	if (debug) alert('4');
 	input.value = (val == '&nbsp;')?'':val;
-	//附加dom对象
-	var left = parseInt(this.offsetLeft);
-	var o = this;
-	while(o.offsetParent) 
-	{
-		o = o.offsetParent;
-		left += parseInt(o.offsetLeft);
-	}
-	var top = parseInt(this.offsetTop);
-	var o = this;
-	while(o.offsetParent) 
-	{
-		o = o.offsetParent;
-		top += parseInt(o.offsetTop);
-	}
-	if (debug) alert('5');
+
+	var offset = $(this).offset();
+
 	$(input).css(
 	{
 		position:'absolute',
-		left:(+left-1)+'px',
+		left:(offset.left-1)+'px',
 		height:$(this).height(),
 		width:$(this).width(),
 		paddingLeft:$(this).css('padding-left'),
@@ -144,14 +129,12 @@ function text_edit(o)
 		paddingRight:$(this).css('padding-right'),
 		paddingBottom:$(this).css('padding-bottom'),
 		margin:0,
-		top:(+top-1)+'px',
+		top:(offset.top-1)+'px',
 		textAlign:$(this).css('text-align'),
 		lineHeight:$(this).css('line-height')?$(this).css('line-height'):$(this).height(),
 		fontSize:$(this).css('font-size')
-	});//.css('z-index',10);
-	if (debug) alert('5.5');
+	});
 	document.body.appendChild(input);
-	if (debug) alert('6');
 	window.edit_input = true;
 	$(input)
 		.focus()
@@ -167,7 +150,6 @@ function text_edit(o)
 				text_cancel_click(event,this);
 			}
 		});
-	if (debug) alert('7');	
 	if ($(this).attr('admin_type') != 'textarea')
 	{
 		$(input).bind('keypress',function(event)
@@ -191,47 +173,26 @@ function select_edit(o)
 		.unbind();
 	var input = document.createElement('select');
 
-	
-	var left = parseInt(this.offsetLeft);
-	var o = this;
-	while(o.offsetParent) 
-	{
-		o = o.offsetParent;
-		left += parseInt(o.offsetLeft);
-	}
-	var top = parseInt(this.offsetTop);
-	var o = this;
-	while(o.offsetParent) 
-	{
-		o = o.offsetParent;
-		top += parseInt(o.offsetTop);
-	}
-	
+	var offset = $(this).offset();
 	$(input).css(
 	{
 		position:'absolute',
-		left:(+left-1)+'px',
+		left:(offset.left-1)+'px',
 		height:$(this).height() + parseInt($(this).css('padding-top')) + parseInt($(this).css('padding-bottom')),
 		width:$(this).width() + parseInt($(this).css('padding-left')) + parseInt($(this).css('padding-right')),
 		margin:0,
-		top:(+top-1)+'px',
-		//zIndex:parseInt(parseInt(this.style.zIndex)+1),
+		top:(offset.top-1)+'px',
 		textAlign:$(this).css('text-align'),
 		lineHeight:$(this).css('line-height')?$(this).css('line-height'):$(this).height(),
 		fontSize:$(this).css('font-size')
 	});
 	document.body.appendChild(input);
 
-	for(i=0;i<source.options.length;i++)
+	for(i=0;i<source.children.length;i++)
 	{
-		input.appendChild(source.options[i].cloneNode(1));
+		input.appendChild(source.children[i].cloneNode(1));
 	}
-
-	for(i=0;i<input.options.length;i++)
-	{
-		var o = input.options[i];
-		o.selected = (o.value == val);
-	}
+	$(input).val(val);
 	
 	$(input)
 		.addClass('text_input')
@@ -297,14 +258,8 @@ function text_ajax_callback(s)
 	});
 	if (o.attr('admin_select_value'))
 	{
-		var source = $_(o.attr('admin_select_source_id'));
-		for(i=0;i<source.childNodes.length;i++)
-		{
-			if ($(source.childNodes[i]).val() == s)
-			{
-				s = $(source.childNodes[i]).html();
-			}
-		}
+		var opt = $('#'+o.attr('admin_select_source_id')).find('option[value='+s+']');
+		s = opt.attr('source')?opt.attr('source'):opt.html();
 	}
 	window.edit_input = false;
 	o.html(s)
