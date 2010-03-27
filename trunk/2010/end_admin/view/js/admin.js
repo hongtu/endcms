@@ -1,4 +1,6 @@
 //初始化
+if ($.browser.msie == true) document.execCommand('BackgroundImageCache', false, true);
+
 function init_admin()
 {
 	//定义 单行文本可编辑对象的鼠标事件
