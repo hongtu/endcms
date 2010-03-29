@@ -1,3 +1,4 @@
+CURRENT_POSITION=当前位置
 NOT_ALLOWED=权限不足
 INDEX = 后台首页
 SITE_TITLE = 后台
@@ -82,7 +83,7 @@ EXPAND=展开
 AVAIL_ACTIONS=可用操作
 UNKNOWN=未知
 INPUT_VAR_ERROR=参数错误
-paper=申请
+function=功能
 
 
 

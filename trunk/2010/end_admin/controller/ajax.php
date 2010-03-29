@@ -17,6 +17,7 @@ $column = $_GET['column'];
 $_allowed = ',';
 foreach($_SESSION['login_user']['allowed_controllers'] as $_c=>$_v) $_allowed.= $_c.',';
 define('END_RESPONSE','text');
+
 check_allowed($table,$m,1);
 
 if (!$id)

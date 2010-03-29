@@ -130,3 +130,12 @@ td div.table-cell { padding:0 3px; }
 
 a.nav_on { background-color:#084578;color:#fff; padding:3px; }
 .small_popup {position:absolute;background-color:#ffffbb;padding:0px 5px;border:1px solid #aaaa66;}
+.new-form
+{
+	display:none;
+	margin:10px;
+	padding:5px;
+	background-color:#FFFF99;
+}
+.new-form td { padding:3px;}
+table.form-table td { padding:3px;}

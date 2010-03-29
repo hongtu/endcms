@@ -4,101 +4,111 @@
 	<!-- INCLUDE meta.html -->
 </head>
 <body>
-<div class='main'>
+<div class='maindiv'>
 
 <div class="headerdiv">
 	<!-- INCLUDE header.html -->
 </div>
 
 <div id='content'>
-	<div id='admin_left'>
-    	<div style="margin:10px;margin-top:30px;">
-        	<ul>
-				<?php if (check_show('add') && LZ_DEBUG == 'yes'):?>
-				<li>
-					<a href="javascript:new_config()">{CONFIG_NEW}</a>
-				</li>
-				<?php endif;?>
-            </ul>
-    		
-        </div>
+	<div id='admin_left' onselectstart="return false;">
+		<div id="admin_left_b">
+	    	<div class="module">
+	        	<h2></h2>
+				<div >
+				</div>
+	        </div>
+		</div>
     </div>
-    <div id='maindiv'>
-    	<div class="description">
-			{page_description}
-        </div>
-        
-        <div class="real_content">
-		
-			<div id="new_config" style="display:<!-- IF thisconfig --><!-- ELSE -->none<!-- ENDIF -->;margin:20px;background-color:#FFFF99;width:400px;">
-            	<h2>{NEW_CONFIG}</h2>
-        		<!-- INCLUDE config_new.html -->
-            </div>
-		<!-- IF debug -->
-		<input type="checkbox" onclick="$('[configname=name]').css('display',this.checked?'block':'none');" />{DISPLAY_NAME}
-       	<br />
-		<!-- ENDIF -->
-		<table cellpadding="0" cellspacing="0" border="0" class="list_table" style="width:750px;">
-			<tr>
-        		<th style="width:7%">{CONFIG_ORDER_ID}</th>
-        		<th style="width:35%">{CONFIG_NAME}</th>
-                <th style="width:35%">{CONFIG_VALUE}</th>
-				<!-- IF debug -->
-                <th style="width:23%">{CONFIG_OPTIONS}</th>
-				<!-- ENDIF -->
-            </tr>
-			<!-- BEGIN config_list -->
-			<tr>
-				<td valign="top">
-					<div admin_type="text"
-                	admin_para="m=update&table=config&column=order_id&id={config_id}"  
-                    admin_trigger="click" style="text-align:center">{order_id}</div>
-				</td>
-				<td valign="top">
-					<!-- IF top.debug -->
-					<div configname="name"  admin_type="text"
-            		admin_para="m=update&table=config&column=name&id={config_id}"  
-                	admin_trigger="click" style="display:none">{name}</div>
-					<div admin_type="text"
-	            	admin_para="m=update&table=config&column=description&id={config_id}"  
-	                admin_trigger="click" >{description}</div>
-					<!-- ELSE -->
-					{description}
-					<!-- ENDIF -->
-				</td>
-				<td valign="top">
-					<div admin_type="<?php if (!$_obj['type']) echo 'text'; else echo $_obj['type']; ?>"
-                	admin_para="m=update&table=config&column=value&id={config_id}"  
-                    admin_trigger="click" >{value}</div>
-				</td>
-				<!-- IF top.debug -->
-				<td valign="top">
-					<?php if (check_show('delete')):?>
-					<a href="javascript:;" onclick="if (confirm('{DELETE_CONFIRM}')) delete_config({config_id},this)">{CONFIG_DELETE}</a>
+    <div id='main'>
+		<div id="main_b">
+			<div id="position">
+				{CURRENT_POSITION}: 系统设置
+			</div>
+			
+	        <div id="admin_content">
+				<div class="nav_wrapper">
+					<?php if (check_show('add') && END_DEBUG == 'yes'):?>
+					&nbsp;{FUNCTION}:<a href="javascript:;" class="nav" onclick="new_config(this)">{CONFIG_NEW}</a>
 					<?php endif;?>
-				</td>
-				<!-- ENDIF -->
-			</tr>
-			<!-- END -->
-		</table>
+				</div>
+				
+				<div id="new_config" class="new-form" style="display:<!-- IF thisconfig --><!-- ELSE -->none<!-- ENDIF -->;width:400px;">
+	            	<h2>{NEW_CONFIG}</h2>
+	        		<!-- INCLUDE config_new.html -->
+	            </div>
+		
+				<div class="nav_wrapper">
+					<!-- IF debug -->
+					<input id="showconfignamecheck" type="checkbox"
+					 onclick="$('[configname=name]').css('display',this.checked?'block':'none');" 
+					/><label for="showconfignamecheck" style="-webkit-user-select:none;-moz-user-select:none;" unselectable="on">{DISPLAY_NAME}</label>
+					<!-- ENDIF -->
+				</div>
+		
+				<table class="list_table" >
+					<tr>
+		        		<th style="width:7%">{CONFIG_ORDER_ID}</th>
+		        		<th style="width:35%">{CONFIG_NAME}</th>
+		                <th style="width:35%">{CONFIG_VALUE}</th>
+						<!-- IF debug -->
+		                <th style="width:23%">{CONFIG_OPTIONS}</th>
+						<!-- ENDIF -->
+		            </tr>
+					<!-- BEGIN config_list -->
+					<tr>
+						<td valign="top">
+							<div admin_type="text"
+		                	admin_para="m=update&table=config&column=order_id&id={config_id}"  
+		                    admin_trigger="click" style="text-align:center">{order_id}</div>
+						</td>
+						<td valign="top">
+							<!-- IF top.debug -->
+							<div configname="name"  admin_type="text"
+		            		admin_para="m=update&table=config&column=name&id={config_id}"  
+		                	admin_trigger="click" style="display:none">{name}</div>
+							<div admin_type="text"
+			            	admin_para="m=update&table=config&column=description&id={config_id}"  
+			                admin_trigger="click" >{description}</div>
+							<!-- ELSE -->
+							{description}
+							<!-- ENDIF -->
+						</td>
+						<td valign="top">
+							<div admin_type="<?php if (!$_obj['type']) echo 'text'; else echo $_obj['type']; ?>"
+		                	admin_para="m=update&table=config&column=value&id={config_id}"  
+		                    admin_trigger="click" >{value}</div>
+						</td>
+						<!-- IF top.debug -->
+						<td valign="top">
+							<?php if (check_show('delete')):?>
+							<a href="javascript:;" onclick="if (confirm('{DELETE_CONFIRM}')) delete_config({config_id},this)">{CONFIG_DELETE}</a>
+							<?php endif;?>
+						</td>
+						<!-- ENDIF -->
+					</tr>
+					<!-- END -->
+				</table>
 
-                <br />
-                <br />
+	                <br />
+	                <br />
 
 
-        </div>
-        
+	        </div>
+     	</div>
     </div>
 </div>
 
 <script>
 
-function new_config()
+function new_config(o)
 {
+	$(o).addClass('nav_on').attr('newconfig','yes');
 	$('#new_config').fadeTo(10,0).slideDown(200).fadeTo('fast',1);
 }
 function cancel_new_config()
 {
+	$('a[newconfig=yes]').removeClass('nav_on');
 	$('#new_config').fadeTo('fast',0).slideUp(200);
 }
 function delete_config(id,o)

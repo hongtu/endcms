@@ -12,47 +12,49 @@
 
 <div id='content'>
 	<div id='admin_left'>
-    	<div style="margin:10px;margin-top:30px;">
-        	<ul>
-				<li>
-					<a href="admin.php?p=rights">{RIGHTS_GROUP}</a>
-				</li>
-				<?php if (check_show('add')):?>
-				<li>
-					<a href="javascript:new_rights()">{RIGHTS_GROUP_NEW}</a>
-				</li>
-				<?php endif;?>
-            </ul>
-    		
+    	<div id="admin_left_b">
+			<!-- INCLUDE admin_left.html -->
         </div>
     </div>
-    <div id='maindiv'>
-    	<div class="description">
-			{page_description}
-        </div>
+    <div id='main'>
+        <div id="main_b">
+	
+			<div id="position">
+				{CURRENT_POSITION}: <a href="admin.php?p=admin">管理员</a> &gt; <a href="admin.php?p=rights">角色管理</a>
+			</div>
+			
+	        <!-- IF err_msg -->
+	        <div class="err_msg pad">
+	        	{err_msg}
+	        </div>
+	        <!-- ENDIF -->
         
-        <!-- IF err_msg -->
-        <div class="err_msg pad">
-        	{err_msg}
-        </div>
-        <!-- ENDIF -->
+	        <!-- IF success_msg -->
+	        <div class="success_msg pad">
+	        	{success_msg}
+	        </div>
+	        <!-- ENDIF -->
         
-        <!-- IF success_msg -->
-        <div class="success_msg pad">
-        	{success_msg}
-        </div>
-        <!-- ENDIF -->
-        
-        <div class="real_content">
+        <div id="admin_content">
 		
-			<div id="new_rights" style="display:<!-- IF thisrights --><!-- ELSE -->none<!-- ENDIF -->;margin:20px;background-color:#FFFF99;width:400px;">
-            	<h2>{NEW_RIGHTS_GROUP}</h2>
-        		<!-- INCLUDE rights_new.html -->
-            </div>
+			
+
 			<!-- IF this_group -->
 				<!-- INCLUDE rights_content.html -->
 			<!-- ELSE -->
-			<table cellpadding="0" cellspacing="0" border="0" class="list_table" style="width:750px;">
+			<div class="nav_wrapper">
+				&nbsp;{FUNCTION}:
+				<?php if(check_show('add')){?>
+				<a class="nav" href="javascript:;" onclick="new_rights(this)">{RIGHTS_GROUP_NEW}</a>
+				<?php };?>
+			</div>
+			
+			<div id="new_rights" class="new-form" style="display:<!-- IF thisrights --><!-- ELSE -->none<!-- ENDIF -->;width:250px;">
+            	<h2>{NEW_RIGHTS_GROUP}</h2>
+        		<!-- INCLUDE rights_new.html -->
+            </div>
+
+			<table class="list_table" >
 				<tr>
 	        		<th style="width:7%">{RIGHTS_ORDER_ID}</th>
 	        		<th style="width:25%">{RIGHTS_NAME}</th>
@@ -91,7 +93,7 @@
 			<br />
 			<br />
         </div>
-        
+        </div>
     </div>
 </div>
 
@@ -99,12 +101,14 @@
 
 
 
-function new_rights()
+function new_rights(o)
 {
+	$(o).addClass('nav_on').attr('newrights','yes');
 	$('#new_rights').fadeTo(10,0).slideDown(200).fadeTo('fast',1);
 }
 function cancel_new_rights()
 {
+	$('a[newrights=yes]').removeClass('nav_on');
 	$('#new_rights').fadeTo('fast',0).slideUp(200);
 }
 function delete_rights(id,o)

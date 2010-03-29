@@ -105,7 +105,7 @@ $end_rights = array
 	),
 	array(
 		'name'=>'admin',
-		'rights'=> array('add','update','delete')
+		'rights'=> array('add','update','update_password','delete')
 	),
 	array(
 		'name'=>'config',

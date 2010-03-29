@@ -1,0 +1,9 @@
+<div class="module">
+	<h2></h2>
+	<ul>
+		<li><a href="admin.php?p=admin">所有管理员</a></li>
+		<?php if($_SESSION['login_user']['allowed_controllers']['rights']){?>
+        <li><a href="admin.php?p=rights">角色管理</a></li>
+		<?php }?>
+    </ul>
+</div>
