@@ -35,8 +35,9 @@ class MODEL
 	//check if one record exists, input an array,such as : array('name'=>'xxx','sex'=>'M')
 	function exists($arr)
 	{
+		if (!is_array($arr)) $arr = array($this->id=>$arr);
 		$arr['select'] = 'count(1) as total';
-		$r = $GLOBALS['db']->get_one($arr);
+		$r = $this->get_one($arr);
 		return intval($r['total'])>0;
 	}
 	

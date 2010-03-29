@@ -10,73 +10,74 @@
 	<!-- INCLUDE header.html -->
 </div>
 
-<div id='content' style="margin:0px;padding:0px;">
+<div id='content'>
 	<div id='admin_left' onselectstart="return false;">
-        	<div style="margin:4px;margin-top:10px;">
+		<div id="admin_left_b">
+			<div class="module">
 	        	<h2>{CATEGORIES_TREE}</h2>
-				<div id="category_tree">
+				<div id="category_tree" style="display:none">
 					<ul>
-						<li><a href="admin.php?p=category" <!-- IF category_id="0" -->class="tree_on" <!-- ENDIF --> >{ROOT_CATEGORY}</a></li>
+						<li><a href="admin.php?p=item" <!-- IF category_id="0" -->class="tree_on" <!-- ENDIF --> >{ROOT_CATEGORY}</a></li>
 						<li>{all_category}</li>
 					</ul>
 				</div>
 	        </div>
+		</div>
     </div>
-    <div id='maindiv'>
-    	<div class="description">
-			{page_description}
-        </div>
-		<div class="position">
-			{CURRENT_POSITION}:{NAVI_CATEGORY} > <a href="admin.php?p=category">{CATEGORY_ROOT}</a> > 
-			<!-- BEGIN position -->
-			 <a href="admin.php?p=category&category_id={category_id}">{name}</a> > 
-			<!-- END -->
-			{this_category.name}
-		</div>
+    <div id='main'>
+		<div id="main_b">
+			<div id="position">
+				{CURRENT_POSITION}:{NAVI_CATEGORY} > <a href="admin.php?p=category">{CATEGORY_ROOT}</a> > 
+				<!-- BEGIN position -->
+				 <a href="admin.php?p=category&category_id={category_id}">{name}</a> > 
+				<!-- END -->
+				{this_category.name}
+			</div>
 		
-		<!-- IF !page_content -->
-		<div class="nav_wrapper">
-			&nbsp;{AVAIL_ACTIONS}:
-			<?php if (check_show('add')):?>
-				
-				<a class="nav" href="javascript:new_category()" id='new_category_a'>
-					{NEW_CHILD_CATEGORY}
-				</a>
-			<?php endif;?>
-			<?php if (check_show('update')):?>
-				<a class="nav" href="admin.php?p=category&action=edit_category&category_id={category_id}" >
-					{EDIT_THIS_CATEGORY}
-				</a>
-			<?php endif;?>
 			
-		</div>
-		<!-- ENDIF -->
+        
+	        <div id="admin_content">
 		
-        <!-- IF err_msg -->
-        <div class="err_msg pad">
-        	{err_msg}
-        </div>
-        <!-- ENDIF -->
-        
-        <!-- IF success_msg -->
-        <div class="success_msg pad">
-        	{success_msg}
-        </div>
-        <!-- ENDIF -->
-        
-        <div class="real_content">
-        	<!-- IF page_content -->
-				{page_content}
-			<!-- ELSE -->
-	        	<div id="new_category" style="display:<!-- IF category --><!-- ELSE -->none<!-- ENDIF -->;margin:20px;background-color:#FFFF99;width:400px;">
-	            	<h2>{NEW_CATEGORY}</h2>
-	        		<!-- INCLUDE category_new.html -->
-	            </div>
-	            <!-- INCLUDE category_list.html -->
-			<!-- ENDIF -->
-			<br />
-        </div>
-    
+				<!-- IF !page_content -->
+				<div class="nav_wrapper">
+					&nbsp;{AVAIL_ACTIONS}:
+					<?php if (check_show('add')):?>
+
+						<a class="nav" href="javascript:new_category()" id='new_category_a'>
+							{NEW_CHILD_CATEGORY}
+						</a>
+					<?php endif;?>
+					<!-- IF category_id>0 -->
+					<?php if (check_show('update')):?>
+						<a class="nav" href="admin.php?p=category&action=edit_category&category_id={category_id}" >
+							&nbsp;{EDIT_THIS_CATEGORY}
+						</a>
+					<?php endif;?>
+					<!-- ENDIF -->
+				</div>
+				<!-- ENDIF -->
+
+		        <!-- IF err_msg -->
+		        <div class="err_msg pad">
+		        	{err_msg}
+		        </div>
+		        <!-- ENDIF -->
+
+		        <!-- IF success_msg -->
+		        <div class="success_msg pad">
+		        	{success_msg}
+		        </div>
+		        <!-- ENDIF -->
+		
+	        	<!-- IF page_content -->
+					{page_content}
+				<!-- ELSE -->
+					<!-- INCLUDE category_new.html -->
+		            <!-- INCLUDE category_list.html -->
+				<!-- ENDIF -->
+				<br />
+	        </div>
+    	</div>
     </div>
 	<div style="clear:both;"></div>
 </div>

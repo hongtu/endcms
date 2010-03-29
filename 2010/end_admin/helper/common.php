@@ -391,10 +391,10 @@ function load_models()
 
 function end_show_edit_button($id)
 {
-	echo ' <a href="admin.php?p=item&action=edit&item_id='.$id.'">'.LANG_EDIT.'</a> ';
+	echo ' <a href="admin.php?p=item&action=edit_item&category_id='.END_ADMIN_CATEGORY_ID.'&item_id='.$id.'">'.LANG_EDIT.'</a> ';
 }
 function end_show_delete_button($id)
 {
-	echo ' <a href="admin.php?p=item&action=edit&item_id='.$id.'">'.LANG_DELETE.'</a> ';
+	echo ' <a href="admin.php?p=item&action=edit_item&category_id='.END_ADMIN_CATEGORY_ID.'&item_id='.$id.'">'.LANG_DELETE.'</a> ';
 }
 

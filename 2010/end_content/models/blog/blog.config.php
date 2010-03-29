@@ -6,38 +6,16 @@
  */
 
 $blog_status = array( 
-	0 => '草稿',
-	1 => '已发布',
-	-1 => '已删除'
+	0 => '<span style="color:blue">草稿</span>',
+	1 => '<span style="color:green">已发布</span>',
+	-1 => '<span style="color:grey">已删除</span>'
 );
 
 $end_models['blog'] = array(
 	'type' => 'list', //表示这是一个列表型的模型，对应一个数据库的表
 	'name' => '博客列表',	//某型的名字，可以把一个栏目配置成某个模型
 	'status' => $blog_status,
-	'list_fields'=>array(
-		'order_id'=>array(
-			'name'=>'优先级',
-			'type'=>'text',
-			'width'=>50,
-			'edit'=>true,
-			'sort'=>true,
-		),
-		'name'=>array(
-			'name'=>'标题',
-			'type'=>'text',
-			'edit'=>true,
-			'search'=>true,
-			'sort'=>true,
-		),
-		'status'=>array(
-			'name'=>'状态',
-			'type'=>'select',
-			'edit'=>true,
-			'options'=>$blog_status
-		),
-		'options'
-	),
+	//'no_category'=>true,
 	'category_fields'=> array(
 		'name'=>array(
 			'name'=>'栏目标题',
@@ -93,15 +71,20 @@ $end_models['blog'] = array(
 			'name'=>'标题',
 			'width'=>'auto',
 			'sort'=>true,
+			'type'=>'text',
 			'search'=>true,
 			'edit'=>true
 		),
 		'create_time'=>array(
 			'name'=>'创建日期',
-			'width'=>150,
+			'width'=>120,
 			'filter'=>'show_blog_date',
-			'search'=>true,
 			'sort'=>true
+		),
+		'category_id'=>array(  /*  此字段只需要配置以下几个，其他由系统自动配置  */
+			'name'=>'所属栏目',
+			'width'=>100,
+			'edit'=>true
 		),
 		'status'=>array(
 			'name'=>'状态',

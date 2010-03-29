@@ -2,18 +2,18 @@
         	<table>
 
             	<tr>
-                	<td>{USER_NAME}</td>
+                	<td>{ADMIN_NAME}</td>
                 	<td><input type="text" class="inputtext" maxlength=200 name="name" id='name' value="{admin.name}" />*</td>
                	</tr>
                 
                 <tr>
-                	<td valign="top">{USER_PASSWORD}</td>
-                    <td><input type="password" class="inputtext" maxlength=200 name="password" id='password' /><!-- IF is_edit_admin -->{IF_NOT_CHANGE}<!-- ELSE -->*<!-- ENDIF --></td>
+                	<td valign="top">{ADMIN_PASSWORD}</td>
+                    <td><input type="password" class="inputtext" maxlength=200 name="password" id='password' />*</td>
                 </tr>
           
                 <tr>
-                	<td valign="top">{USER_PASSWORD_CONFIRM}</td>
-                    <td><input type="password" class="inputtext" maxlength=200 name="password2" id='password2' /><!-- IF is_edit_admin -->{IF_NOT_CHANGE}<!-- ELSE -->*<!-- ENDIF --></td>
+                	<td valign="top">{ADMIN_PASSWORD_CONFIRM}</td>
+                    <td><input type="password" class="inputtext" maxlength=200 name="password2" id='password2' />*</td>
                 </tr>
             	<tr>
                 	<td>{EMAIL}</td>
@@ -21,7 +21,7 @@
                	</tr>                
                 <tr>
                 	<td colspan="2" align="center">
-                    	<input type="submit" value="{USER_SUBMIT}" />&nbsp;
+                    	<input type="submit" value="{ADMIN_SUBMIT}" />&nbsp;
                     	<input type="button" value="{CANCEL}" onclick="cancel_new_admin(); return false;" />
                     </td>
                 </tr>
@@ -33,13 +33,6 @@
 <script>
 function check_form()
 {
-	<!-- IF !is_edit_admin -->
-	if (!$_('password').value || !$_('name').value)
-	{
-		alert('{INPUT_ALL}');
-		return false;
-	}
-	<!-- ENDIF -->
 	if ($_('password').value != $_('password2').value)
 	{
 		alert('{PASSWORD_NOT_THE_SAME}');

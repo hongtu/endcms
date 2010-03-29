@@ -19,22 +19,23 @@ if ($m == 'new_admin')
 {
 	check_allowed('admin','add');
 	$data = filter_array($_POST,'name!,end_encode:password!,email');
-	if ($admin->exists($data['name']))
+	
+	if ($admin->exists(array('name'=>$data['name'])))
 	{
-		end_exit(lang("USER_EXISTS"),'admin.php?p=admin',1);
+		end_exit(lang("ADMIN_EXISTS"),'admin.php?p=admin',1);
 	}
 	else if ( $admin->add($data) )
 	{
-		end_exit(lang('USER_NEW_SUCCESS'),'admin.php?p=admin',1);
+		end_exit(lang('ADMIN_NEW_SUCCESS'),'admin.php?p=admin',1);
 	}
 	else
 	{
-		$err_msg = lang('USER_NEW_ERROR');
+		$err_msg = lang('ADMIN_NEW_ERROR');
 		$action = 'new_admin';
 	}
 }
 
-$view_data['page_description'] = lang('USER_INDEX');
+$view_data['page_description'] = lang('ADMIN_INDEX');
 $view_data['err_msg'] = $err_msg;
 $view_data['admin_id'] = $admin_id;
 $view_data['rights'] = $rights->get_list();
@@ -43,6 +44,22 @@ $cond = array();
 if ($rights_id !== false)
 {
 	$cond['rights_id'] = $rights_id;
+}
+
+//order added by longbill
+if ($_GET['order'] && $_GET['asc'])
+	$cond['order'] = $_GET['order'].' asc';
+else if ($_GET['order'])
+	$cond['order'] = $_GET['order'].' desc';
+else
+	$cond['order']=$admin->id.' DESC';
+if (is_array($_GET['search']))
+{
+	foreach($_GET['search'] as $key=>$val)
+	{
+		$val = str_replace('*','%',$val);
+		$cond['where'] = " `$key` LIKE '%".mysql_escape_string($val)."%' ";
+	}
 }
 
 $admins = end_page($admin,$cond,(intval($config['admin_admin_page_size']))?intval($config['admin_admin_page_size']):20);

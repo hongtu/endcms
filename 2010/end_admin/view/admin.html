@@ -3,8 +3,6 @@
 <head>
 	<!-- INCLUDE meta.html -->
 </head>
-
-
 <body>
 <div class='maindiv'>
 
@@ -12,73 +10,79 @@
 	<!-- INCLUDE header.html -->
 </div>
 
-<div id='contentdiv'>
+<div id='content'>
 	<div id='admin_left'>
-    	<div style="margin:10px;margin-top:30px;">
-			<?php if(check_show('add')){?>
-        	<ul>
-                <li><a href="javascript:new_admin();">{NEW_USER}</a></li>
-            </ul>
-    		<?php }?>
-        </div>
+		<div id="admin_left_b">
+			<!-- INCLUDE admin_left.html -->
+		</div>
     </div>
-    <div id='maindiv'>
-    	<div class="description">
-			{page_description}
-        </div>
-        
-        <!-- IF err_msg -->
-        <div class="err_msg pad">
-        	{err_msg}
-        </div>
-        <!-- ENDIF -->
-        
-        <!-- IF success_msg -->
-        <div class="success_msg pad">
-        	{success_msg}
-        </div>
-        <!-- ENDIF -->
-        
-        <div class="real_content">
-			<div class="nav_wrapper">
-				&nbsp;{DISPLAY}:
-				<a href="admin.php?p=admin"  class="nav <!-- IF rights_id="-1" -->nav_on<!-- ENDIF -->">{SHOW_ALL}</a>
-				<a href="admin.php?p=admin&rights_id=0" class="nav <!-- IF rights_id="0" -->nav_on<!-- ENDIF -->">{DEFAULT_RIGHTS_GROUP}</a>
-				<!-- BEGIN rights -->
-				<a href="admin.php?p=admin&rights_id={rights_id}" class="nav <!-- IF rights_id=parent.rights_id -->nav_on<!-- ENDIF -->">{name}</a>
-				<!-- END -->
+    <div id='main'>
+		<div id="main_b">
+        	<div id="position">
+				{CURRENT_POSITION}: 管理员
 			</div>
 			
-			<div id="new_admin" style="display:<!-- IF admin --><!-- ELSE -->none<!-- ENDIF -->;margin:20px;background-color:#FFFF99;width:400px;">
-            	<h2>{NEW_USER}</h2>
-        		<!-- INCLUDE admin_new.html -->
-            </div>
-            <!-- INCLUDE admin_list.html -->
-			<br />
-			{pager}
-        </div>
+	        <!-- IF err_msg -->
+	        <div class="err_msg pad">
+	        	{err_msg}
+	        </div>
+	        <!-- ENDIF -->
         
+	        <!-- IF success_msg -->
+	        <div class="success_msg pad">
+	        	{success_msg}
+	        </div>
+	        <!-- ENDIF -->
+        
+	        <div id="admin_content">
+				<div class="nav_wrapper">
+					&nbsp;{FUNCTION}:
+					<?php if(check_show('add')){?>
+					<a class="nav" href="javascript:;" onclick="new_admin(this);">{NEW_ADMIN}</a>
+					<?php };?>
+				</div>
+				
+				<div id="new_admin" class="new-form" style="display:<!-- IF admin --><!-- ELSE -->none<!-- ENDIF -->;width:300px;">
+	            	<h2>{NEW_ADMIN}</h2>
+	        		<!-- INCLUDE admin_new.html -->
+	            </div>
+				
+				<div class="nav_wrapper">
+					&nbsp;{DISPLAY}:
+					<a href="admin.php?p=admin"  class="nav <!-- IF rights_id="-1" -->nav_on<!-- ENDIF -->">{SHOW_ALL}</a>
+					<a href="admin.php?p=admin&rights_id=0" class="nav <!-- IF rights_id="0" -->nav_on<!-- ENDIF -->">{DEFAULT_RIGHTS_GROUP}</a>
+					<!-- BEGIN rights -->
+					<a href="admin.php?p=admin&rights_id={rights_id}" class="nav <!-- IF rights_id=parent.rights_id -->nav_on<!-- ENDIF -->">{name}</a>
+					<!-- END -->
+				</div>
+			
+				
+	            <!-- INCLUDE admin_list.html -->
+				<br />
+				{pager}
+	        </div>
+        </div>
     </div>
 </div>
 
-<div id="change_password" style="display:none;position:absolute;background-color:#FFFF99;width:200px;">
+<div id="change_password" class="new-form" style="position:absolute;width:200px;">
         	 <table>
              	<tr>
-                	<td valign="top">{USER_NAME}</td>
+                	<td valign="top">{ADMIN_NAME}</td>
                     <td><input type="text" class="inputtext" style="width:100px;" id='change_password_admin' disabled="disabled" /></td>
                 </tr>
                 <tr>
-                	<td valign="top">{USER_PASSWORD}</td>
+                	<td valign="top">{ADMIN_PASSWORD}</td>
                     <td><input type="password" class="inputtext" password="1"  style="width:100px;" /></td>
                 </tr>
           
                 <tr>
-                	<td valign="top">{USER_PASSWORD_CONFIRM}</td>
+                	<td valign="top">{ADMIN_PASSWORD_CONFIRM}</td>
                     <td><input type="password" class="inputtext" password="2"  style="width:100px;" /></td>
                 </tr>
                 <tr>
                 	<td colspan="2" align="center">
-                    	<input type="button" value="{USER_SUBMIT}" onclick="do_change_password(); return false;" />
+                    	<input type="button" value="{ADMIN_SUBMIT}" onclick="do_change_password(); return false;" />
                         <input type="button" value="{CANCEL}" onclick="$('#change_password').slideUp(200); return false;" />
                     </td>
                 </tr>
@@ -122,7 +126,7 @@ function change_password_callback(s)
 {
 	if (s == 'success')
 	{
-		alert('{USER_UPDATE_SUCCESS}');
+		alert('{ADMIN_UPDATE_SUCCESS}');
 	}
 	else
 	{
@@ -147,13 +151,15 @@ function delete_callback(s)
 	$('[to_be_delete=yes]').parent().parent().fadeOut();
 }
 
-function new_admin()
+function new_admin(o)
 {
+	$(o).addClass('nav_on').attr('newadmin','yes');
 	$('#new_admin').fadeTo(10,0).slideDown(200).fadeTo('fast',1);
 }
 
 function cancel_new_admin()
 {
+	$('a[newadmin=yes]').removeClass('nav_on');
 	$('#new_admin').fadeTo('fast',0).slideUp(200);
 }
 <?php if (!$_SESSION['login_user']['rights']['admin_update']) {?>
