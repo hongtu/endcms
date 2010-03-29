@@ -1,5 +1,10 @@
 <div id="admin_logo">
-  <h1><a href="#" title="易思cms">易思cms</a></h1>
+	<h1><a href="#" title="易思cms">易思cms</a></h1>
+	<div id="admin_info">
+		当前登录为: <span class="username">{_session.login_user.name}</span> 
+		<a href="admin.php?p=account">修改密码</a> 
+		<a href="admin.php?p=login&m=logout&module=admin&backurl=index.php">注销登录</a>
+	</div>
 </div>
 <div id="admin_menu">
 <ul>
@@ -14,7 +19,6 @@
 		'item',
 		'category',
 		'admin',
-		'account',
 		'config',
 	);
 	foreach($display_controllers as $_p)
@@ -25,8 +29,8 @@
 		echo "href='admin.php?p={$_p}'>".lang('NAVI_'.$_p)."</a></li>";
 	}
 	?>
-        
-        <li style="background:none;"><a href='admin.php?p=login&m=logout&module=admin&backurl=index.php'>{LOGOUT}</a></li>
+	<!--         
+	        <li style="background:none;"><a href='admin.php?p=login&m=logout&module=admin&backurl=index.php'>{LOGOUT}</a></li> -->
 	</ul>
   </ul>
 </div>

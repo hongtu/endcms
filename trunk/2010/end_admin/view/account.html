@@ -23,6 +23,9 @@
     </div>
     <div id='main'>
     	<div id="main_b">
+			<div id="position">
+				{CURRENT_POSITION}: 帐户管理 
+			</div>
 	        <div id="admin_content">
 	          <form action="admin.php?m=edit&p=account" method="post" onsubmit="return false;" >
 	              <table class="form-table">
@@ -30,6 +33,10 @@
 	                	<td>{USER_NAME}</td>
 	                	<td>{admin.name}</td>
 	               	</tr>
+					<tr>
+	                	<td valign="top">当前密码</td>
+	                    <td><input type="password" class="inputtext" maxlength=200 name="old_password" /></td>
+	                </tr>
 	                <tr>
 	                	<td valign="top">{USER_PASSWORD}</td>
 	                    <td><input type="password" class="inputtext" maxlength=200 name="password" id='password' />{IF_NOT_CHANGE}</td>
@@ -39,10 +46,7 @@
 	                	<td valign="top">{USER_PASSWORD_CONFIRM}</td>
 	                    <td><input type="password" class="inputtext" maxlength=200 name="password2" id='password2' />{IF_NOT_CHANGE}</td>
 	                </tr>
-	            	<tr>
-	                	<td>{EMAIL}</td>
-	                	<td><input type="text" class="inputtext" maxlength=200 name="email" value="{admin.email}" /></td>
-	               	</tr> 
+	            	
                 
 	                <tr>
 	                	<td colspan="2" align="center"><input type="submit" value="{USER_SUBMIT}" onclick="check_form(); return false;" />&nbsp;&nbsp;<span  style="background-color:#ffff99;padding:3px;display:none" id='notice_span'>{CHANGES_SAVED}</span></td>
@@ -71,8 +75,9 @@ function check_form()
 function commit_form()
 {
 	$('[type=submit]').attr('disabled','disabled');
-	$.post('admin.php?p=account&m=edit',{
-		email: $('[name=email]').val(),
+	$.post('admin.php?p=account&m=update_password',
+	{
+		old_password:$('[name=old_password]').val(),
 		password: $('[name=password]').val()
 	}, submit_callback);
 }

@@ -1,4 +1,4 @@
-
+ADMIN_OLD_PASSWORD_ERROR=当前密码错误
 TITLE = 修改密码
 USER_NAME = 用户名
 EMAIL = E-mail

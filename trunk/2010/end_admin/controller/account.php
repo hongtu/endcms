@@ -4,21 +4,28 @@ define('END_RESPONSE','text');
 $m = $_GET['m'];
 $admin = model('admin');
 
-if ($m == 'edit')
+if ($m == 'update_password')
 {
 	check_allowed('account','update',1);
-	$data = filter_array($_POST,'email');
-	if ($_POST['password']) $data['password'] = end_encode($_POST['password']);
-
-	if ($data && $admin->update($_SESSION['login_user']['admin_id'],$data))
+	$data = filter_array($_POST,'end_encode:old_password,end_encode:password');
+	
+	if ($data && $admin->exists(array('admin_id'=>$_SESSION['login_user']['admin_id'],'password'=>$data['old_password'])))
 	{
-		$_SESSION['login_user'] = $admin->get_one($_SESSION['login_user']['admin_id']);
-		echo lang('admin_UPDATE_SUCCESS');
-		die;
+		if ($admin->update($_SESSION['login_user']['admin_id'],array('password'=>$data['password'])))
+		{
+			$_SESSION['login_user'] = $admin->get_one($_SESSION['login_user']['admin_id']);
+			echo lang('admin_UPDATE_SUCCESS');
+			die;
+		}
+		else
+		{
+			echo  lang('admin_UPDATE_ERR');
+			die;
+		}
 	}
 	else
 	{
-		echo  lang('admin_UPDATE_ERR');
+		echo  lang('ADMIN_OLD_PASSWORD_ERROR');
 		die;
 	}
 }
