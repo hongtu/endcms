@@ -4,23 +4,28 @@
 	<!-- INCLUDE meta.html -->
 </head>
 <body>
-<div class='main'>
+<div class='maindiv'>
 
 <div class="headerdiv">
 	<!-- INCLUDE header.html -->
 </div>
 
 <div id='content'>
-	<div id='admin_left'>
-    	<div id="admin_left_b">
-        	<ul>
-
-            </ul>
-    		
-        </div>
+	<div id='admin_left' onselectstart="return false;">
+		<div id="admin_left_b">
+	    	<div class="module">
+	        	<h2></h2>
+				<div>
+					
+				</div>
+	        </div>
+		</div>
     </div>
     <div id='main'>    
         <div id="main_b">
+			<div id="position">
+				{CURRENT_POSITION}: 后台首页
+			</div>
         	{page_content}
         </div>
         
