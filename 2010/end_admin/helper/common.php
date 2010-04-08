@@ -372,11 +372,24 @@ function is_ie()
 function load_models()
 {
 	global $end_models,$end_rights;
-	$_h = opendir(END_MODEL_DIR);
+	$_h = opendir(END_ROOT);
 	while($v = readdir($_h))
 	{
-		if (is_dir(END_MODEL_DIR.$v) && file_exists($_c_file = END_MODEL_DIR.$v.'/'.$v.'.config.php'))
-			include($_c_file);
+		if (is_dir(END_ROOT.$v) 
+		&& preg_match('/^end_/',$v) 
+		&& is_dir($mdir = END_ROOT.$v.'/model/') 
+		&& $__h = opendir($mdir) )
+		{
+			while($v = readdir($__h))
+			{
+				if (is_dir($mdir.$v) && file_exists($mfile = $mdir.$v.'/'.$v.'.config.php'))
+				{
+					include_once($mfile);
+					$end_models[$v]['model_path'] = $mdir.$v.'/';
+				}
+			}
+			closedir($__h);
+		}
 	}
 	closedir($_h);
 	$_models = array();
@@ -387,7 +400,6 @@ function load_models()
 	}
 	$end_models = $_models;
 }
-
 
 function end_show_edit_button($id)
 {

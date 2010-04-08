@@ -34,10 +34,17 @@
 				 <a href="admin.php?p=item&category_id={category_id}">{name}</a> > 
 				<!-- END -->
 			</div>
-  	      <!-- IF page_content -->
-	        	{page_content}
-				<br />
-	        <!-- ELSE -->
+			
+			<!-- IF err_msg -->
+			<div class="error">
+			{err_msg}
+			</div>
+			<!-- ENDIF -->
+			
+	  	    <!-- IF page_content -->
+		        	{page_content}
+					<br />
+		    <!-- ELSE -->
 			
 			
 			<div id="admin_content">
@@ -66,12 +73,23 @@
 			
 			<!-- ELSE -->
 				<!-- IF category_id -->
-				{CLICK_TO_EDIT_CATEGORY}<a href="admin.php?p=category&action=edit_category&category_id={category_id}">{CLICK_HERE}</a>
+					<h2>栏目类型: {category_type}</h2>
+					<a href="admin.php?p=category&action=edit_category&category_id={category_id}">编辑</a>
+					<table class="view-table">
+					<?php
+					foreach($_obj['category_fields'] as $key=>$field)
+					{
+						echo '<tr>';
+						echo '<th>'.$field['name'].'</th>';
+						echo '<td>'.$_obj['category'][$key].'</td>';
+						echo '</tr>';
+					}
+					?>
+					</table>
 				<!-- ELSE -->
-				<a href="<?php echo UMV_INDEX; ?>/index.php" target="_blank">预览首页</a><br />
-				<a href="<?php echo UMV_INDEX; ?>/index.php?generateHtml=1" target="_blank">更新首页轮播图</a><br />
-				<a href="<?php echo UMV_INDEX; ?>/index.php?generateHtml=2" target="_blank">生成首页</a><br />
-				
+				<!--
+					TODO 内容管理首页
+				-->
 				<!-- ENDIF -->
 			<!-- ENDIF -->
 			</div>

@@ -71,6 +71,10 @@ table.list_table td div {height:100%;}
 
 td div.table-cell { padding:0 3px; }
 
+table.view-table { border-color:#C4CED4; border-style:solid; border-width:1px 0 0 1px;  }
+table.view-table th{ padding:0 3px; border-right:1px solid #c4ced4;border-bottom:1px solid #c4ced4; color:#666;  font-weight:bold; }
+table.view-table th a { color:#3462a4; }
+table.view-table td{ padding:0 3px; border-color:#C4CED4; border-style:solid; border-width:0 1px 1px 0; text-align:left;}
 
 .sys_date table th{ font-weight:bold; text-align:center; color:#045294;}
 .sys_date table td{ text-align:center;}
@@ -125,11 +129,13 @@ td div.table-cell { padding:0 3px; }
 
 
 /*category tree*/
+#category_tree { margin:5px 0;}
 #category_tree ul { padding-left:15px;}
 #category_tree ul li { }
 #category_tree ul li img {  }
 #category_tree ul li a { font-size:12px; margin-left:3px; line-height:18px; padding:3px 7px 3px 20px; background:transparent url(../images/folder.gif) no-repeat 4px 45%;}
 #category_tree ul li a.tree_on { background-color:#999; color:#fff; }
+#category_tree .expand_button { clear:left;cursor:pointer;display:block;float:left;height:9px;margin:4px 0px;width:9px;}
 
 a.nav_on { background-color:#084578;color:#fff; padding:3px; }
 .small_popup {position:absolute;background-color:#ffffbb;padding:0px 5px;border:1px solid #aaaa66;}
@@ -142,3 +148,4 @@ a.nav_on { background-color:#084578;color:#fff; padding:3px; }
 }
 .new-form td { padding:3px;}
 table.form-table td { padding:3px;}
+.error { color:red;}

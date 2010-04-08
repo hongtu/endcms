@@ -93,6 +93,11 @@ foreach($_fields as $name=>$attr)
 		$data[$name] = $_POST[$name];
 		if ($attr['filter']) $data[$name] = $attr['filter']($data[$name]);
 		if ($attr['type'] == 'checkbox') $data[$name] = $data[$name]?'1':'0';
+		if ($attr['type'] == 'textarea')
+		{
+			$data[$name] = str_replace("\r",'',$data[$name]);
+			$data[$name] = str_replace(array("\n"," "),array('<br>','&nbsp;'),$data[$name]);
+		}
 		if (!$attr['null'] && !$data[$name] && $attr['type'] != 'checkbox') 
 		{
 			$errors[$name] = '不能为空';
