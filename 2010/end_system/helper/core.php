@@ -6,16 +6,16 @@
  * @param string $f 
  * @return model class
  */
-function model($f)
+function model($f,$path = false)
 {
 	//缓存
 	if (isset($GLOBALS['end_model_instance_'.$f])) return $GLOBALS['end_model_instance_'.$f];
-	
-	//优先使用end_models目录下的model
-	if (file_exists($_file = END_MODEL_DIR.$f.'/'.$f.'.model.php'))
+
+	if ($path && file_exists($_file = $path.'/'.$f.'.model.php'))
 		include_once($_file);
-	//其次是end_system/model目录下的
-	else if (file_exists($_file = END_MODULE_DIR.'model/'.$f.'.model.php'))
+	else if (file_exists($_file = END_MODULE_DIR.'model/'.$f.'/'.$f.'.model.php'))
+		include_once($_file);
+	else if (file_exists($_file = END_SYSTEM_DIR.'model/'.$f.'.model.php'))
 		include_once($_file);
 	else
 		die("load model error! Model file not found: $f.model.php");
@@ -29,7 +29,6 @@ function model($f)
 function helper($f)
 {
 	$loaded = false;
-
 	if (file_exists($_file = END_MODULE_DIR.'helper/'.$f.'.php'))
 	{
 		include_once($_file);

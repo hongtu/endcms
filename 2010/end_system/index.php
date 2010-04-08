@@ -39,7 +39,7 @@ include_once(END_SYSTEM_DIR.'library/mysql.php');
 include_once(END_SYSTEM_DIR.'library/model.php');
 
 //载入对应模块的config.php
-if (END_MODULE != 'index' && file_exists(END_MODULE_DIR.'config.php')) include_once(END_MODULE_DIR.'config.php');
+if (file_exists(END_MODULE_DIR.'config.php')) include_once(END_MODULE_DIR.'config.php');
 
 //连接数据库
 $db = new DB;
@@ -68,6 +68,7 @@ function_exists('end_on_ready') && end_on_ready();
 //the ultimate view data array
 $view_data = array();
 $view_html = '';
+define('END_VIEWER_DIR',END_MODULE_DIR.'view/');
 
 //load the main controller
 $_c_filename = END_CONTROLLER_DIR.$_controller;

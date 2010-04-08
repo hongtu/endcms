@@ -28,12 +28,13 @@ define('END_LANGUAGE','cn');
 //define directories
 define('END_LANGUAGE_DIR',END_MODULE_DIR.'language/');
 define('END_CONTROLLER_DIR',END_MODULE_DIR.'controller/');
-define('END_VIEWER_DIR',END_MODULE_DIR.'view/');
 define('END_VIEWER_EXT','html');
 
-define('END_MODEL_DIR',END_ROOT.'end_content/models/');
-define('END_PLUGIN_DIR',END_ROOT.'end_content/plugins/');
-define('END_THEME_DIR',END_ROOT.'end_content/themes/');
+define('END_MODEL_DIR',END_ROOT.'end_'.END_MODULE.'/model/');
+define('END_PLUGIN_DIR',END_ROOT.'end_'.END_MODULE.'/plugin/');
+define('END_THEME_DIR',END_ROOT.'end_'.END_MODULE.'/view/');
+
+
 
 
 //open debug mode
