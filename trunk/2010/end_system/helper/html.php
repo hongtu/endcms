@@ -201,13 +201,3 @@ function en_substr($s,$end)
 	}
 	return substr($s,0,$end).'...';
 }
-
-function category_link($obj)
-{
-	return $obj['url'];
-}
-
-function item_link($obj)
-{
-	return $obj['url'];
-}

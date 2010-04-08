@@ -79,16 +79,15 @@ class MODEL
 		//user defined conditions such as `name` LIKE '%xxx%' ....
 		if ($data['where']) $sql.= " AND ".$data['where'];
 		
-		if ($data['total'] != 1 && $data['order'] !== false)
-		{
-			//order control
-			if (!$data['order'] && $this->order_id)
-				$sql.= " ORDER BY $this->order_id DESC";		
-			else if ($data['order'])
-				$sql.= " ORDER BY ".$data['order'].'';
-			else 
-				$sql.=" ORDER BY $this->id ";
-		}
+		//order control
+		if (!$data['order'] && $this->order_id)
+			$sql.= " ORDER BY $this->order_id DESC,$this->id DESC";		
+		else if ($data['order'])
+			$sql.= " ORDER BY ".$data['order'].'';
+		else 
+			$sql.=" ORDER BY $this->id DESC";
+	
+		
 		//page control
 		if ($data['from'] && $data['total'])
 			$sql.=" LIMIT ".$data['from'].",".$data['total'];

@@ -9,11 +9,6 @@ class MODEL_ADMIN extends MODEL
 		$this->order_id = 'admin_id';
 	}
 	
-	function exists($name)
-	{
-		return parent::exists( array('name'=>$name));
-	}
-	
 	function check_password($name,$password)
 	{
 		return parent::get_one( array('name'=>$name,'password'=>$password));
