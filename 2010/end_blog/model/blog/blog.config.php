@@ -13,7 +13,7 @@ $blog_status = array(
 
 $end_models['blog'] = array(
 	'type' => 'list', //表示这是一个列表型的模型，对应一个数据库的表
-	'name' => '博客列表',	//某型的名字，可以把一个栏目配置成某个模型
+	'name' => '博客文章列表',	//某型的名字，可以把一个栏目配置成某个模型
 	'status' => $blog_status,
 	//'no_category'=>true,
 	'category_fields'=> array(
@@ -89,7 +89,7 @@ $end_models['blog'] = array(
 		'status'=>array(
 			'name'=>'状态',
 			'width'=>50,
-			'filter'=>'show_blog_status',
+			//'filter'=>'show_blog_status',
 			'edit'=>true,
 			'type'=>'select',
 			'options'=>$blog_status

@@ -29,6 +29,12 @@ a img { border:0;}
 #left .entry .info a.more { margin-right:10px;}
 #left .entry .info a.comments { padding-left:16px; background:#fff url(../images/comments.gif) no-repeat 0 50%;}
 
+.comments {  }
+.comments .comment { background-color:#eee; padding:5px; margin-bottom:20px;}
+.comments .comment .info { background-color:#ddd; padding-left:5px; }
+
+
+
 #right .block { margin:10px 0 30px 80px; width:170px; overflow:hidden;}
 #right .block h3 { color:#000; font-style:italic;font-size:16px; margin:0;}
 #right .block .content { margin-left:10px; }

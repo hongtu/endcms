@@ -1,0 +1,34 @@
+<?php
+include(END_VIEWER_DIR.'common.php');
+$blog = model('blog');
+$comment = model('comment');
+$id = intval($_GET['id']);
+$_obj['blog'] = $blog->get_one($id);
+$_obj['comments'] = $comment->get_list(array('blog_id'=>$id));
+?><!-- INCLUDE header.html -->
+
+<div id='content'>
+	<div id='left'>
+		<div class="entry">
+			<a href="{item_link(blog)}"><h2>{blog.name}</h2></a>
+			<div class="time">{date("F/jS Y",blog.create_time)}</div>
+			<div class="intro">{blog.content}</div>
+			<div class="info">
+				<a href="{item_link(blog)}#comments" class="comments">10 Comments</a>
+			</div>
+		</div>
+		<a name="comments" />
+		<div class="comments">
+			<!-- BEGIN comments -->
+			<div class="comment">
+				<div class="info">{date("Y-m-d H:i",time)} {name}:</div>
+				<div class="content">{content}</div>
+			</div>
+			<!-- END -->
+		</div>
+    </div>
+	<!-- INCLUDE sidebar.html -->
+	<div class="clear"></div>
+</div>
+
+<!-- INCLUDE footer.html -->

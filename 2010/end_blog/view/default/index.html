@@ -1,0 +1,25 @@
+<?php
+include(END_VIEWER_DIR.'common.php');
+$blog = model('blog');
+$_obj['items'] = $blog->get_list();
+?><!-- INCLUDE header.html -->
+
+<div id='content'>
+	<div id='left'>
+    	<!-- BEGIN items -->
+		<div class="entry">
+			<a href="{item_link($_obj)}"><h2>{name}</h2></a>
+			<div class="time">{date("F/jS Y",create_time)}</div>
+			<div class="intro">{content}</div>
+			<div class="info">
+				<a href="{item_link($_obj)}" class="more">Read More...</a>
+				<a href="{item_link($_obj)}#comments" class="comments">10 Comments</a>
+			</div>
+		</div>
+		<!-- END -->
+    </div>
+	<!-- INCLUDE sidebar.html -->
+	<div class="clear"></div>
+</div>
+
+<!-- INCLUDE footer.html -->
