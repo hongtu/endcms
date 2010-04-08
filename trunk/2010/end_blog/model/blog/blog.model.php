@@ -13,4 +13,5 @@ class MODEL_BLOG extends MODEL
 		$this->id = 'blog_id';
 		$this->order_id = 'order_id';
 	}
+	
 }
