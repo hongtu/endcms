@@ -4,11 +4,30 @@
 			{category_tree}
 		</select>
 	</div>
+	<div style="display:none">
+	<?php
+		//输出 select 类型 字段 的 选择源数据
+		foreach($_obj['list_fields'] as $_key=>$field)
+		{
+			if ($field['edit'] && $field['type'] == 'select' && is_array($field['options']))
+			{
+				$select_id = 'select_source_'.$_key;
+				echo '<select id="'.$select_id.'">'."\n";
+				foreach($field['options'] as $_key=>$_val)
+				{
+					echo '<option value="'.$_key.'" source="'.htmlspecialchars($_val).'">'.$_val."</option>\n";
+				}
+				echo "</select>\n";
+			}
+		}
+	?>
+	</div>
 	<script>
-	function show_category_name(id)
+	function show_select_value(source,val)
 	{
-		if (!id) return '';
-		return $('#select_source_category_id').find('option[value='+id+']').html();
+		if (!val) return '';
+		var dom = $('#select_source_'+source).find('option[value='+val+']');
+		return dom.attr('source')?dom.attr('source'):dom.html();
 	}
 	</script>
             <table cellpadding="0" cellspacing="0" border="0" id="item_table" class="list_table" >
@@ -32,13 +51,12 @@
 						foreach($_obj['list_fields'] as $_key=>$field)
 						{
 							echo '<td>'."\n".'<div class="table-cell" ';
+							
 							$value = $item[$_key];
 							
-							if($_key == 'category_id') //分类，系统自动配置
-							{
-								$field['type'] = 'select';
-								$value = '<script>document.write(show_category_name("'.$value.'"));</script>';
-							}
+							
+							if($_key == 'category_id') $field['type'] = 'select'; //分类，系统自动 
+							
 							
 							//配置可编辑的单元格
 							if ($field['edit'])
@@ -63,6 +81,8 @@
 										.$_key."&id="
 										.$item_id."'";
 			 						echo ' admin_trigger="click" ';
+									if ($field['height']) 
+										echo ' style="overflow:hidden;height:'.$field['height'].'px" ';
 								}
 								else
 								{
@@ -101,6 +121,10 @@
 									}
 								}
 							}
+							else if ($field['type'] == 'select')
+							{
+								$value = '<script>document.write(show_select_value("'.$_key.'","'.$value.'"));</script>';
+							}
 							
 							//显示数据
 							echo $value;
@@ -116,23 +140,4 @@
 </div>
 {pager}
 
-
-<div style="display:none">
-<?php
-	//输出 select 类型 字段 的 选择源数据
-	foreach($_obj['list_fields'] as $_key=>$field)
-	{
-		if ($field['edit'] && $field['type'] == 'select' && is_array($field['options']))
-		{
-			$select_id = 'select_source_'.$_key;
-			echo '<select id="'.$select_id.'">'."\n";
-			foreach($field['options'] as $_key=>$_val)
-			{
-				echo '<option value="'.$_key.'" source="'.htmlspecialchars($_val).'">'.$_val."</option>\n";
-			}
-			echo "</select>\n";
-		}
-	}
-?>
-</div>
 

@@ -1,6 +1,7 @@
 <table  class="list_table" id="category_table" >
             	<thead>
                    	<tr>
+						<th style="width:20px;">{CATEGORY_ID}</th>
                 		<th style="width:50px;">{CATEGORY_ORDER_ID}</th>
                 		<th>{CATEGORY_NAME}</th>
                    		<th style="width:200px;">{CATEGORY_URL}</th>
@@ -15,24 +16,8 @@
                 <tbody>
                 
           		  	<!-- BEGIN categories -->
-						<?php	if($_obj['system'] && LZ_DEBUG !='yes'){?>
-            				<tr>
-		               		 	<td><div admin_type="text"
-		                        	admin_para="m=update&table=category&column=order_id&id={category_id}" 
-									style="text-align:center">{order_id}</div></td>
-		               		 	<td>{name}</td>
-		               		    <td>{description}</td>
-								<td>{show_status:status}</td>
-		                        <td>
-									<a href="admin.php?p=category&category_id={category_id}">{CATEGORY_CHILD}</a> 
-		                          	<?php
-									if (check_show('update')):?>
-		                          	<a href="javascript:edit_page({category_id});">{EDIT}</a> 
-									<?php endif;?>
-		                        </td>
-		               		</tr>
-						<?php }else{ ?>
 							<tr>
+								<td style="text-align:center">{category_id}</td>
 		               		 	<td><div admin_type="text"
 		                        	admin_para="m=update&table=category&column=order_id&id={category_id}" 
 									style="text-align:center">{order_id}</div></td>
@@ -76,7 +61,7 @@
 									<!-- a href="index.php?p=category&category_id={category_id}" target="_blank">{PREVIEW}</a-->
 		                        </td>
 		               		</tr>
-						<?php } ?>
+					
                     <!-- END -->
                     
                 </tbody>
@@ -107,7 +92,7 @@ function edit_page(id)
 </div>
 <div style="display:none">
 <select id="category_system_select">
-	<option value="0">0</option>
-	<option value="1">1</option>
+	<option value="no">no</option>
+	<option value="yes">yes</option>
 </select>
 </div>

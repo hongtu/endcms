@@ -22,8 +22,20 @@ if ($category_id || $item_type)
 		define('END_ADMIN_ITEM_TYPE',$item_type);
 	else
 		die('please provide valid category_id or item_type!');
-	
-	$item = model($item_type);
+}
+
+//如果不是列表页面
+if ($this_category && !preg_match('/_list$/',$this_category['status']))
+{
+	$item_type = false;
+	$view_data['category_fields'] = $end_models[$this_category['status']]['category_fields'];
+	$view_data['category_type'] = $end_models[$this_category['status']]['name'];
+	$view_data['category'] = $this_category;
+}
+
+if ($item_type)
+{
+	$item = model($item_type,$end_models[$item_type.'_list']['model_path']);
 	
 	$item_model = $end_models[$item_type.'_list'];
 	$_fields = $item_model['fields'];
@@ -165,7 +177,7 @@ if ($category_id || $item_type)
 
 		//分页处理
 		if($item_model['no_category'])
-			$cond = array();
+			$cond = array('where'=>'1=1');
 		else
 			$cond = array('where'=>"(category_id='$category_id' OR category_id=0)");
 		

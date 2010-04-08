@@ -20,6 +20,10 @@ define('END_RESPONSE','text');
 
 check_allowed($table,$m,1);
 
+
+load_models();
+
+
 if (!$id)
 {
 	ajax_exit('id needed');
@@ -29,7 +33,10 @@ if ($table)
 {
 	if (strpos(",$_allowed,",",$table,") !== false)
 	{
-		$obj = model($table);
+		if ($end_models[$table.'_list'])
+			$obj = model($table,$end_models[$table.'_list']['model_path']);
+		else
+			$obj = model($table);
 	}
 }
 

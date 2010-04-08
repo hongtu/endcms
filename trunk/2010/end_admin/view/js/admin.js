@@ -104,13 +104,13 @@ function text_edit(o)
 	if ($(this).attr('admin_type') == 'textarea')
 	{
 		var input = document.createElement('textarea');
-		val = val.replace(/<br\s*\/?>/ig,"\n");
+		val = val.replace(/<br\s*\/?>/ig,"\n").replace(/\&nbsp\;/ig,' ');
 		var self = this;
 		var height_handler = function()
 		{
 			$(this).height($(self).height()).height(this.scrollHeight);
 		}
-		$(input).bind('keydown',height_handler).bind('keyup',height_handler)
+		$(input).bind('keydown',height_handler).bind('keyup',height_handler);
 	}
 	else
 	{
@@ -137,6 +137,7 @@ function text_edit(o)
 		fontSize:$(this).css('font-size')
 	});
 	document.body.appendChild(input);
+	$(input).trigger('keydown');
 	window.edit_input = true;
 	$(input)
 		.focus()
@@ -238,7 +239,7 @@ function text_save()
 	
 	if (p.attr('admin_type') == 'textarea')
 	{
-		val = val.replace(/\n/ig,'<br>');
+		val = val.replace(/\n/ig,'<br>').replace(/\ /ig,'&nbsp;');
 	}
 	
 	if (para.toLowerCase().indexOf('.php?') == -1)
