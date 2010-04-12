@@ -9,6 +9,12 @@ class MODEL_CATEGORY extends MODEL
 		$this->id = 'category_id';
 	}
 
+	function get_cats_by_alias($a)
+	{
+		global $db;
+		return $db->get_all("SELECT * FROM `$this->table` WHERE `parent_id`=(SELECT `$this->id` FROM `$this->table` WHERE `alias`='$a') ORDER BY `$this->order_id` DESC,`$this->id` DESC");
+	}
+
 	function delete($id)
 	{
 		check_allowed_category($id,END_RESPONSE == 'text');

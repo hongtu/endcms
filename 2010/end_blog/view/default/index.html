@@ -1,8 +1,9 @@
 <?php
 include(END_VIEWER_DIR.'common.php');
 $blog = model('blog');
-$_obj['items'] = $blog->get_list();
 ?><!-- INCLUDE header.html -->
+{id=intval(_get.id)}
+{items=$blog->get_list()}
 
 <div id='content'>
 	<div id='left'>

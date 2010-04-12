@@ -838,7 +838,7 @@ class QuickSkinParser
 		else $_cmd = 'echo';
         if (!strlen($tag))
         {
-          $code  =  "<?php $_cmd $extension();\n?>";
+          $code  =  "<?php ".'$GLOBALS["_obj"]=$_obj; '."$_cmd $extension();\n?>";
         }
         else
         {
@@ -854,13 +854,11 @@ class QuickSkinParser
 				else
 					$__tags[] = $__tag;
 		  	}
-            $code  =  "<?php $_cmd $extension(".join(',',$__tags).");?>";
+            $code  =  "<?php ".'$GLOBALS["_obj"]=$_obj; '."$_cmd $extension(".join(',',$__tags).");?>";
         }
         $page  =  str_replace($var[0][$cnt],  $code,  $page);
       }
     }
-
-
 
     /* Add Include Header */
     if (isset($header) && !empty($header))
