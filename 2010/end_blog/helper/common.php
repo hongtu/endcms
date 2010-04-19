@@ -16,7 +16,7 @@ function get_cats($s)
 
 function category_link()
 {
-	$o = $GLOBALS['_obj'];
+	$o = $GLOBALS['view_data'];
 	if ($o['status'] == 'link')
 		return $o['url'];
 	else if (  $o['status'] == 'page')
@@ -27,7 +27,7 @@ function category_link()
 
 function item_link()
 {
-	$o = $GLOBALS['_obj'];
+	$o = $GLOBALS['view_data'];
 	return '?p=blog&id='.$o['blog_id'];
 }
 

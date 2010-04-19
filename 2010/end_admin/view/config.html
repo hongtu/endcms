@@ -75,7 +75,7 @@
 							<!-- ENDIF -->
 						</td>
 						<td valign="top">
-							<div admin_type="<?php if (!$_obj['type']) echo 'text'; else echo $_obj['type']; ?>"
+							<div admin_type="<?php if (!$view_data['type']) echo 'text'; else echo $view_data['type']; ?>"
 		                	admin_para="m=update&table=config&column=value&id={config_id}"  
 		                    admin_trigger="click" style="overflow:hidden;height:20px;" >{value}</div>
 						</td>

@@ -2,7 +2,7 @@
 /*
 根据配置生成编辑页面的各个输入字段
 */
-	foreach($_obj['fields'] as $name=>$data)
+	foreach($view_data['fields'] as $name=>$data)
 	{
 		if (preg_match('/^__/',$name)) continue;
 		echo "<tr><td>$data[name]";
@@ -15,7 +15,7 @@
 		//显示之前的预处理
 		if ($data['prefilter'] && function_exists($data['prefilter']))
 		{
-			$_obj['content'][$name] = $data['prefilter']($_obj['content'][$name]);
+			$view_data['content'][$name] = $data['prefilter']($view_data['content'][$name]);
 		}
 		
 		//简单文字输入
@@ -23,28 +23,28 @@
 		{
 			if ($data['disabled'])
 			{
-				echo "<input type='hidden' name='$name' readonly='readonly' style='$_style' value='$_obj[content][$name]' />";
+				echo "<input type='hidden' name='$name' readonly='readonly' style='$_style' value='$view_data[content][$name]' />";
 			}
 			else
 			{
-				echo "<input type='text' name='$name' style='$_style' value='".$_obj['content'][$name]."' />";
+				echo "<input type='text' name='$name' style='$_style' value='".$view_data['content'][$name]."' />";
 			}
 		}
 		//复选框
 		elseif ($data['type'] == 'checkbox')
 		{
 			echo "<input type='checkbox' name='$name' ";
-			if ($_obj['content'][$name]) echo " checked='checked' ";
+			if ($view_data['content'][$name]) echo " checked='checked' ";
 			if ($data['disabled']) echo ' disabled="disabled" ';
 			echo " />";
 		}
 		//文件
 		elseif ($data['type'] == 'file')
 		{
-			if ($_obj['content'][$name])
+			if ($view_data['content'][$name])
 			{
-				echo lang("uploaded_file").$_obj['content'][$name]."<br />";
-				echo "<input type='hidden' name='$name' value='$_obj[content][$name]' />";
+				echo lang("uploaded_file").$view_data['content'][$name]."<br />";
+				echo "<input type='hidden' name='$name' value='$view_data[content][$name]' />";
 			}
 			echo "<input type='file' name='$name' style='$_style' />";
 		}
@@ -53,9 +53,9 @@
 		{
 			if (!$data['height']) $_style.='height:300px;';
 			echo "<textarea name='$name' style='$_style'>";
-			$_obj['content'][$name] = str_replace(array("\n","\r"),array("",""),$_obj['content'][$name]);
-			$_obj['content'][$name] = str_replace(array('<br>','&nbsp;'),array("\n",' '),$_obj['content'][$name]);
-			echo htmlspecialchars($_obj['content'][$name]);
+			$view_data['content'][$name] = str_replace(array("\n","\r"),array("",""),$view_data['content'][$name]);
+			$view_data['content'][$name] = str_replace(array('<br>','&nbsp;'),array("\n",' '),$view_data['content'][$name]);
+			echo htmlspecialchars($view_data['content'][$name]);
 			echo "</textarea>";
 		}
 		//下拉选框
@@ -65,7 +65,7 @@
 			foreach($data['options'] as $_val=>$_name)
 			{
 				echo "<option ";
-				if ($_obj['content'][$name] == $_val) echo " selected='selected' ";
+				if ($view_data['content'][$name] == $_val) echo " selected='selected' ";
 				echo " value='$_val'>$_name</option>";
 			}
 			echo "</select>";
@@ -73,7 +73,7 @@
 		//日期时间
 		elseif ($data['type'] == 'datetime')
 		{
-			$t = $_obj['content'][$name];
+			$t = $view_data['content'][$name];
 			if (is_array($t))
 				$t = mktime($t['h'],$t['i'],$t['s'],$t['m'],$t['d'],$t['y']);
 			if (!$t) $t = time();
@@ -91,7 +91,7 @@
 			if (!$data['height']) $_style.= 'height:400px;';
 			?>
 					<textarea style="<?php echo $_style;?>" name="<?php echo $name;?>" id="editor_<?php echo $name;?>" rich="true"><?php
-					echo htmlspecialchars($_obj['content'][$name]);
+					echo htmlspecialchars($view_data['content'][$name]);
 					?></textarea>
 					</td></tr>
 					<tr>

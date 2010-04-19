@@ -82,11 +82,11 @@
 					<a href="admin.php?p=category&action=edit_category&category_id={category_id}">编辑</a>
 					<table class="view-table">
 					<?php
-					foreach($_obj['category_fields'] as $key=>$field)
+					foreach($view_data['category_fields'] as $key=>$field)
 					{
 						echo '<tr>';
 						echo '<th>'.$field['name'].'</th>';
-						echo '<td>'.$_obj['category'][$key].'</td>';
+						echo '<td>'.$view_data['category'][$key].'</td>';
 						echo '</tr>';
 					}
 					?>

@@ -6,6 +6,6 @@ $category = model('category');
 $id = intval($_GET['id']);
 $cid = intval($_GET['cid']);
 
-$_obj['navigations'] = get_cats('navigation');
+$view_data['navigations'] = get_cats('navigation');
 
 ?>

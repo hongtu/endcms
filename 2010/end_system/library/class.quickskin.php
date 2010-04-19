@@ -237,9 +237,9 @@ class QuickSkin
       }
       $_top  =  $this->data;
     }
-    $_obj  =  &$_top;
+    $view_data  =  &$_top;
     $_stack_cnt  =  0;
-    $_stack[$_stack_cnt++]  =  $_obj;
+    $_stack[$_stack_cnt++]  =  $view_data;
 	
     /* Check if template is already compiled */
     $queryString = $_SERVER['QUERY_STRING'];
@@ -279,7 +279,7 @@ class QuickSkin
         }
       }
       /* Execute Compiled Template */
-		extract($_obj);
+		extract($view_data);
       include($this->cpl_file);
     }
     else
@@ -584,7 +584,7 @@ class QuickSkinParser
     }
     /* END, ELSE Blocks */
     $page  =  preg_replace("/<!--\s+ENDIF.+?-->/", "<?php } ?>", $this->template);
-    $page  =  preg_replace("/<!--\s+END\s*[a-zA-Z0-9_.]*\s+-->/",  "<?php } \$_obj=\$_stack[--\$_stack_cnt];} ?>", $page);
+    $page  =  preg_replace("/<!--\s+END\s*[a-zA-Z0-9_.]*\s+-->/",  "<?php } \$view_data=\$_stack[--\$_stack_cnt];} ?>", $page);
     $page  =  preg_replace("/<!--\s+ELSE\s+-->/", "<?php } else { ?>", $page);
 	
 	$_var_exp = '\$[a-zA-Z0-9\_\-\>]+';
@@ -657,7 +657,7 @@ class QuickSkinParser
 	            . "if (!empty(\$$parent"."['$block'])){"
 	            . "if (!is_array(\$$parent"."['$block']))"
 	            . "\$$parent"."['$block']=array(array('$block'=>\$$parent"."['$block'])); "
-	            . "\$_stack[\$_stack_cnt++]=\$_obj; "
+	            . "\$_stack[\$_stack_cnt++]=\$view_data; "
 	            . "\$rowcounter = 0; "
 	            . "foreach (\$$parent"."['$block'] as \$rowcnt=>\$$block) { "
 				."\$_key=\$rowcnt; \$_value=\$$block; "
@@ -666,9 +666,9 @@ class QuickSkinParser
 	              . "\$$block"."['_rowcount']=(\$rowcounter); "
 	              . "\$$block"."['_oddrow']=\$rowcounter%2; "
 				  . "\$$block"."['_key']=\$_key; "
-	              . "\$_obj=&\$$block; "
+	              . "\$view_data=&\$$block; "
 				."}else{"
-				."\$_obj=array('_key'=>\$_key,'_value'=>\$_value); }"
+				."\$view_data=array('_key'=>\$_key,'_value'=>\$_value); }"
 				."?>";
 	        $page  =  str_replace($var[0][$cnt],  $code,  $page);
 	 }
@@ -789,7 +789,7 @@ class QuickSkinParser
 		else $_cmd = 'echo';
         if (!strlen($tag))
         {
-          $code  =  "<?php ".'$GLOBALS["_obj"]=$_obj; '."$_cmd $extension();\n?>";
+          $code  =  "<?php ".'$GLOBALS["view_data"]=$view_data; '."$_cmd $extension();\n?>";
         }
         else
         {
@@ -805,7 +805,7 @@ class QuickSkinParser
 				else
 					$__tags[] = $__tag;
 		  	}
-            $code  =  "<?php ".'$GLOBALS["_obj"]=$_obj; '."$_cmd $extension(".join(',',$__tags).");?>";
+            $code  =  "<?php ".'$GLOBALS["view_data"]=$view_data; '."$_cmd $extension(".join(',',$__tags).");?>";
         }
         $page  =  str_replace($var[0][$cnt],  $code,  $page);
       }
@@ -842,9 +842,9 @@ class QuickSkinParser
   }
 
   /* Splits Template-Style Variable Names into an Array-Name/Key-Name Components
-   * {example}               :  array( "_obj",                   "example" )  ->  $_obj['example']
-   * {example.value}         :  array( "_obj['example']",        "value" )    ->  $_obj['example']['value']
-   * {example.0.value}       :  array( "_obj['example'][0]",     "value" )    ->  $_obj['example'][0]['value']
+   * {example}               :  array( "view_data",                   "example" )  ->  $view_data['example']
+   * {example.value}         :  array( "view_data['example']",        "value" )    ->  $view_data['example']['value']
+   * {example.0.value}       :  array( "view_data['example'][0]",     "value" )    ->  $view_data['example'][0]['value']
    * {top.example}           :  array( "_stack[0]",              "example" )  ->  $_stack[0]['example']
    * {parent.example}        :  array( "_stack[$_stack_cnt-1]",  "example" )  ->  $_stack[$_stack_cnt-1]['example']
    * {parent.parent.example} :  array( "_stack[$_stack_cnt-2]",  "example" )  ->  $_stack[$_stack_cnt-2]['example']
@@ -872,7 +872,7 @@ class QuickSkinParser
     }
     else
     {
-      $obj  =  '_obj';
+      $obj  =  'view_data';
     }
     while (is_int(strpos($tag, '.')))
     {
@@ -891,8 +891,8 @@ class QuickSkinParser
   }
 
   /* Determine Template Command from Variable Name
-   * {variable}             :  array( "echo",              "variable" )  ->  echo $_obj['variable']
-   * {variable > new_name}  :  array( "_obj['new_name']=", "variable" )  ->  $_obj['new_name']= $_obj['variable']
+   * {variable}             :  array( "echo",              "variable" )  ->  echo $view_data['variable']
+   * {variable > new_name}  :  array( "view_data['new_name']=", "variable" )  ->  $view_data['new_name']= $view_data['variable']
    * @param string $tag Variale Name used in Template
    * @return array  Array Command, Variable
    * @access private
