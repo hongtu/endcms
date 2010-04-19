@@ -1,0 +1,46 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" lang="zh-CN"> 
+<head>
+	<!-- INCLUDE meta.html -->
+</head>
+<body>
+<div class='maindiv'>
+
+<div class="headerdiv">
+	<!-- INCLUDE header.html -->
+</div>
+
+<div id='content'>
+	<div id='admin_left' onselectstart="return false;">
+		<div id="admin_left_b">
+	    	<div class="module">
+				<h2>我最常用</h2>
+				{menus=model('log')->count_menu(10)}
+				<ul class="admin-left">
+					<!-- BEGIN menus -->
+					<li><a href="{url}">{info}</a></li>
+					<!-- END -->
+			    </ul>
+			</div>
+		</div>
+    </div>
+    <div id='main'>    
+        <div id="main_b">
+			<div id="position">
+				{CURRENT_POSITION}: 后台首页
+			</div>
+        	欢迎使用ENDCMS内容管理系统。<br />
+			<br />
+			程序开发： Longbill ( <a href="http://longbill.cn" target="_blank">http://longbill.cn</a> longbill.cn@gmail.com)<br />
+			界面设计： EndTo ( <a href="http://endto.com" target="_blank">http://endto.com</a> )
+        </div>
+        
+    </div>
+</div>
+
+
+<!-- INCLUDE footer.html -->
+
+</div>
+</body>
+</html>
