@@ -3,7 +3,7 @@ include(END_VIEWER_DIR.'common.php');
 $blog = model('blog');
 ?><!-- INCLUDE header.html -->
 {id=intval(_get.id)}
-{items=$blog->get_list()}
+{items=model('blog')->get_list()}
 
 <div id='content'>
 	<div id='left'>

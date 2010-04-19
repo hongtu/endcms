@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- 主机: localhost
--- 生成日期: 2010 年 04 月 08 日 13:26
+-- 生成日期: 2010 年 04 月 19 日 23:41
 -- 服务器版本: 5.0.41
 -- PHP 版本: 5.2.5
 
@@ -27,7 +27,7 @@ CREATE TABLE IF NOT EXISTS `end_admin` (
   `email` varchar(100) collate utf8_unicode_ci default NULL,
   `status` varchar(100) collate utf8_unicode_ci default NULL,
   UNIQUE KEY `id` (`admin_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=35 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=36 ;
 
 --
 -- 转存表中的数据 `end_admin`
@@ -35,7 +35,7 @@ CREATE TABLE IF NOT EXISTS `end_admin` (
 
 INSERT INTO `end_admin` (`admin_id`, `rights_id`, `name`, `password`, `email`, `status`) VALUES
 (1, 1, 'longbill', '55d7e24398e9cc418e630d1602a6609f43cefef0', 'aaa@aaa.com', 'admin'),
-(33, 0, 'umv', 'fb312dfbca62f37635126a7c012a3d30ab176863', 'umv', NULL);
+(35, 0, 'endcms', '77fbc280bf0900b454c5b83ab0b52fb965d30811', 'endcms@endcms.com', NULL);
 
 -- --------------------------------------------------------
 
@@ -93,8 +93,9 @@ CREATE TABLE IF NOT EXISTS `end_category` (
   `alias` varchar(200) collate utf8_unicode_ci NOT NULL default '',
   `system` enum('yes','no') collate utf8_unicode_ci NOT NULL default 'no',
   UNIQUE KEY `category_id` (`category_id`),
-  KEY `alias` (`url`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=17 ;
+  KEY `alias` (`url`),
+  KEY `alias_2` (`alias`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=18 ;
 
 --
 -- 转存表中的数据 `end_category`
@@ -104,12 +105,13 @@ INSERT INTO `end_category` (`category_id`, `parent_id`, `name`, `description`, `
 (10, 9, 'Index', '返回首页', NULL, 10, 'link', 1269952671, 0, './', '', '_self', '', '', 'no'),
 (11, 9, 'About', '刘春龙的个人简介', '刘春龙', 0, 'page', 1269953497, 0, 'about/', '<p>\r\n	哈哈哈。不错啊</p>\r\n', '', '关于刘春龙', '', 'no'),
 (12, 9, 'Projects', 'ceshi', 'ceshi', 5, 'page', 1269962981, 0, 'projects/', '<p>\r\n	fdsaf sadfdsa</p>\r\n', '', '测试', '', 'no'),
-(9, 0, '博客导航', '', NULL, -2, 'folder', 1270555503, 0, '', '', '', '', 'aa', 'yes'),
+(9, 0, '博客导航', '', NULL, -2, 'folder', 1270708556, 0, '', '', '', '', 'navigation', 'yes'),
 (5, 0, '博客分类', '', NULL, 1, 'folder', 1270608613, 0, '', '', '', '', '', 'yes'),
 (6, 5, 'Works', NULL, NULL, 0, 'blog_list', 1269226114, 0, '', '', '', '', '', 'no'),
 (7, 5, 'Mac', NULL, NULL, 0, 'blog_list', 1269226116, 0, '', '', '', '', '', 'no'),
 (8, 5, 'Other', NULL, NULL, 0, 'blog_list', 1269226119, 0, '', '', '', '', '', 'no'),
-(16, 0, '评论管理', NULL, NULL, 0, 'comment_list', 1270608609, 1270608601, '', '', '', '', '', 'no');
+(16, 0, '评论管理', NULL, NULL, 0, 'comment_list', 1270708559, 1270608601, '', '', '', '', '', 'yes'),
+(17, 0, '系统设置', NULL, NULL, -3, 'config_list', 1271691282, 1271691272, '', '', '', '', '', 'no');
 
 -- --------------------------------------------------------
 
@@ -145,6 +147,7 @@ INSERT INTO `end_comment` (`comment_id`, `blog_id`, `email`, `name`, `content`, 
 
 CREATE TABLE IF NOT EXISTS `end_config` (
   `config_id` int(11) unsigned NOT NULL auto_increment,
+  `category_id` int(11) NOT NULL,
   `name` varchar(50) collate utf8_unicode_ci default NULL,
   `value` varchar(200) collate utf8_unicode_ci default NULL,
   `updated_at` timestamp NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
@@ -158,9 +161,182 @@ CREATE TABLE IF NOT EXISTS `end_config` (
 -- 转存表中的数据 `end_config`
 --
 
-INSERT INTO `end_config` (`config_id`, `name`, `value`, `updated_at`, `type`, `description`, `order_id`) VALUES
-(2, 'site_name', '刘春龙的博客', '2010-03-24 18:22:49', 'text', '站点名字', 1),
-(4, 'upload_file_types', '图片：*.jpg; *.png;*.jpeg;*.gif;<br>文档：*.doc;*.docx;*.xls;*.ppt;<br>压缩：*.rar;*.zip;*.7z;', '2010-01-26 17:33:36', 'textarea', '全站上传文件类型限制', 0);
+INSERT INTO `end_config` (`config_id`, `category_id`, `name`, `value`, `updated_at`, `type`, `description`, `order_id`) VALUES
+(2, 17, 'site_name', '刘春龙的博客', '2010-04-19 23:37:03', 'text', '站点名字', 1),
+(4, 17, 'upload_file_types', '图片：*.jpg;&nbsp;*.png;*.jpeg;*.gif;<br>文档：*.doc;*.docx;*.xls;*.ppt;<br>压缩：*.rar;*.zip;*.7z;', '2010-04-19 23:37:23', 'textarea', '全站上传文件类型限制', 0);
+
+-- --------------------------------------------------------
+
+--
+-- 表的结构 `end_log`
+--
+
+CREATE TABLE IF NOT EXISTS `end_log` (
+  `log_id` int(10) unsigned NOT NULL auto_increment,
+  `admin_id` int(10) unsigned NOT NULL,
+  `controller` varchar(100) character set utf8 collate utf8_unicode_ci NOT NULL,
+  `url` varchar(200) character set utf8 collate utf8_unicode_ci NOT NULL,
+  `menu` tinyint(4) NOT NULL,
+  `time` int(11) NOT NULL default '0',
+  `info` varchar(200) character set utf8 collate utf8_unicode_ci NOT NULL,
+  PRIMARY KEY  (`log_id`),
+  KEY `admin_id` (`admin_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=228 ;
+
+--
+-- 转存表中的数据 `end_log`
+--
+
+INSERT INTO `end_log` (`log_id`, `admin_id`, `controller`, `url`, `menu`, `time`, `info`) VALUES
+(79, 0, 'login', '/admin.php?p=login&module=admin&backurl=admin.php%3Fp%3Dadmin', 0, 1271691179, ''),
+(80, 0, 'login', '/admin.php?p=login&module=admin&m=login&backurl=admin.php%3Fp%3Dadmin', 0, 1271691182, ''),
+(81, 1, 'admin', 'admin.php?p=admin', 1, 1271691182, ' 管理管理员'),
+(82, 1, 'ajax', '/admin.php?p=ajax&m=delete&table=admin&id=33', 0, 1271691188, ''),
+(83, 1, 'admin', '/admin.php?m=new_admin&p=admin', 0, 1271691202, ''),
+(84, 1, 'admin', 'admin.php?p=admin', 1, 1271691204, ' 管理管理员'),
+(85, 1, 'category', 'admin.php?p=category&category_id=', 1, 1271691205, ' 栏目管理&gt;'),
+(86, 1, 'item', '/admin.php?p=item', 0, 1271691206, ''),
+(87, 1, 'category', 'admin.php?p=category&category_id=', 1, 1271691208, ' 栏目管理&gt;'),
+(88, 1, 'item', '/admin.php?p=item', 0, 1271691208, ''),
+(89, 1, 'item', 'admin.php?p=item&category_id=16', 1, 1271691216, ' 内容管理&gt;评论管理'),
+(90, 1, 'item', 'admin.php?p=item&category_id=8', 1, 1271691219, ' 内容管理&gt;Other'),
+(91, 1, 'item', 'admin.php?p=item&category_id=7', 1, 1271691219, ' 内容管理&gt;Mac'),
+(92, 1, 'item', 'admin.php?p=item&category_id=6', 1, 1271691220, ' 内容管理&gt;Works'),
+(93, 1, 'item', '/admin.php?p=item&category_id=10', 0, 1271691228, ''),
+(94, 1, 'item', '/admin.php?p=item&category_id=10', 0, 1271691229, ''),
+(95, 1, 'item', '/admin.php?p=item&category_id=12', 0, 1271691230, ''),
+(96, 1, 'item', '/admin.php?p=item&category_id=11', 0, 1271691232, ''),
+(97, 1, 'item', '/admin.php?p=item&category_id=12', 0, 1271691234, ''),
+(98, 1, 'item', '/admin.php?p=item&category_id=11', 0, 1271691235, ''),
+(99, 1, 'item', '/admin.php?p=item&category_id=12', 0, 1271691236, ''),
+(100, 1, 'item', '/admin.php?p=item&category_id=11', 0, 1271691237, ''),
+(101, 1, 'item', '/admin.php?p=item&category_id=12', 0, 1271691238, ''),
+(102, 1, 'item', '/admin.php?p=item&category_id=11', 0, 1271691239, ''),
+(103, 1, 'item', '/admin.php?p=item&category_id=10', 0, 1271691241, ''),
+(104, 1, 'item', '/admin.php?p=item&category_id=12', 0, 1271691242, ''),
+(105, 1, 'item', '/admin.php?p=item&category_id=11', 0, 1271691243, ''),
+(106, 1, 'item', '/admin.php?p=item&category_id=12', 0, 1271691244, ''),
+(107, 1, 'item', '/admin.php?p=item&category_id=10', 0, 1271691246, ''),
+(108, 1, 'item', '/admin.php?p=item&category_id=11', 0, 1271691247, ''),
+(109, 1, 'item', '/admin.php?p=item&category_id=12', 0, 1271691247, ''),
+(110, 1, 'item', '/admin.php?p=item&category_id=10', 0, 1271691248, ''),
+(111, 1, 'item', '/admin.php?p=item&category_id=12', 0, 1271691249, ''),
+(112, 1, 'item', '/admin.php?p=item&category_id=11', 0, 1271691249, ''),
+(113, 1, 'item', '/admin.php?p=item&category_id=12', 0, 1271691250, ''),
+(114, 1, 'item', '/admin.php?p=item&category_id=11', 0, 1271691253, ''),
+(115, 1, 'item', '/admin.php?p=item&category_id=12', 0, 1271691254, ''),
+(116, 1, 'item', 'admin.php?p=item&category_id=16', 1, 1271691261, ' 内容管理&gt;评论管理'),
+(117, 1, 'category', 'admin.php?p=category&category_id=', 1, 1271691267, ' 栏目管理&gt;'),
+(118, 1, 'category', '/admin.php?m=new_category&p=category&category_id=0', 0, 1271691272, ''),
+(119, 1, 'category', 'admin.php?p=category&category_id=', 1, 1271691273, ' 栏目管理&gt;'),
+(120, 1, 'ajax', '/admin.php?p=ajax&m=update&table=category&column=order_id&id=17', 0, 1271691279, ''),
+(121, 1, 'ajax', '/admin.php?p=ajax&m=update&table=category&column=status&id=17', 0, 1271691282, ''),
+(122, 1, 'item', '/admin.php?p=item', 0, 1271691284, ''),
+(123, 1, 'item', '/admin.php?p=item', 0, 1271691285, ''),
+(124, 1, 'item', '/admin.php?p=item&category_id=17', 0, 1271691285, ''),
+(125, 1, 'item', 'admin.php?p=item&category_id=17', 1, 1271691303, ' 内容管理&gt;系统设置'),
+(126, 1, 'ajax', '/admin.php?p=ajax&m=update&table=config&column=value&id=4', 0, 1271691360, ''),
+(127, 1, 'item', '/admin.php?p=item&action=edit_item&category_id=17&item_id=2', 0, 1271691422, ''),
+(128, 1, 'item', '/admin.php?m=edit_item&p=item&item_id=2&category_id=17', 0, 1271691423, ''),
+(129, 1, 'item', 'admin.php?p=item&category_id=17', 1, 1271691424, ' 内容管理&gt;系统设置'),
+(130, 1, 'item', '/admin.php?p=item&action=edit_item&category_id=17&item_id=4', 0, 1271691426, ''),
+(131, 1, 'item', '/admin.php?m=edit_item&p=item&item_id=4&category_id=17', 0, 1271691430, ''),
+(132, 1, 'item', '/admin.php?m=edit_item&p=item&item_id=4&category_id=17', 0, 1271691443, ''),
+(133, 1, 'item', 'admin.php?p=item&category_id=17', 1, 1271691444, ' 内容管理&gt;系统设置'),
+(134, 1, 'item', '/admin.php?p=item&action=edit_item&category_id=17&item_id=4', 0, 1271691448, ''),
+(135, 1, 'item', '/admin.php?m=edit_item&p=item&item_id=4&category_id=17', 0, 1271691450, ''),
+(136, 1, 'item', 'admin.php?p=item&category_id=17', 1, 1271691451, ' 内容管理&gt;系统设置'),
+(137, 1, 'category', 'admin.php?p=category&category_id=', 1, 1271691466, ' 栏目管理&gt;'),
+(138, 1, '', '/admin.php', 0, 1271691467, ''),
+(139, 1, 'category', 'admin.php?p=category&category_id=', 1, 1271691469, ' 栏目管理&gt;'),
+(140, 1, '', '/admin.php', 0, 1271691476, ''),
+(141, 1, 'category', 'admin.php?p=category&category_id=', 1, 1271691478, ' 栏目管理&gt;'),
+(142, 1, 'category', 'admin.php?p=category&category_id=', 1, 1271691485, ' 栏目管理&gt;'),
+(143, 1, 'category', 'admin.php?p=category&category_id=', 1, 1271691486, ' 栏目管理&gt;'),
+(144, 1, 'category', 'admin.php?p=category&category_id=', 1, 1271691486, ' 栏目管理&gt;'),
+(145, 1, 'category', 'admin.php?p=category&category_id=', 1, 1271691487, ' 栏目管理&gt;'),
+(146, 1, 'category', 'admin.php?p=category&category_id=', 1, 1271691487, ' 栏目管理&gt;'),
+(147, 1, 'category', 'admin.php?p=category&category_id=', 1, 1271691487, ' 栏目管理&gt;'),
+(148, 1, 'category', 'admin.php?p=category&category_id=', 1, 1271691487, ' 栏目管理&gt;'),
+(149, 1, 'category', 'admin.php?p=category&category_id=', 1, 1271691487, ' 栏目管理&gt;'),
+(150, 1, 'category', 'admin.php?p=category&category_id=', 1, 1271691487, ' 栏目管理&gt;'),
+(151, 1, 'category', 'admin.php?p=category&category_id=', 1, 1271691487, ' 栏目管理&gt;'),
+(152, 1, 'category', 'admin.php?p=category&category_id=', 1, 1271691488, ' 栏目管理&gt;'),
+(153, 1, 'category', 'admin.php?p=category&category_id=', 1, 1271691488, ' 栏目管理&gt;'),
+(154, 1, 'category', 'admin.php?p=category&category_id=', 1, 1271691488, ' 栏目管理&gt;'),
+(155, 1, 'category', 'admin.php?p=category&category_id=', 1, 1271691488, ' 栏目管理&gt;'),
+(156, 1, 'category', 'admin.php?p=category&category_id=', 1, 1271691488, ' 栏目管理&gt;'),
+(157, 1, 'category', 'admin.php?p=category&category_id=', 1, 1271691489, ' 栏目管理&gt;'),
+(158, 1, 'category', 'admin.php?p=category&category_id=', 1, 1271691489, ' 栏目管理&gt;'),
+(159, 1, 'category', 'admin.php?p=category&category_id=', 1, 1271691489, ' 栏目管理&gt;'),
+(160, 1, 'category', 'admin.php?p=category&category_id=', 1, 1271691489, ' 栏目管理&gt;'),
+(161, 1, 'category', 'admin.php?p=category&category_id=', 1, 1271691489, ' 栏目管理&gt;'),
+(162, 1, '', '/admin.php', 0, 1271691490, ''),
+(163, 1, 'category', 'admin.php?p=category&category_id=', 1, 1271691492, ' 栏目管理&gt;'),
+(164, 1, '', '/admin.php', 0, 1271691494, ''),
+(165, 1, 'item', 'admin.php?p=item&category_id=17', 1, 1271691495, ' 内容管理&gt;系统设置'),
+(166, 1, 'category', 'admin.php?p=category&category_id=', 1, 1271691503, ' 栏目管理&gt;'),
+(167, 1, 'item', '/admin.php?p=item', 0, 1271691505, ''),
+(168, 1, 'item', 'admin.php?p=item&category_id=7', 1, 1271691509, ' 内容管理&gt;Mac'),
+(169, 1, 'item', '/admin.php?p=item', 0, 1271691511, ''),
+(170, 1, '', '/admin.php', 0, 1271691513, ''),
+(171, 1, 'item', 'admin.php?p=item&category_id=17', 1, 1271691517, ' 内容管理&gt;系统设置'),
+(172, 1, 'category', 'admin.php?p=category&category_id=', 1, 1271691518, ' 栏目管理&gt;'),
+(173, 1, 'category', 'admin.php?p=category&category_id=5', 1, 1271691519, ' 栏目管理&gt;博客分类'),
+(174, 1, 'category', 'admin.php?p=category&category_id=7', 1, 1271691521, ' 栏目管理&gt;Mac'),
+(175, 1, 'category', 'admin.php?p=category&category_id=5', 1, 1271691522, ' 栏目管理&gt;博客分类'),
+(176, 1, 'category', 'admin.php?p=category&category_id=5', 1, 1271691523, ' 栏目管理&gt;博客分类'),
+(177, 1, 'category', 'admin.php?p=category&category_id=5', 1, 1271691524, ' 栏目管理&gt;博客分类'),
+(178, 1, 'category', 'admin.php?p=category&category_id=5', 1, 1271691524, ' 栏目管理&gt;博客分类'),
+(179, 1, 'category', 'admin.php?p=category&category_id=5', 1, 1271691525, ' 栏目管理&gt;博客分类'),
+(180, 1, 'category', 'admin.php?p=category&category_id=5', 1, 1271691525, ' 栏目管理&gt;博客分类'),
+(181, 1, 'category', 'admin.php?p=category&category_id=5', 1, 1271691525, ' 栏目管理&gt;博客分类'),
+(182, 1, 'category', 'admin.php?p=category&category_id=5', 1, 1271691525, ' 栏目管理&gt;博客分类'),
+(183, 1, 'category', 'admin.php?p=category&category_id=5', 1, 1271691525, ' 栏目管理&gt;博客分类'),
+(184, 1, 'category', 'admin.php?p=category&category_id=5', 1, 1271691526, ' 栏目管理&gt;博客分类'),
+(185, 1, 'category', 'admin.php?p=category&category_id=5', 1, 1271691526, ' 栏目管理&gt;博客分类'),
+(186, 1, 'category', 'admin.php?p=category&category_id=5', 1, 1271691526, ' 栏目管理&gt;博客分类'),
+(187, 1, '', '/admin.php', 0, 1271691527, ''),
+(188, 1, 'item', 'admin.php?p=item&category_id=17', 1, 1271691530, ' 内容管理&gt;系统设置'),
+(189, 1, '', '/admin.php', 0, 1271691533, ''),
+(190, 1, 'item', '/admin.php?p=item', 0, 1271691545, ''),
+(191, 1, 'item', 'admin.php?p=item&category_id=8', 1, 1271691547, ' 内容管理&gt;Other'),
+(192, 1, 'item', 'admin.php?p=item&category_id=7', 1, 1271691548, ' 内容管理&gt;Mac'),
+(193, 1, 'item', 'admin.php?p=item&category_id=6', 1, 1271691549, ' 内容管理&gt;Works'),
+(194, 1, '', '/admin.php', 0, 1271691550, ''),
+(195, 1, 'item', '/admin.php?p=item', 0, 1271691552, ''),
+(196, 1, 'item', '/admin.php?p=item&category_id=10', 0, 1271691554, ''),
+(197, 1, 'item', '/admin.php?p=item&category_id=12', 0, 1271691555, ''),
+(198, 1, 'item', '/admin.php?p=item&category_id=11', 0, 1271691556, ''),
+(199, 1, '', '/admin.php', 0, 1271691557, ''),
+(200, 1, 'category', 'admin.php?p=category&category_id=', 1, 1271691559, ' 栏目管理&gt;'),
+(201, 1, 'category', 'admin.php?p=category&category_id=9', 1, 1271691560, ' 栏目管理&gt;博客导航'),
+(202, 1, 'category', 'admin.php?p=category&category_id=10', 1, 1271691561, ' 栏目管理&gt;Index'),
+(203, 1, 'category', 'admin.php?p=category&category_id=12', 1, 1271691561, ' 栏目管理&gt;Projects'),
+(204, 1, 'category', 'admin.php?p=category&category_id=11', 1, 1271691562, ' 栏目管理&gt;About'),
+(205, 1, '', '/admin.php', 0, 1271691563, ''),
+(206, 1, 'admin', 'admin.php?p=admin', 1, 1271691582, ' 管理管理员'),
+(207, 1, 'category', 'admin.php?p=category&category_id=', 1, 1271691585, ' 栏目管理&gt;'),
+(208, 1, 'item', '/admin.php?p=item', 0, 1271691587, ''),
+(209, 1, 'category', 'admin.php?p=category&category_id=', 1, 1271691635, ' 栏目管理&gt;'),
+(210, 1, 'admin', 'admin.php?p=admin', 1, 1271691636, ' 管理管理员'),
+(211, 1, '', '/admin.php', 0, 1271691637, ''),
+(212, 1, 'item', '/admin.php?p=item', 0, 1271691638, ''),
+(213, 1, '', '/admin.php', 0, 1271691639, ''),
+(214, 1, 'item', '/admin.php?p=item', 0, 1271691645, ''),
+(215, 1, 'category', 'admin.php?p=category&category_id=', 1, 1271691646, ' 栏目管理&gt;'),
+(216, 1, 'item', '/admin.php?p=item', 0, 1271691647, ''),
+(217, 1, 'category', 'admin.php?p=category&category_id=', 1, 1271691648, ' 栏目管理&gt;'),
+(218, 1, 'item', '/admin.php?p=item', 0, 1271691648, ''),
+(219, 1, 'category', 'admin.php?p=category&category_id=', 1, 1271691649, ' 栏目管理&gt;'),
+(220, 1, 'item', '/admin.php?p=item', 0, 1271691652, ''),
+(221, 1, 'category', 'admin.php?p=category&category_id=', 1, 1271691653, ' 栏目管理&gt;'),
+(222, 1, 'item', '/admin.php?p=item', 0, 1271691654, ''),
+(223, 1, 'category', 'admin.php?p=category&category_id=', 1, 1271691655, ' 栏目管理&gt;'),
+(224, 1, 'admin', 'admin.php?p=admin', 1, 1271691656, ' 管理管理员'),
+(225, 1, 'rights', 'admin.php?p=rights', 1, 1271691658, '管理角色/权限'),
+(226, 1, 'admin', 'admin.php?p=admin', 1, 1271691666, ' 管理管理员'),
+(227, 1, 'item', '/admin.php?p=item', 0, 1271691669, '');
 
 -- --------------------------------------------------------
 
@@ -183,25 +359,3 @@ CREATE TABLE IF NOT EXISTS `end_rights` (
 
 INSERT INTO `end_rights` (`rights_id`, `name`, `description`, `order_id`, `rights`) VALUES
 (1, '超级管理员', '拥有所有权限', 9, 'category_add,category_update,category_delete,item_view,item_add,item_update,item_delete,account_update,admin_add,admin_update,admin_update_password,admin_delete,config_add,config_update,config_delete,upload_add,rights_add,rights_update,rights_delete,blog_view,blog_add,blog_update,blog_delete,comment_add,comment_update,comment_delete');
-
-
-
-
-
--- --------------------------------------------------------
-
---
--- 表的结构 `end_log`
---
-
-CREATE TABLE IF NOT EXISTS `end_log` (
-  `log_id` int(10) unsigned NOT NULL auto_increment,
-  `admin_id` int(10) unsigned NOT NULL,
-  `controller` varchar(100) character set utf8 collate utf8_unicode_ci NOT NULL,
-  `url` varchar(200) character set utf8 collate utf8_unicode_ci NOT NULL,
-  `menu` tinyint(4) NOT NULL,
-  `time` int(11) NOT NULL default '0',
-  `info` varchar(200) character set utf8 collate utf8_unicode_ci NOT NULL,
-  PRIMARY KEY  (`log_id`),
-  KEY `admin_id` (`admin_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=79 ;
