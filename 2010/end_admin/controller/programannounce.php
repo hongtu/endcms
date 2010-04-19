@@ -21,7 +21,7 @@ if ($action == 'add')
 	{
 		if ($announce->add(array(
 			'program_id'=>$program_id,
-			'user_id'=>$_SESSION['login_user']['admin_id'],
+			'user_id'=>get_admin_id(),
 			'content'=>$content
 			)))
 		{

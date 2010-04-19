@@ -240,7 +240,7 @@ class QuickSkin
     $_obj  =  &$_top;
     $_stack_cnt  =  0;
     $_stack[$_stack_cnt++]  =  $_obj;
-
+	
     /* Check if template is already compiled */
     $queryString = $_SERVER['QUERY_STRING'];
     //$cpl_file_name = preg_replace('/[:\/.\\\\]/', '_', $this->tpl_file);
@@ -279,6 +279,7 @@ class QuickSkin
         }
       }
       /* Execute Compiled Template */
+		extract($_obj);
       include($this->cpl_file);
     }
     else
@@ -556,20 +557,13 @@ class QuickSkinParser
 
     $header = '';
 
+	
     /* Code to allow subtemplates */
-    if(eregi("<!-- INCLUDE", $this->template))
+    if(preg_match("/<!--\s+INCLUDE/", $this->template))
     {
       while ($this->count_subtemplates() > 0)
       {
-        preg_match_all('/<!-- INCLUDE {([a-zA-Z0-9\-_.]+)} -->/', $this->template, $tvar);
-        foreach($tvar[1] as $subfile)
-        {
-		
-          $subst = "<!-- INCLUDE ".$data[$subfile]." -->";
-          $this->template = str_replace("<!-- INCLUDE {".$subfile."} -->", $subst, $this->template);
-        }
-		
-        preg_match_all('/<!-- INCLUDE ([a-zA-Z0-9\-_.\/]+) -->/', $this->template, $tvar);
+        preg_match_all('/<!--\s+INCLUDE\s+([a-zA-Z0-9\-_.\/]+)\s+-->/', $this->template, $tvar);
         foreach($tvar[1] as $subfile)
         {
 			if (dirname($this->tpl_file))
@@ -584,43 +578,108 @@ class QuickSkinParser
           {
             $subst = 'QuickSkin Parser Error: Subtemplate not found: \''.$subfile.'\'';
           }
-          $this->template = str_replace("<!-- INCLUDE $subfile -->", $subst, $this->template);
+          $this->template = preg_replace("/<!--\s+INCLUDE\s+$subfile\s+-->/", $subst, $this->template);
         }
       }
     }
     /* END, ELSE Blocks */
-    $page  =  preg_replace("/<!-- ENDIF.+?-->/", "<?php } ?>", $this->template);
-    $page  =  preg_replace("/<!-- END[ a-zA-Z0-9_.]* -->/",  "<?php } \$_obj=\$_stack[--\$_stack_cnt];} ?>", $page);
-    $page  =  str_replace("<!-- ELSE -->", "<?php } else { ?>", $page);
+    $page  =  preg_replace("/<!--\s+ENDIF.+?-->/", "<?php } ?>", $this->template);
+    $page  =  preg_replace("/<!--\s+END\s*[a-zA-Z0-9_.]*\s+-->/",  "<?php } \$_obj=\$_stack[--\$_stack_cnt];} ?>", $page);
+    $page  =  preg_replace("/<!--\s+ELSE\s+-->/", "<?php } else { ?>", $page);
+	
+	$_var_exp = '\$[a-zA-Z0-9\_\-\>]+';
+	$_fn_exp = '[a-zA-Z0-9\_]+\([^\}]*\)';
+	
+	if (preg_match_all('/\{('.$_var_exp.'\s*\=\s*[^}]+)\}/',$page,$ms))
+	{
+		foreach($ms[1] as $cnt=>$tag)
+		{
+			if (!preg_match('/\;\s*$/',$tag)) $tag.=';';
+			$code = "<?php ".$tag." ?>";
+			$page = str_replace($ms[0][$cnt],$code,$page);
+		}
+	}
+	
+	if (preg_match_all('/\{(\$[a-zA-Z\_][^\}]*)\}/',$page,$ms))
+	{
+		foreach($ms[1] as $cnt=>$tag)
+		{
+			$code = "<?php echo ".$tag." ?>";
+			$page = str_replace($ms[0][$cnt],$code,$page);
+		}
+	}
+	
+	
+	if (preg_match_all('/\{(foreach\s*\([^}]+\))\}/',$page,$ms))
+	{
+		foreach($ms[1] as $cnt=>$tag)
+		{
+			$code = "<?php ".$tag.":?>";
+			$page = str_replace($ms[0][$cnt],$code,$page);
+		}
+	}
+	
+	if (preg_match_all('/\{((else)?if\s*\([^}]+\))\}/',$page,$ms))
+	{
+		foreach($ms[1] as $cnt=>$tag)
+		{
+			$code = "<?php ".$tag.":?>";
+			$page = str_replace($ms[0][$cnt],$code,$page);
+		}
+	}
+	
+	if (preg_match_all('/\{([a-zA-Z0-9\_]+\([^\}]*\))\}/',$page,$ms))
+	{
+		foreach($ms[1] as $cnt=>$tag)
+		{
+			if (preg_match('/[\(\,]\s*[a-z\_]/i',$tag)) continue; //避免 {strip_tags(value)} 被处理
+			if (!preg_match('/\;\s*$/',$tag)) $tag.=';';
+			$code = "<?php echo ".$tag."?>";
+			$page = str_replace($ms[0][$cnt],$code,$page);
+		}
+	}
+	
+	
+	$page = preg_replace('/\{\/foreach\}/i','<?php endforeach; ?>',$page);
+	$page = preg_replace('/\{else\}/i','<?php else: ?>',$page);
+	$page = preg_replace('/\{\/if\}/i','<?php endif; ?>',$page);
+	
+	
 	
     /* 'BEGIN - END' Blocks */
-    if (preg_match_all('/<!-- BEGIN ([a-zA-Z0-9_.]+) -->/', $page, $var))
+    if (preg_match_all('/<!--\s+BEGIN\s+([a-zA-Z0-9\.\_]+)\s+-->/', $page, $var))
     {
-      foreach ($var[1] as $tag)
+      foreach ($var[1] as $cnt=>$tag)
       {
-        list($parent, $block)  =  $this->var_name($tag);
-        $code  =  "<?php "
-            . "if (!empty(\$$parent"."['$block'])){"
-            . "if (!is_array(\$$parent"."['$block']))"
-            . "\$$parent"."['$block']=array(array('$block'=>\$$parent"."['$block'])); "
-            . "\$_stack[\$_stack_cnt++]=\$_obj; "
-            . "\$rowcounter = 0; "
-            . "foreach (\$$parent"."['$block'] as \$rowcnt=>\$$block) { "
-              . "\$$block"."['ROWCNT']=(\$rowcounter); "
-              . "\$$block"."['ALTROW']=\$rowcounter%2; "
-              . "\$$block"."['ROWBIT']=\$rowcounter%2; "
-              . "\$$block"."['_key']=\$rowcnt; "
-              . "\$rowcounter++;"
-              . "\$_obj=&\$$block; ?>";
-        $page  =  str_replace("<!-- BEGIN $tag -->",  $code,  $page);
-      }
-    }
+
+	        list($parent, $block)  =  $this->var_name($tag);
+	        $code  =  "<?php "
+	            . "if (!empty(\$$parent"."['$block'])){"
+	            . "if (!is_array(\$$parent"."['$block']))"
+	            . "\$$parent"."['$block']=array(array('$block'=>\$$parent"."['$block'])); "
+	            . "\$_stack[\$_stack_cnt++]=\$_obj; "
+	            . "\$rowcounter = 0; "
+	            . "foreach (\$$parent"."['$block'] as \$rowcnt=>\$$block) { "
+				."\$_key=\$rowcnt; \$_value=\$$block; "
+	            . "\$rowcounter++;"
+				." if (is_array(\$$block)){"
+	              . "\$$block"."['_rowcount']=(\$rowcounter); "
+	              . "\$$block"."['_oddrow']=\$rowcounter%2; "
+				  . "\$$block"."['_key']=\$_key; "
+	              . "\$_obj=&\$$block; "
+				."}else{"
+				."\$_obj=array('_key'=>\$_key,'_value'=>\$_value); }"
+				."?>";
+	        $page  =  str_replace($var[0][$cnt],  $code,  $page);
+	 }
+	}
+	
 
     /* replace logical operator in [ELSE]IF */
     $this->replace_logic_expression($page);
 
     /* 'IF nnn=mmm' Blocks */
-    if (preg_match_all('/<!-- (ELSE)?IF ([a-zA-Z0-9_.]+)\s*([!=<>]+)\s*(["]?[^"]*["]?) -->/', $page, $var))
+    if (preg_match_all('/<!--\s+(ELSE)?IF\s+([a-zA-Z0-9_.]+)\s*([!=<>]+)\s*(["]?[^"]*["]?)\s+-->/', $page, $var))
     {
       foreach ($var[2] as $cnt => $tag)
       {
@@ -649,7 +708,7 @@ class QuickSkinParser
 
 
     /* 'IF nnn' Blocks */
-    if (preg_match_all('/<!-- (ELSE)?IF ([a-zA-Z0-9_.]+) -->/', $page, $var))
+    if (preg_match_all('/<!--\s+(ELSE)?IF\s+([a-zA-Z0-9_.]+)\s+-->/', $page, $var))
     {
       foreach ($var[2] as $cnt => $tag)
       {
@@ -660,7 +719,7 @@ class QuickSkinParser
       }
     }
     /* 'IF !nnn' Blocks */
-    if (preg_match_all('/<!-- (ELSE)?IF !([a-zA-Z0-9_.]+) -->/', $page, $var))
+    if (preg_match_all('/<!--\s+(ELSE)?IF\s+!([a-zA-Z0-9_.]+)\s+-->/', $page, $var))
     {
       foreach ($var[2] as $cnt => $tag)
       {
@@ -671,80 +730,19 @@ class QuickSkinParser
       }
     }
 
-    /* 'IF {extension:variable}'=mmm Blocks
-     * e.g.
-     * <!-- IF {count:list} > 0 -->
-     * List populated
-     * <!-- ELSE -->
-     * List is empty
-     * <!-- ENDIF -->
-     * thanks to Khary Sharpe (ksharpe [at] kharysharpe [dot] com) for the initial code
-     */
-    if (preg_match_all('/<!-- (ELSE)?IF {([a-zA-Z0-9_]+):([^}]*)}\s*([!=<>]+)\s*(["]?[^"]*["]?) -->/', $page, $var))
-    {
-      foreach ($var[2] as $cnt => $tag)
-      {
-        list($parent, $block)  =  $this->var_name($tag);
-        $cmp   =  $var[4][$cnt];
-        $val   =  $var[5][$cnt];
-        $else  =  ($var[1][$cnt] == 'ELSE') ? '} else' : '';
-        if ($cmp == '=')
-        {
-          $cmp  =  '==';
-        }
-
-        $extension = $var[2][$cnt];
-        $extension_var = $var[3][$cnt];
-        if (!isset($this->extension_tagged[$extension]))
-        {
-          //$header .= 'include_once  "'.$this->extensions_dir."/".$this->extension_prefix."$extension.php\";\n";
-          $this->extension_tagged[$extension] = true;
-        }
-        if (!strlen($extension_var))
-        {
-          $code = "<?php $else"."if ($extension() $cmp $val) { ?>";
-        }
-        elseif (substr($extension_var, 0, 1) == '"')
-        {
-          $code = "<?php $else"."if ($extension($extension_var) $cmp $val) { ?>";
-        }
-        elseif (strpos($extension_var, ','))
-        {
-          list($tag, $addparam) = explode(',', $extension_var, 2);
-          list($block, $skalar) = $this->var_name($extension_var);
-          if (preg_match('/^([a-zA-Z_]+)/', $addparam, $match))
-          {
-            $nexttag = $match[1];
-            list($nextblock, $nextskalar) = $this->var_name($nexttag);
-            $addparam = substr($addparam, strlen($nexttag));
-            $code = "<?php $else"."if ($extension(\$$block"."['$skalar'],\$$nextblock"."['$nextskalar']"."$addparam) $cmp $val) { ?>";
-          }
-          else
-          {
-            $code = "<?php $else"."if ($extension(\$$block"."['$skalar'],$addparam) $cmp $val) { ?>";
-          }
-        }
-        else
-        {
-          list($block, $skalar) = $this->var_name($extension_var);
-          $code = "<?php $else"."if ($extension(\$$block"."['$skalar']) $cmp $val) { ?>";
-        }
-        $page = str_replace($var[0][$cnt], $code, $page);
-      }
-    }
-			//	Replace language constants
-			// e.g  {TITLE} will be <?php echo lang('TITLE'); //
-			// added by Longbill  longbill.cn@gmail.com
-			if (preg_match_all('/'.$this->left_delimiter.'([A-Z0-9_]+)'.$this->right_delimiter.'/', $page, $var))
-			{
-				foreach ($var[1] as $fulltag)
-				{
-					$code  =  lang($fulltag);
-					$page  =  str_replace(stripslashes($this->left_delimiter).$fulltag.stripslashes($this->right_delimiter),  $code,  $page);
-				}
-			}
-			
-			
+	//	Replace language constants
+	// e.g  {TITLE} will be <?php echo lang('TITLE'); //
+	// added by Longbill  longbill.cn@gmail.com
+	if (preg_match_all('/'.$this->left_delimiter.'([A-Z0-9_]+)'.$this->right_delimiter.'/', $page, $var))
+	{
+		foreach ($var[1] as $fulltag)
+		{
+			$code  =  lang($fulltag);
+			$page  =  str_replace(stripslashes($this->left_delimiter).$fulltag.stripslashes($this->right_delimiter),  $code,  $page);
+		}
+	}
+	
+	
     /* Replace Scalars */
     if (preg_match_all('/'.$this->left_delimiter.'([a-zA-Z0-9_.>]+)'.$this->right_delimiter.'/', $page, $var))
     {
@@ -770,53 +768,6 @@ class QuickSkinParser
     }
 	*/
 	
-    /* Include Extensions */
-    if (preg_match_all('/'.$this->left_delimiter.'([a-zA-Z0-9_]+):([^}]*)'.$this->right_delimiter.'/', $page, $var))
-    {
-      foreach ($var[2] as $cnt => $tag)
-      {
-        /* Determin Command (echo / $obj[n]=) */
-        list($cmd, $tag)  =  $this->cmd_name($tag);
-
-        $extension  =  $var[1][$cnt];
-        if (!isset($this->extension_tagged[$extension]))
-        {
-          //$header .= 'include_once "'.$this->extensions_dir."/".$this->extension_prefix."$extension.php\";\n";
-          $this->extension_tagged[$extension]  =  true;
-        }
-        if (!strlen($tag))
-        {
-          $code  =  "<?php $cmd $extension();\n?>";
-        }
-        elseif (substr($tag, 0, 1) == '"')
-        {
-          $code  =  "<?php $cmd $extension($tag);\n?>";
-        }
-        elseif (strpos($tag, ','))
-        {
-          list($tag, $addparam)  =  explode(',', $tag, 2);
-          list($block, $skalar)  =  $this->var_name($tag);
-          if (preg_match('/^([a-zA-Z_]+)/', $addparam, $match))
-          {
-            $nexttag   =  $match[1];
-            list($nextblock, $nextskalar)  =  $this->var_name($nexttag);
-            $addparam  =  substr($addparam, strlen($nexttag));
-            $code  =  "<?php $cmd $extension(\$$block"."['$skalar'],\$$nextblock"."['$nextskalar']"."$addparam);\n?>";
-          }
-          else
-          {
-            $code  =  "<?php $cmd $extension(\$$block"."['$skalar'],$addparam);\n?>";
-          }
-        }
-        else
-        {
-          list($block, $skalar)  =  $this->var_name($tag);
-          $code  =  "<?php\n$cmd $extension(\$$block"."['$skalar']);\n?>";
-        }
-        $page  =  str_replace($var[0][$cnt],  $code,  $page);
-      }
-    }
-
 
     /* 
 		Include Extensions LIKE : {date("Y-m",item.update_time)}
@@ -846,7 +797,7 @@ class QuickSkinParser
 			$__tags = array();
 		  	foreach($_tags as $__tag)
 		  	{
-				if (preg_match('/^([a-zA-Z_\.]+)/', $__tag))
+				if (preg_match('/^([a-z0-9A-Z_\.]+)$/', $__tag))
 				{
 					$__arr = $this->var_name($__tag);
 					$__tags[] = '$'.$__arr[0].'[\''.$__arr[1].'\']';
@@ -969,7 +920,7 @@ class QuickSkinParser
    */
   function count_subtemplates()
   {
-    $ret = preg_match_all('/<!-- INCLUDE ([a-zA-Z0-9_.]+) -->/', $this->template, $tvar);
+    $ret = preg_match_all('/<!--\s+INCLUDE ([a-zA-Z0-9_.\/]+)\s+-->/', $this->template, $tvar);
     unset($tvar);
     return $ret;
   }

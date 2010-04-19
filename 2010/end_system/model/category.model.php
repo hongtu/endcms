@@ -9,10 +9,11 @@ class MODEL_CATEGORY extends MODEL
 		$this->id = 'category_id';
 	}
 
-	function get_cats_by_alias($a)
+	function get_cats($a)
 	{
 		global $db;
-		return $db->get_all("SELECT * FROM `$this->table` WHERE `parent_id`=(SELECT `$this->id` FROM `$this->table` WHERE `alias`='$a') ORDER BY `$this->order_id` DESC,`$this->id` DESC");
+		$_key = (is_numeric($s))?$this->id:'alias';
+		return $db->get_all("SELECT * FROM `$this->table` WHERE `parent_id`=(SELECT `$this->id` FROM `$this->table` WHERE `$_key`='$a') ORDER BY `$this->order_id` DESC,`$this->id` DESC");
 	}
 
 	function delete($id)
@@ -37,7 +38,7 @@ class MODEL_CATEGORY extends MODEL
 		check_allowed_category($id,END_RESPONSE == 'text');
 		if (!$data['update_time']) $data['update_time'] = time();
 		$re = parent::update($id,$data);
-		if ($re && $data['url'])
+		if ($re && $data['url'] && defined('MAKE_HTML') && MAKE_HTML)
 		{
 			end_mkdir(END_ROOT.$data['url']);
 		}

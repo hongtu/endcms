@@ -79,6 +79,20 @@ if (!$view_html)
 	$_viewer_dir = END_VIEWER_DIR;
 	function_exists('end_on_template_begin') && end_on_template_begin();
 	$_template = template($_viewer);
+	
+	
+	
+	
+	$r_path = dirname($_SERVER['REQUEST_URI'].'index.php');
+	if (!$r_path || $r_path == '/') $r_path = '.';
+	$_url_base = str_replace('//','/',$_SERVER['HTTP_HOST'].'/'.$r_path.'/');
+	$view_data['url_base'] = 'http://'.$_url_base;
+	$view_data['_get'] = $_GET;
+	$view_data['_post'] = $_POST;
+	$view_data['_session'] = $_SESSION;
+	$view_data['config'] = $config;
+	$view_data['debug'] = END_DEBUG;
+	
 	//total output array by controllers
 	$_template->assign($view_data);
 	

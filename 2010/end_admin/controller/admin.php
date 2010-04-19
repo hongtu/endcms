@@ -34,7 +34,11 @@ if ($m == 'new_admin')
 		$action = 'new_admin';
 	}
 }
-
+else
+{
+	define('END_LOG_INFO',LANG_TITLE);
+	define('END_LOG_URL','admin.php?p=admin');
+}
 $view_data['page_description'] = lang('ADMIN_INDEX');
 $view_data['err_msg'] = $err_msg;
 $view_data['admin_id'] = $admin_id;

@@ -63,13 +63,14 @@ if ($item_type)
 		/*
 			TODO 保存状态
 		*/
-		/*
+		
 		//点击保存草稿或者直接发布按钮
-		if ($_POST['publish'] && $item->status['shown'])
-			$data['status'] = $item->status['shown']?$item->status['shown']['id']:$item->status['ready']['id'];
-		else if ($_POST['saveonly'] && $item->status['auditing']) 
-			$data['status'] = $item->status['auditing']['id'];
-		*/
+		if (isset($_POST['saveas']))
+		{
+			foreach($_POST['saveas'] as $_k=>$_v)
+				$data['status'] = intval($_k);
+		}
+		
 		//处理提交的数据
 		include('edit_field.php');
 		
@@ -146,6 +147,7 @@ if ($item_type)
 			'categories' => $category->get_list(),
 			'category_id' => $category_id,
 			'fields'=>$_fields,
+			'statuses'=>$end_models[$item_type.'_list']['status'],
 			'this_category' => $this_category,
 			'category_name' => $this_category['name'],
 			'login_user' => $_SESSION['login_user'],
@@ -201,7 +203,7 @@ if ($item_type)
 		$items = end_page(
 				$item,
 				$cond,
-				isset($config[$item_type.'_pagesize'])?$config[$item_type.'_pagesize']:20 //默认20条每页
+				isset($end_models[$item_type.'_list']['list_items'])?$end_models[$item_type.'_list']['list_items']:20 //默认20条每页
 			);
 
 		//根据category_id得到category_name
@@ -222,19 +224,24 @@ if ($item_type)
 		{
 			$view_data['this_category'] = array( 'is_list' => true);
 		}
+		define('END_LOG_INFO',LANG_NAVI_ITEM.'&gt;'.$this_category['name']);
+		define('END_LOG_URL','admin.php?p=item&category_id='.$this_category['category_id']);
 		$view_data['page_description'] = lang('ITEM_LIST');
 	}
 
 	//nav buttons
-	$statuses = array();
-	foreach($end_models[$item_type.'_list']['status'] as $_key=>$_val) $statuses[] = array('index'=>$_key,'value'=>$_val);
+	if (isset($end_models[$item_type.'_list']['status']))
+	{
+		$statuses = array();
+		foreach($end_models[$item_type.'_list']['status'] as $_key=>$_val) $statuses[] = array('index'=>$_key,'value'=>$_val);
 	
-	$view_data['statuses'] = $statuses;
+		$view_data['statuses'] = $statuses;
+	}
 	$view_data['category_tree'] = print_category_tree($category->tree_category(array('status'=>$this_category['status'])));
 	$view_data['current_status_all'] = isset($_GET['status'])?false:true;
 	$view_data['err_msg'] = $err_msg;
 	$view_data['success_msg'] = $success_msg;
-	$view_data['position'] = $category->position_category($category_id);
+	
 	$view_data['status'] = $view_data['current_status_all']?'-999':$status;
 	$view_data['table'] = $item_type;
 	$view_data['category_id'] = $category_id;
@@ -252,7 +259,7 @@ if ($item_type)
 	$list_tmp->assign($view_data);
 	$view_data['list_content'] = $list_tmp->result();
 }
-
+$view_data['position'] = $category->position_category($category_id);
 $_tree = $category->tree_category(0);
 $view_data['all_category'] = print_category_tree_link('admin.php?p=item&category_id=',$_tree,$category_id);
 $view_data['search'] = isset($_GET['search'])?$_GET['search']:'';

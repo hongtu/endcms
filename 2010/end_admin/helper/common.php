@@ -407,6 +407,10 @@ function end_show_edit_button($id)
 }
 function end_show_delete_button($id)
 {
-	echo ' <a href="admin.php?p=item&action=edit_item&category_id='.END_ADMIN_CATEGORY_ID.'&item_id='.$id.'">'.LANG_DELETE.'</a> ';
+	echo ' <a href="javascript:;//'.$id.'" onclick="delete_item(\''.$id.'\',this)">'.LANG_DELETE.'</a> ';
 }
 
+function get_admin_id()
+{
+	return $_SESSION['login_user']['admin_id'];
+}
