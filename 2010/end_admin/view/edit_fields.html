@@ -2,6 +2,7 @@
 /*
 根据配置生成编辑页面的各个输入字段
 */
+	if (!$view_data['fields']) $view_data['fields'] = array();
 	foreach($view_data['fields'] as $name=>$data)
 	{
 		if (preg_match('/^__/',$name)) continue;
@@ -15,6 +16,7 @@
 		//显示之前的预处理
 		if ($data['prefilter'] && function_exists($data['prefilter']))
 		{
+			$view_data['content']['__orig_'.$name] = $view_data['content'][$name];
 			$view_data['content'][$name] = $data['prefilter']($view_data['content'][$name]);
 		}
 		
@@ -73,16 +75,16 @@
 		//日期时间
 		elseif ($data['type'] == 'datetime')
 		{
-			$t = $view_data['content'][$name];
+			$t = $view_data['content']['__orig_'.$name];
 			if (is_array($t))
 				$t = mktime($t['h'],$t['i'],$t['s'],$t['m'],$t['d'],$t['y']);
 			if (!$t) $t = time();
-			echo "<input type='text' size='4' value='".date('Y',$t)."' name='$name[y]'>年";
-			echo "<input type='text' size='2' value='".date('m',$t)."' name='$name[m]'>月";
-			echo "<input type='text' size='2' value='".date('d',$t)."' name='$name[d]'>日 ";
-			echo "<input type='text' size='2' value='".date('H',$t)."' name='$name[h]'>时";
-			echo "<input type='text' size='2' value='".date('i',$t)."' name='$name[i]'>分";
-			echo "<input type='text' size='2' value='".date('s',$t)."' name='$name[s]'>秒";
+			echo "<input type='text' size='4' value='".date('Y',$t)."' name='".$name."[y]'>年";
+			echo "<input type='text' size='2' value='".date('m',$t)."' name='".$name."[m]'>月";
+			echo "<input type='text' size='2' value='".date('d',$t)."' name='".$name."[d]'>日 ";
+			echo "<input type='text' size='2' value='".date('H',$t)."' name='".$name."[h]'>时";
+			echo "<input type='text' size='2' value='".date('i',$t)."' name='".$name."[i]'>分";
+			echo "<input type='text' size='2' value='".date('s',$t)."' name='".$name."[s]'>秒";
 		}
 		//超文本编辑器
 		elseif ($data['type'] == 'richtext')

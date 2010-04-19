@@ -64,10 +64,15 @@ a:hover { color:#c60;}
 #sys_table table td,#sys_table table th{ border-color:#C4CED4; border-style:solid; border-width:0 1px 1px 0; height:25px; text-align:left;}
 #sys_table table td { padding:3px; }
 table.list_table { border-color:#C4CED4; border-style:solid; border-width:1px 0 0 1px; margin:5px  auto 5px; width:100%;}
-table.list_table th{ padding:0 3px; border-right:1px solid #c4ced4;border-bottom:1px solid #c4ced4;background:url(../images/sys_tit_bg.png) repeat-x; color:#666;  font-weight:bold; }
+table.list_table th{ padding:0 3px; border-right:1px solid #c4ced4;border-bottom:1px solid #c4ced4;background:#e4ecf2 url(../images/sys_tit_bg.png) repeat-x 50% 50%; color:#666;  font-weight:bold; }
 table.list_table th a { color:#3462a4; }
 table.list_table td{ border-color:#C4CED4; border-style:solid; border-width:0 1px 1px 0; text-align:left;}
 table.list_table td div {height:100%;}
+
+
+table.view_table { border-color:#C4CED4; border-style:solid; border-width:1px 0 0 1px; margin:10px;margin-left:0;}
+table.view_table th{ padding:0 10px; border-right:1px solid #c4ced4;border-bottom:1px solid #c4ced4;background-color:#e4eef4; color:#666;  font-weight:bold; }
+table.view_table td{ border-color:#C4CED4; border-style:solid; border-width:0 1px 1px 0; text-align:left; padding:0 3px;}
 
 td div.table-cell { padding:0 3px; }
 

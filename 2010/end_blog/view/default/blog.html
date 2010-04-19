@@ -1,10 +1,10 @@
 <?php
-include(END_VIEWER_DIR.'common.php');
 $blog = model('blog');
 $comment = model('comment');
 $id = intval($_GET['id']);
 $view_data['blog'] = $blog->get_one($id);
 $view_data['comments'] = $comment->get_list(array('blog_id'=>$id));
+$view_data['title'] = $view_data['blog']['name'];
 ?><!-- INCLUDE header.html -->
 
 <div id='content'>

@@ -56,7 +56,7 @@
 									<a href="javascript:;" onclick="if (confirm('{DELETE_CONFIRM}')) delete_category({category_id},this);">{DELETE}</a> 
 									<?php endif;
 									if (check_show('update')):?>
-		                          	<a href="javascript:edit_page({category_id});">{EDIT}</a> 
+		                          	<a href="admin.php?p=category&action=edit_category&category_id={category_id}">{EDIT}</a> 
 									<?php endif;?>
 									<!-- a href="index.php?p=category&category_id={category_id}" target="_blank">{PREVIEW}</a-->
 		                        </td>
@@ -68,20 +68,6 @@
                 
 </table>
 
-<script>
-function edit_page(id)
-{
-	var o = $('[status_category_id='+id+']');
-	if (o.attr('admin_select_value') == '1')
-	{
-		alert('{CAN_NOT_EDIT_LIST_CATEGORY}');
-	}
-	else
-	{
-		window.location.href = "admin.php?p=category&action=edit_category&category_id="+id;
-	}
-}
-</script>
 
 <div style="display:none">
 <select id="status_select">

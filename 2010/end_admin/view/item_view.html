@@ -1,14 +1,14 @@
-
-<table cellpadding="0" cellspacing="0" border="0" id="item_table" class="list_table">
+<h3>查看内容</h3>
+<table cellpadding="0" cellspacing="0" border="0" id="item_table" class="view_table">
 <?php
 
 /*
-根据配置生成编辑页面的各个输入字段
+根据配置生成编辑页面的各个显示字段
 */
 	foreach($view_data['fields'] as $name=>$data)
 	{
 		if (preg_match('/^__/',$name)) continue;
-		echo "<tr><th>{$data[name]}";
+		echo "<tr><th>".$data['name'];
 		echo "</th>";
 		echo "<td>";
 		
@@ -21,53 +21,59 @@
 		//简单文字输入
 		if ($data['type'] == 'text')
 		{
-			echo htmlspecialchars($view_data[content][$name]);
+			echo $view_data['content'][$name];
 		}
 		//复选框
 		elseif ($data['type'] == 'checkbox')
 		{
-			echo $view_data[content][$name];
+			echo $view_data['content'][$name];
 		}
 		//文件
 		elseif ($data['type'] == 'file')
 		{	
-			$t = $view_data[content][$name];
-			if(!empty($view_data[content]['file_name'])) {
-				$t = $view_data[content]['file_name'];
-			} 
-			echo "<a href='{$view_data[content][$name]}' target='_blank'>{$t}</a>";
+			$t = $view_data['content'][$name];
+			echo "<a href='$t' target='_blank'>$t</a>";
 		}
 		//多行文本
 		elseif ($data['type'] == 'textarea')
 		{
-			echo htmlspecialchars($view_data[content][$name]);
+			echo $view_data['content'][$name];
 		}
 		//下拉选框
 		elseif ($data['type'] == 'select')
 		{
 			foreach($data['options'] as $_val=>$_name)
 			{
-				echo " $_name ";
+				if ($view_data['content'][$name] == $_val) echo $_name;
 			}
-			
 		}
 		//日期时间
 		elseif ($data['type'] == 'datetime')
 		{
-			$t = $view_data[content][$name];
-			echo $t;
-
+			$t = $view_data['content'][$name];
+			echo date('Y-m-d H:i:s',$t);
 		}
 		//超文本编辑器
 		elseif ($data['type'] == 'richtext')
 		{
-			echo $view_data[content][$name];
+			echo $view_data['content'][$name];
 		}
-		if ($data['description']) echo $data['description'];
 		echo "</td></tr>\n";
+	}
+	if ($view_data['statuses'])
+	{
+		echo '<tr><th>状态</th>';
+		echo '<td>';
+		foreach($view_data['statuses'] as $_val=>$_name)
+		{
+			if ($view_data['content']['status'] == $_val) echo $_name;
+		}
+		echo '</td></tr>';
 	}
 ?>
 <tr>
-	<td colspan="2" style="text-align:center;"><a href="javascript:history.go(-1);">返回上一页</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="admin.php?p=item&category_id={top.category_id}">返回栏目</a></td>
+	<td colspan="2" style="text-align:center;"><a href="<?php 
+		echo $_SESSION['end_last_list_page']?$_SESSION['end_last_list_page']:'admin.php?p=item&category_id='.$view_data['category_id'];
+	?>">返回</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="admin.php?p=item&action=edit_item&item_id={item_id}&category_id={category_id}">编辑</a></td>
 </tr>
 </table>

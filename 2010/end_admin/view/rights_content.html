@@ -8,11 +8,11 @@ $('#position').append(' &gt; 权限设置');
 <?php $this_rights=$view_data['this_rights'];?>
 <!-- BEGIN rights -->
 <tr>
-	<td width="150"><?php echo lang('rights_'.$view_data['name']);?></td>
+	<td width="150">{description}</td>
 	<td>
-	<?php foreach($view_data['rights'] as $rgiht)
+	<?php foreach($view_data['rights'] as $right)
 	{
-		$view_data['this_name'] = $view_data['name'].'_'.$rgiht;
+		$view_data['this_name'] = $view_data['name'].'_'.$right;
 		?>
 	<input 
 		type="checkbox" 
@@ -22,7 +22,10 @@ $('#position').append(' &gt; 权限设置');
 		<?php if ($this_rights[$view_data['this_name']]) {?>
 		checked="checked"
 		<?php }?>
-	><label for="{this_name}"><?php echo trim(lang('rights_'.$rgiht));?></label>
+	><label for="{this_name}"><?php 
+		$_n = 'LANG_'.strtoupper('rights_'.$right);
+		echo (defined($_n))?constant($_n):$right;
+	?></label>
 	<?php }?>
 	</td>
 </tr>
@@ -37,7 +40,8 @@ $('#position').append(' &gt; 权限设置');
 		<br />
 		<!-- BEGIN categories -->
 		{print_space(depth)}
-		<input type="checkbox" right="category" name="category_{category_id}" id="category_{category_id}" <?php
+		<input type="checkbox" onclick="check_rights_checked(this)" right="category" categoryid="{category_id}" name="category_{category_id}" depth="{depth}" parentid="{parent_id}"
+		id="category_{category_id}" <?php
 		if ($this_rights['category_'.$view_data['category_id']])
 		{
 			echo 'checked="checked" ';
@@ -51,6 +55,30 @@ $('#position').append(' &gt; 权限设置');
 </form>
 
 <script>
+function check_rights_checked(o)
+{
+	o = $(o);
+	if (!o.get(0).checked) //如果取消，那么取消所有子分类
+	{
+		cancle_check(o);
+	}
+	else
+	{
+		while(parseInt(o.attr('depth')) > 0)
+		{
+			o = $('input[name=category_'+o.attr('parentid')+']').attr('checked','checked');
+		}
+	}
+}
+
+function cancle_check(tmp)
+{
+	tmp.removeAttr('checked').each(function()
+	{
+		cancle_check($('[input[parentid='+$(this).attr('categoryid')+']'));
+	});
+}
+
 $(function()
 {
 	<?php if ($some_checked) { ?>
