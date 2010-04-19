@@ -36,7 +36,6 @@ define('END_THEME_DIR',END_ROOT.'end_'.END_MODULE.'/view/');
 
 define('END_ADMIN_LOG_NUM',1000);
 
-
 //open debug mode
 define('END_DEBUG',true);
 
@@ -44,10 +43,10 @@ define('END_DEBUG',true);
 define('END_MYSQL_PREFIX','end_');
 //mysql information
 $mysql = array(
-	'username' => "wap",
-	'password' => "wap",
+	'username' => "endcms",
+	'password' => "2012",
 	'server' => "localhost",
-	'database' => "kbear",
+	'database' => "endcms",
 );
 
 //global config ( could be overwritten by end_config entries in database ) 

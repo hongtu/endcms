@@ -183,3 +183,25 @@ CREATE TABLE IF NOT EXISTS `end_rights` (
 
 INSERT INTO `end_rights` (`rights_id`, `name`, `description`, `order_id`, `rights`) VALUES
 (1, '超级管理员', '拥有所有权限', 9, 'category_add,category_update,category_delete,item_view,item_add,item_update,item_delete,account_update,admin_add,admin_update,admin_update_password,admin_delete,config_add,config_update,config_delete,upload_add,rights_add,rights_update,rights_delete,blog_view,blog_add,blog_update,blog_delete,comment_add,comment_update,comment_delete');
+
+
+
+
+
+-- --------------------------------------------------------
+
+--
+-- 表的结构 `end_log`
+--
+
+CREATE TABLE IF NOT EXISTS `end_log` (
+  `log_id` int(10) unsigned NOT NULL auto_increment,
+  `admin_id` int(10) unsigned NOT NULL,
+  `controller` varchar(100) character set utf8 collate utf8_unicode_ci NOT NULL,
+  `url` varchar(200) character set utf8 collate utf8_unicode_ci NOT NULL,
+  `menu` tinyint(4) NOT NULL,
+  `time` int(11) NOT NULL default '0',
+  `info` varchar(200) character set utf8 collate utf8_unicode_ci NOT NULL,
+  PRIMARY KEY  (`log_id`),
+  KEY `admin_id` (`admin_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=79 ;
