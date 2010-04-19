@@ -36,6 +36,11 @@ elseif ($m == 'config' && $rights_id)
 	$data['rights'] = join(',',$r);
 	if ($rights->update($rights_id,$data)) end_exit(lang('rights_updated'),'admin.php?p=rights');
 }
+else
+{
+	define('END_LOG_INFO',LANG_TITLE);
+	define('END_LOG_URL','admin.php?p=rights');
+}
 if ($rights_id)
 {
 	$_SESSION['login_user']['rights']['limit_category_id'] = false;

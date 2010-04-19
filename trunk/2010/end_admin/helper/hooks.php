@@ -25,6 +25,7 @@ function end_on_ready()
 	{
 		if (!$_SESSION['login_user'])
 		{
+			model('log')->clear_old(0,END_ADMIN_LOG_NUM);
 			header("location:admin.php?p=login&module=admin&backurl="
 				.urlencode(basename($_SERVER['SCRIPT_NAME']).'?'.$_SERVER['QUERY_STRING']));
 			die;
@@ -52,27 +53,20 @@ function end_on_ready()
 			$_SESSION['login_user']['allowed_categories'] = join(',',$allowed_categories);
 		}
 	}
+	$log = array('admin_id'=>get_admin_id(),'controller'=>$_GET['p'],'time'=>time(),'url'=>$_SERVER['REQUEST_URI']);
+	define('END_LOG_ID',model('log')->add($log));
+	model('log')->clear_old($log['admin_id'],END_ADMIN_LOG_NUM);
 }
 
 
 function end_on_template_begin()
 {
-	global $view_data,$config; 
+	global $view_data;
+	if (intval(END_LOG_ID) > 0 && !count($_POST) && defined('END_LOG_INFO'))
+	{
+		$log = array('menu' => '1','info' => END_LOG_INFO);
+		if (defined('END_LOG_URL')) $log['url'] = END_LOG_URL;
+		model('log')->update(END_LOG_ID,$log);
+	}
 	$view_data['login_user'] = $_SESSION['login_user'];
-	$view_data['now'] = array(
-		'time' => date('H:i'),
-		'year' => date('Y'),
-		'month' => date('m'),
-		'day' => date('d')
-		);
-	
-	$r_path = dirname($_SERVER['REQUEST_URI']);
-	if (!$r_path || $r_path == '/') $r_path = '.';
-	$_url_base = str_replace('/./','/','http://'.$_SERVER['HTTP_HOST'].'/'.$r_path.'/');
-	$view_data['url_base'] = $_url_base;
-	$view_data['_get'] = $_GET;
-	$view_data['_post'] = $_POST;
-	$view_data['_session'] = $_SESSION;
-	$view_data['config'] = $config;
-	$view_data['debug'] = END_DEBUG;
 }

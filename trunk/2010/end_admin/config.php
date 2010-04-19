@@ -1,6 +1,76 @@
 <?php
 
+
 $end_models = array();
+
+
+$end_models['config'] = array(
+	'name'=>"系统设置",
+	'type'=>'list',
+	'list_items'=>10,
+	'category_fields'=>array(
+		'name'=>array(
+			'name'=>'页面名称',
+			'type'=>'text',
+			'null'=>false
+		),
+		'description'=> array(
+			'name'=>'描述',
+			'type'=>'text',
+			'null'=>true,
+		)
+	),
+	'list_fields'=>array(
+		'order_id'=>array(
+			'name'=>'优先级',
+			'edit'=>true,
+			'width'=>50,
+			'sort'=>true
+		),
+		'name'=>array(
+			'name'=>'变量名',
+			'search'=>true,
+			'width'=>100,
+			'sort'=>true
+		),
+		'description'=>array(
+			'name'=>'描述',
+			'edit'=>true,
+			'search'=>true,
+			'sort'=>true
+		),
+		'value'=>array(
+			'name'=>'值',
+			'edit'=>true,
+			'type'=>'textarea',
+			'height'=>'20',
+			'search'=>true,
+			'sort'=>true
+		),
+		'_options'=>array(
+			'name'=>'操作',
+			'filter'=>'end_config_options'
+		),
+	),
+	'fields'=>array(
+		'name'=>array(
+			'name'=>'变量名',
+			'type'=>'text',
+			'width'=>200
+		),
+		'description'=>array(
+			'name'=>'描述',
+			'width'=>200,
+			'type'=>'text'
+		),
+		'value'=>array(
+			'name'=>'值',
+			'width'=>400,
+			'height'=>200,
+			'type'=>'textarea',
+		)
+	),
+);
 
 $end_models['page'] = array(
 	'name'=>"<span style='color:#49e'>页面</span>",
@@ -120,3 +190,10 @@ $end_rights = array
 		'rights'=>array('add','update','delete')
 	)
 );
+
+
+function end_config_options($c)
+{
+	end_show_edit_button($c['config_id']);
+	end_show_delete_button($c['config_id']);
+}

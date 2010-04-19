@@ -112,7 +112,13 @@ if ($action == "edit_category")
 	$view_data['page_content'] = $temp->result();
 }
 
+$view_data['this_category'] = $category->get_one($category_id);
 
+if (!$action && !$m)
+{
+	define('END_LOG_INFO',LANG_NAVI_CATEGORY.'&gt;'.$view_data['this_category']['name']);
+	define('END_LOG_URL','admin.php?p=category&category_id='.$view_data['this_category']['category_id']);
+}
 //显示分类和项目列表
 
 $categories = $category->get_list( array('parent_id'=>$category_id) );
@@ -125,7 +131,7 @@ $view_data['success_msg'] = $success_msg;
 $view_data['category_id'] = $category_id;
 $view_data['position'] = $category->position_category($category_id);
 unset($view_data['position'][count($view_data['position'])-1]);
-$view_data['this_category'] = $category->get_one($category_id);
+
 
 $statuses = array();
 foreach($end_models as $key=>$val)
