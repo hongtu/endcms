@@ -1,23 +1,18 @@
-<?php
-include(END_VIEWER_DIR.'common.php');
-$blog = model('blog');
-?><!-- INCLUDE header.html -->
-{id=intval(_get.id)}
-{items=model('blog')->get_list()}
+<!-- INCLUDE header.html -->
 
 <div id='content'>
 	<div id='left'>
-    	<!-- BEGIN items -->
+    	{foreach(model('blog')->get_list(array('status'=>1)) as $item)}
 		<div class="entry">
-			<a href="{item_link($view_data)}"><h2>{name}</h2></a>
-			<div class="time">{date("F/jS Y",create_time)}</div>
-			<div class="intro">{content}</div>
+			<a href="{item_link($item)}"><h2>{$item['name']}</h2></a>
+			<div class="time">{date("F/jS Y",$item['create_time'])}</div>
+			<div class="intro">{$item['content']}</div>
 			<div class="info">
-				<a href="{item_link($view_data)}" class="more">Read More...</a>
-				<a href="{item_link($view_data)}#comments" class="comments">10 Comments</a>
+				<a href="{item_link($item)}" class="more">Read More...</a>
+				<a href="{item_link($item)}#comments" class="comments">Comments</a>
 			</div>
 		</div>
-		<!-- END -->
+		{/foreach}
     </div>
 	<!-- INCLUDE sidebar.html -->
 	<div class="clear"></div>

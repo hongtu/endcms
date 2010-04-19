@@ -116,8 +116,8 @@ $view_data['this_category'] = $category->get_one($category_id);
 
 if (!$action && !$m)
 {
-	define('END_LOG_INFO',LANG_NAVI_CATEGORY.'&gt;'.$view_data['this_category']['name']);
-	define('END_LOG_URL','admin.php?p=category&category_id='.$view_data['this_category']['category_id']);
+	define('END_LOG_INFO',($category_id)?LANG_NAVI_CATEGORY.'&gt;'.$view_data['this_category']['name']:LANG_NAVI_CATEGORY);
+	define('END_LOG_URL',($category_id)?'admin.php?p=category&category_id='.$view_data['this_category']['category_id']:'admin.php?p=category');
 }
 //显示分类和项目列表
 

@@ -386,6 +386,7 @@ function load_models()
 				{
 					include_once($mfile);
 					$end_models[$v]['model_path'] = $mdir.$v.'/';
+					//define('LANG_RIGHTS_'.strtoupper($v),$end_models[$v]['name']);
 				}
 			}
 			closedir($__h);
@@ -401,6 +402,10 @@ function load_models()
 	$end_models = $_models;
 }
 
+function end_show_view_button($id)
+{
+	echo ' <a href="admin.php?p=item&action=view_item&category_id='.END_ADMIN_CATEGORY_ID.'&item_id='.$id.'">'.LANG_VIEW.'</a> ';
+}
 function end_show_edit_button($id)
 {
 	echo ' <a href="admin.php?p=item&action=edit_item&category_id='.END_ADMIN_CATEGORY_ID.'&item_id='.$id.'">'.LANG_EDIT.'</a> ';

@@ -56,7 +56,8 @@ $end_models['comment'] = array(
 		'blog_id'=>array(
 			'name'=>'日志ID',
 			'width'=>50,
-			'sort'=>true
+			'sort'=>true,
+			'align'=>'center',
 		),
 		'time'=>array(
 			'name'=>'时间',
@@ -84,7 +85,6 @@ $end_models['comment'] = array(
 		'status'=>array(
 			'name'=>'状态',
 			'width'=>50,
-			//'filter'=>'show_comment_status',
 			'edit'=>true,
 			'type'=>'select',
 			'options'=>$comment_status
@@ -99,14 +99,9 @@ $end_models['comment'] = array(
 
 $end_rights[] = array(
 	'name'=>'comment',
+	'description'=>'评论数据管理',
 	'rights'=>array('add','update','delete')
 );
-
-function show_comment_status($status,$statuses)
-{
-	$status = intval($status);
-	return $statuses[$status]?$statuses[$status]:'unkown';
-}
 
 function show_comment_date($t)
 {
@@ -115,7 +110,7 @@ function show_comment_date($t)
 
 function show_comment_options($comment)
 {
+	end_show_view_button($comment['comment_id']);
 	end_show_edit_button($comment['comment_id']);
 	end_show_delete_button($comment['comment_id']);
-	echo ' <a href="admin.php?p=item&item_type=comment&comment_id='.$comment['comment_id'].'">评论</a> ';
 }

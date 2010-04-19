@@ -49,3 +49,8 @@ a img { border:0;}
 
 #bottom { border-top:1px solid #bbb; margin-top:30px;}
 #bottom .content { padding:20px;}
+
+
+.block_links a.link-name { color:#000;font-weight:bold; line-height:14px; display:block; margin-top:5px;}
+.block_links .link-description { line-height:16px; font-size:12p;font-style:italic; margin-bottom:10px;}
+

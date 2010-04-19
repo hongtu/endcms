@@ -8,13 +8,13 @@
 
 <div id="header">
 	<div class="title">
-		<h1>Longbill's Blog</h1>
-		<h2>PHP Javascript And Works</h2>
+		<h1>{$config['site_name']}</h1>
+		<h2>{$config['sub_title']}</h2>
 	</div>
 
 	<ul class="navs">
-		<!-- BEGIN navigations -->
-		<li><a href="{category_link()}" target="{target}">{name}</a></li>
-		<!-- END -->
+		{foreach(get_cats('navigation') as $navi)}
+		<li><a href="{category_link($navi)}" target="{$navi['target']}">{$navi['name']}</a></li>
+		{/foreach}
 	</ul>
 </div>

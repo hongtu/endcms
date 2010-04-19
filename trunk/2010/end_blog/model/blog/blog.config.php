@@ -15,6 +15,7 @@ $end_models['blog'] = array(
 	'type' => 'list', //表示这是一个列表型的模型，对应一个数据库的表
 	'name' => '博客文章列表',	//某型的名字，可以把一个栏目配置成某个模型
 	'status' => $blog_status,
+	'list_items'=>20, //后台每页显示
 	//'no_category'=>true,
 	'category_fields'=> array(
 		'name'=>array(
@@ -59,12 +60,14 @@ $end_models['blog'] = array(
 			'name'=>'ID',
 			'width'=>'30',
 			'sort'=>true,
+			'align'=>'center',
 		),
 		'order_id'=>array(
 			'name'=>'优先级',
 			'width'=>'50',
 			'edit'=>true,
-			'sort'=>true
+			'sort'=>true,
+			'align'=>'center',
 		),
 		
 		'name'=>array(
@@ -104,6 +107,7 @@ $end_models['blog'] = array(
 
 $end_rights[] = array(
 	'name'=>'blog',
+	'description'=>'博客数据管理',
 	'rights'=>array('view','add','update','delete')
 );
 

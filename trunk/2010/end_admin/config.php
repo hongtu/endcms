@@ -163,30 +163,37 @@ $end_rights = array
 (
 	array(
 		'name'=>'category',
+		'description'=>'分类管理',
 		'rights'=> array('add','update','delete')
 	),
 	array( 
 		'name'=>'item',
+		'description'=>'内容管理',
 		'rights'=> array('view','add','update','delete')
 	),
 	array(
 		'name'=>'account',
+		'description'=>'更改密码',
 		'rights'=> array('update')
 	),
 	array(
 		'name'=>'admin',
+		'description'=>'管理员管理',
 		'rights'=> array('add','update','update_password','delete')
 	),
 	array(
 		'name'=>'config',
+		'description'=>'系统设置',
 		'rights'=> array('add','update','delete')
 	),
 	array(
 		'name'=>'upload',
+		'description'=>'文件上传',
 		'rights'=>array('add')
 	),
 	array(
 		'name'=>'rights',
+		'description'=>'角色/权限管理',
 		'rights'=>array('add','update','delete')
 	)
 );

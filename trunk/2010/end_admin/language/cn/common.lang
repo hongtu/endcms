@@ -84,7 +84,7 @@ AVAIL_ACTIONS=可用操作
 UNKNOWN=未知
 INPUT_VAR_ERROR=参数错误
 function=功能
-
+view=查看
 
 
 END_UPLOAD_DIR_ATTACHMENT=上传附件

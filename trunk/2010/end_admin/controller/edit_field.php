@@ -5,7 +5,7 @@
 输出 $data , $errors
 
 */
-
+if (!is_array($_fields)) $fields = array();
 foreach($_fields as $name=>$attr)
 {
 	if (preg_match('/^__/',$name)) continue;

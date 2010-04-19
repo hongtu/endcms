@@ -94,8 +94,7 @@ if ($item_type)
 			{
 				//写入数据库后
 				if ($_fields['__after_db']) $_fields['__after_db']($item->get_one($item_id));
-				
-				$return_to = 'admin.php?p=item&category_id='.$category_id;
+				$return_to = $_POST['return_to']?$_POST['return_to']:'admin.php?p=item&category_id='.$category_id;
 				end_exit(lang('ITEM_SAVE_SUCCESS'),$return_to,1);
 			}
 			else
@@ -126,6 +125,7 @@ if ($item_type)
 		} else {
 			$temp = template('item_edit.html');
 		}
+		
 		if (count($_POST)>0) //re-edit
 		{
 			$_item = $_POST;
@@ -133,6 +133,7 @@ if ($item_type)
 		elseif ($item_id) //edit
 		{
 			$_item = $item->get_one($item_id);
+			$_item['return_to'] = $_SERVER['HTTP_REFERER'];
 			//显示数居前的处理
 			if ($_fields['__before_edit']) $_fields['__before_edit']($_item);
 		}
@@ -155,16 +156,13 @@ if ($item_type)
 				$category->tree_category(array('status'=>$this_category['status'])),
 				$category_id),
 		));
-		if($action == 'view_item') {
-			$view_data['page_description'] = '查看详情';
-		} else {
-			$view_data['page_description'] = lang('EDIT_ITEM');
-		}
+
 		$view_data['page_content'] = $temp->result();
 	} 
 	//显示内容列表
 	else
 	{
+		$_SESSION['end_last_list_page'] = $_SERVER['REQUEST_URI'];
 		$categories_arr = $category->get_list();
 		$categories = array();
 		$all_category = array();
@@ -176,15 +174,21 @@ if ($item_type)
 			}
 			$all_category[$c['category_id']] = $c['name'];
 		}
-
-		//分页处理
+		
+		//分类
 		if($item_model['no_category'])
 			$cond = array('where'=>'1=1');
 		else
 			$cond = array('where'=>"(category_id='$category_id' OR category_id=0)");
-		
-		if (isset($_GET['status'])) $cond['status'] = intval($_GET['status']);
-		
+		//status处理
+		if($item_model['status'])
+		{
+			if (isset($_GET['status']))
+				$cond['status'] = intval($_GET['status']);
+			else
+				$cond['where'].=' AND `status`>=0 ';
+		}
+		//搜索
 		if (is_array($_GET['search']))
 		{
 			foreach($_GET['search'] as $key=>$val)
@@ -193,7 +197,7 @@ if ($item_type)
 				$cond['where'].= " AND `$key` LIKE '%".mysql_escape_string($val)."%' ";
 			}
 		}
-		
+		//排序
 		if ($_GET['order'] && $_GET['asc'])
 			$cond['order'] = $_GET['order'].' asc';
 		else if ($_GET['order'])
@@ -205,13 +209,6 @@ if ($item_type)
 				$cond,
 				isset($end_models[$item_type.'_list']['list_items'])?$end_models[$item_type.'_list']['list_items']:20 //默认20条每页
 			);
-
-		//根据category_id得到category_name
-		for($i=0;$i<count($items);$i++)
-		{
-			$_c = $all_category[$items[$i]['category_id']];
-			$items[$i]['category_name'] = $_c?$_c:lang('DEFAULT_CATEGORY');
-		}
 
 		$view_data['categories'] = $categories;
 		$view_data['items'] = $items;
