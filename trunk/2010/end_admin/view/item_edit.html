@@ -1,0 +1,43 @@
+<div id="sys_table">
+<!-- IF item_id -->
+<form action="admin.php?m=edit_item&p=item&item_id={item_id}&category_id={category_id}" method="post" enctype="multipart/form-data">
+<!-- ELSE -->
+<form action="admin.php?m=new_item&p=item&category_id={category_id}" method="post"  enctype="multipart/form-data" >
+<!-- ENDIF -->
+	<table >
+		<tr>
+			<th class="sys_tit_bg" colspan="2">
+				<h2 class="sys_h2">{if ($item_id)}编辑{else}添加内容{/if}</h2>
+			</th>
+		</tr>
+    	<tr>
+        	<td valign="top">
+				{ITEM_CATEGORY}<span style="color:red">*</span>
+			</td>
+        	<td>
+				<div><select name="category_id" >
+                	<option value="0">{PLEASE_SELECT}</option>
+                		{category_tree}
+                	</select>
+				</div>
+            </td>
+       	</tr>
+    
+        <!-- INCLUDE edit_fields.html -->
+
+        <tr>
+        	<td colspan="2" align="center">
+				<input type="submit" name="save" value="保存" /> &nbsp;
+				<!-- IF statuses -->
+				<!-- BEGIN statuses -->
+				<input type="submit" name="saveas[{_key}]" value="保存为'{strip_tags(_value)}'" /> &nbsp;
+				<!-- END -->
+				<!-- ENDIF -->
+				<input type="button" value="{RETURN}"  onclick="if (confirm('{RETURN_ALERT}')) history.go(-1);" /> &nbsp;
+			</td>
+        </tr>
+     </table>
+     
+        
+   </form>
+</div>

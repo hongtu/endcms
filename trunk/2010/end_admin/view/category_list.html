@@ -1,0 +1,98 @@
+<table  class="list_table" id="category_table" >
+            	<thead>
+                   	<tr>
+						<th style="width:20px;">{CATEGORY_ID}</th>
+                		<th style="width:50px;">{CATEGORY_ORDER_ID}</th>
+                		<th>{CATEGORY_NAME}</th>
+                   		<th style="width:200px;">{CATEGORY_URL}</th>
+                   		<th style="width:70px;">{CATEGORY_STATUS}</th>
+						<!-- IF debug -->
+						<th style="width:30px;">{CATEGORY_SYSTEM}</th>
+						<th style="width:70px;">{CATEGORY_ALIAS}</th>
+						<!-- ENDIF -->
+                        <th style="width:150px;">{CATEGORY_OPTIONS}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                
+          		  	<!-- BEGIN categories -->
+							<tr>
+								<td style="text-align:center">{category_id}</td>
+		               		 	<td><div admin_type="text"
+		                        	admin_para="m=update&table=category&column=order_id&id={category_id}" 
+									style="text-align:center">{order_id}</div></td>
+		               		 	<td><div admin_type="text"
+		                        	admin_para="m=update&table=category&column=name&id={category_id}">{name}</div></td>
+		               		    <td><div admin_type="text" 
+		                        	admin_para="m=update&table=category&column=url&id={category_id}">{url}</div>
+		                        </td>
+								<td>
+									<div admin_type="text"
+					              	admin_para="m=update&table=category&column=status&id={category_id}" 
+					                    admin_select_value="{status}"
+					                    admin_select_source_id="status_select"
+					                    admin_trigger="click" status_category_id="{category_id}"
+										>{show_status(status)}</div>
+								</td>
+								<!-- IF parent.debug -->
+								<td>
+									<div admin_type="text"
+					              	admin_para="m=update&table=category&column=system&id={category_id}" 
+					                    admin_select_value="{system}"
+					                    admin_select_source_id="category_system_select"
+					                    admin_trigger="click" status_category_id="{category_id}"
+										>{system}</div>
+								</td>
+								<td>
+									<div admin_type="text"
+					              	admin_para="m=update&table=category&column=alias&id={category_id}" 
+					                    admin_trigger="click"
+										>{alias}</div>
+								</td>
+								<!-- ENDIF -->
+		                        <td>
+									<a href="admin.php?p=category&category_id={category_id}">{CATEGORY_CHILD}</a> 
+		                          	<?php if (check_show('delete')):?>
+									<a href="javascript:;" onclick="if (confirm('{DELETE_CONFIRM}')) delete_category({category_id},this);">{DELETE}</a> 
+									<?php endif;
+									if (check_show('update')):?>
+		                          	<a href="javascript:edit_page({category_id});">{EDIT}</a> 
+									<?php endif;?>
+									<!-- a href="index.php?p=category&category_id={category_id}" target="_blank">{PREVIEW}</a-->
+		                        </td>
+		               		</tr>
+					
+                    <!-- END -->
+                    
+                </tbody>
+                
+</table>
+
+<script>
+function edit_page(id)
+{
+	var o = $('[status_category_id='+id+']');
+	if (o.attr('admin_select_value') == '1')
+	{
+		alert('{CAN_NOT_EDIT_LIST_CATEGORY}');
+	}
+	else
+	{
+		window.location.href = "admin.php?p=category&action=edit_category&category_id="+id;
+	}
+}
+</script>
+
+<div style="display:none">
+<select id="status_select">
+	<!-- BEGIN statuses -->
+	<option value="{index}">{value}</option>
+	<!-- END -->
+</select>
+</div>
+<div style="display:none">
+<select id="category_system_select">
+	<option value="no">no</option>
+	<option value="yes">yes</option>
+</select>
+</div>
