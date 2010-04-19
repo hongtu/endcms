@@ -5,21 +5,21 @@ $('#position').append(' &gt; 权限设置');
 <a href="javascript:checkall()">{SELECT_ALL}</a>&nbsp;<a href="javascript:inverse()">{SELECT_INVERSE}</a>
 <form action="admin.php?p=rights&m=config&rights_id={this_group.rights_id}" method="post">
 <table style="margin:10px;width:500px;" class="list_table" cellspacing="0">
-<?php $this_rights=$_obj['this_rights'];?>
+<?php $this_rights=$view_data['this_rights'];?>
 <!-- BEGIN rights -->
 <tr>
-	<td width="150"><?php echo lang('rights_'.$_obj['name']);?></td>
+	<td width="150"><?php echo lang('rights_'.$view_data['name']);?></td>
 	<td>
-	<?php foreach($_obj['rights'] as $rgiht)
+	<?php foreach($view_data['rights'] as $rgiht)
 	{
-		$_obj['this_name'] = $_obj['name'].'_'.$rgiht;
+		$view_data['this_name'] = $view_data['name'].'_'.$rgiht;
 		?>
 	<input 
 		type="checkbox" 
 		right="action"
 		name="{this_name}" 
 		id="{this_name}" 
-		<?php if ($this_rights[$_obj['this_name']]) {?>
+		<?php if ($this_rights[$view_data['this_name']]) {?>
 		checked="checked"
 		<?php }?>
 	><label for="{this_name}"><?php echo trim(lang('rights_'.$rgiht));?></label>
@@ -38,7 +38,7 @@ $('#position').append(' &gt; 权限设置');
 		<!-- BEGIN categories -->
 		{print_space(depth)}
 		<input type="checkbox" right="category" name="category_{category_id}" id="category_{category_id}" <?php
-		if ($this_rights['category_'.$_obj['category_id']])
+		if ($this_rights['category_'.$view_data['category_id']])
 		{
 			echo 'checked="checked" ';
 			$some_checked = true;

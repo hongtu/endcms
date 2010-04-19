@@ -5,7 +5,7 @@
 /*
 根据配置生成编辑页面的各个输入字段
 */
-	foreach($_obj['fields'] as $name=>$data)
+	foreach($view_data['fields'] as $name=>$data)
 	{
 		if (preg_match('/^__/',$name)) continue;
 		echo "<tr><th>{$data[name]}";
@@ -15,32 +15,32 @@
 		//显示之前的预处理
 		if ($data['prefilter'] && function_exists($data['prefilter']))
 		{
-			$_obj['content'][$name] = $data['prefilter']($_obj['content'][$name]);
+			$view_data['content'][$name] = $data['prefilter']($view_data['content'][$name]);
 		}
 		
 		//简单文字输入
 		if ($data['type'] == 'text')
 		{
-			echo htmlspecialchars($_obj[content][$name]);
+			echo htmlspecialchars($view_data[content][$name]);
 		}
 		//复选框
 		elseif ($data['type'] == 'checkbox')
 		{
-			echo $_obj[content][$name];
+			echo $view_data[content][$name];
 		}
 		//文件
 		elseif ($data['type'] == 'file')
 		{	
-			$t = $_obj[content][$name];
-			if(!empty($_obj[content]['file_name'])) {
-				$t = $_obj[content]['file_name'];
+			$t = $view_data[content][$name];
+			if(!empty($view_data[content]['file_name'])) {
+				$t = $view_data[content]['file_name'];
 			} 
-			echo "<a href='{$_obj[content][$name]}' target='_blank'>{$t}</a>";
+			echo "<a href='{$view_data[content][$name]}' target='_blank'>{$t}</a>";
 		}
 		//多行文本
 		elseif ($data['type'] == 'textarea')
 		{
-			echo htmlspecialchars($_obj[content][$name]);
+			echo htmlspecialchars($view_data[content][$name]);
 		}
 		//下拉选框
 		elseif ($data['type'] == 'select')
@@ -54,14 +54,14 @@
 		//日期时间
 		elseif ($data['type'] == 'datetime')
 		{
-			$t = $_obj[content][$name];
+			$t = $view_data[content][$name];
 			echo $t;
 
 		}
 		//超文本编辑器
 		elseif ($data['type'] == 'richtext')
 		{
-			echo $_obj[content][$name];
+			echo $view_data[content][$name];
 		}
 		if ($data['description']) echo $data['description'];
 		echo "</td></tr>\n";

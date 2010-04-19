@@ -13,9 +13,9 @@ class END_Loader
 			include_once($_file);
 			if (class_exists('END_'.$f))
 			{
-				eval('$_obj = new END_'.$f.';');
-				$this->loaded['model/'.$_file] = $_obj;
-				return $_obj;
+				eval('$view_data = new END_'.$f.';');
+				$this->loaded['model/'.$_file] = $view_data;
+				return $view_data;
 			}
 			else
 			{
