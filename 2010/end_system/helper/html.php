@@ -201,3 +201,66 @@ function en_substr($s,$end)
 	}
 	return substr($s,0,$end).'...';
 }
+
+/*
+get a substring of UTF-8 words
+*/
+function cn_substr($str, $start, $len,$dotted='')
+{
+	$str = htmlspecialchars_decode(strip_tags($str));
+	$str = str_replace('&nbsp;',' ',$str);
+	$str = preg_replace('/\s+/',' ',$str);
+	$tmpstr = "";
+	$strlen = strlen($str);
+	$cnt = 0;
+	$istr = '';
+	for($i = 0; $i < $strlen; $i++) 
+	{
+        if(ord(substr($str, $i, 1)) > 127) 
+		{
+            $istr = substr($str, $i, 3);
+            $i+=2;
+        }
+		else if (ord(substr($str, $i+1, 1)) <= 127)
+		{
+            $istr = substr($str, $i, 2);
+			$i+=1;
+		}
+		else
+		{
+			$istr = substr($str, $i, 1);
+		}
+		if ( $cnt >= $start && $cnt < $start+$len)
+		{
+			$tmpstr .= $istr;
+		}
+		$cnt++;
+    }
+    $re = ($str == $tmpstr)?$tmpstr:$tmpstr.$dotted;
+	return htmlspecialchars($re);
+}
+
+
+/*
+get client ip address
+*/
+function ip()
+{
+	if(getenv('HTTP_CLIENT_IP') && strcasecmp(getenv('HTTP_CLIENT_IP'), 'unknown'))
+	{
+		$ip = getenv('HTTP_CLIENT_IP');
+	}
+	elseif(getenv('HTTP_X_FORWARDED_FOR') && strcasecmp(getenv('HTTP_X_FORWARDED_FOR'), 'unknown'))
+	{
+		$ip = getenv('HTTP_X_FORWARDED_FOR');
+	}
+	elseif(getenv('REMOTE_ADDR') && strcasecmp(getenv('REMOTE_ADDR'), 'unknown'))
+	{
+		$ip = getenv('REMOTE_ADDR');
+	}
+	elseif(isset($_SERVER['REMOTE_ADDR']) && $_SERVER['REMOTE_ADDR'] && strcasecmp($_SERVER['REMOTE_ADDR'], 'unknown'))
+	{
+		$ip = $_SERVER['REMOTE_ADDR'];
+	}
+	return preg_match("/[\d\.]{7,15}/", $ip, $matches) ? $matches[0] : 'unknown';
+}

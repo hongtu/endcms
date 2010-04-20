@@ -84,4 +84,39 @@ function item_link($o=false)
 }
 
 
+
+/*
+获得过去多久
+比如 3秒  5小时  7天
+*/
+function get_past_time($t,$second='秒',$minite='分',$hour='小时',$day='天',$month='月',$year='年')
+{
+	$d = time()-$t;
+	if ($d < 60)
+	{
+		return $d.$second;
+	}
+	$d = intval($d/60);
+	if ($d < 60)
+	{
+		return $d.$minite;
+	}
+	$d = intval($d/60);
+	if ($d < 24)
+	{
+		return $d.$hour;
+	}
+	$d = intval($d/24);
+	if ($d < 30)
+	{
+		return $d.$day;
+	}
+	$d = intval($d/30);
+	if ($d < 12)
+	{
+		return $d.$month;
+	}
+	return intval($d/12).$year;
+}
+
 ?>

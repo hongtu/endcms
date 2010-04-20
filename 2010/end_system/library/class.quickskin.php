@@ -797,7 +797,7 @@ class QuickSkinParser
 			$__tags = array();
 		  	foreach($_tags as $__tag)
 		  	{
-				if (preg_match('/^([a-z0-9A-Z_\.]+)$/', $__tag))
+				if (preg_match('/^([a-zA-Z\_][a-z0-9A-Z_\.]+)$/', $__tag))
 				{
 					$__arr = $this->var_name($__tag);
 					$__tags[] = '$'.$__arr[0].'[\''.$__arr[1].'\']';

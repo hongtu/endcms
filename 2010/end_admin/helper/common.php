@@ -43,29 +43,7 @@ function check_show($action)
 }
 
 
-/*
-get client ip address
-*/
-function ip()
-{
-	if(getenv('HTTP_CLIENT_IP') && strcasecmp(getenv('HTTP_CLIENT_IP'), 'unknown'))
-	{
-		$ip = getenv('HTTP_CLIENT_IP');
-	}
-	elseif(getenv('HTTP_X_FORWARDED_FOR') && strcasecmp(getenv('HTTP_X_FORWARDED_FOR'), 'unknown'))
-	{
-		$ip = getenv('HTTP_X_FORWARDED_FOR');
-	}
-	elseif(getenv('REMOTE_ADDR') && strcasecmp(getenv('REMOTE_ADDR'), 'unknown'))
-	{
-		$ip = getenv('REMOTE_ADDR');
-	}
-	elseif(isset($_SERVER['REMOTE_ADDR']) && $_SERVER['REMOTE_ADDR'] && strcasecmp($_SERVER['REMOTE_ADDR'], 'unknown'))
-	{
-		$ip = $_SERVER['REMOTE_ADDR'];
-	}
-	return preg_match("/[\d\.]{7,15}/", $ip, $matches) ? $matches[0] : 'unknown';
-}
+
 
 
 /*
@@ -126,35 +104,6 @@ function end_exit($content,$url='javascript:history.go(-1);',$t = 2)
 }
 
 
-/*
-get a substring of UTF-8 words
-*/
-function cn_substr($str, $start, $len,$dotted='')
-{
-	$tmpstr = "";
-	$strlen = strlen($str);
-	$cnt = 0;
-	$istr = '';
-	for($i = 0; $i < $strlen; $i++) 
-	{
-        if(ord(substr($str, $i, 1)) > 127) 
-		{
-            $istr = substr($str, $i, 3);
-            $i+=2;
-        }
-		else
-		{
-            $istr = substr($str, $i, 1);
-		}
-		if ( $cnt >= $start && $cnt < $start+$len)
-		{
-			$tmpstr .= $istr;
-		}
-		$cnt++;
-    }
-    return ($str == $tmpstr)?$tmpstr:$tmpstr.$dotted;
-}
-
 
 
 /*
@@ -212,39 +161,7 @@ function format_date_short($t)
 	return $re;
 }
 
-/*
-get a approximately past time
-e.g. 3seconds  5hours  7days 
-*/
-function format_past_time($t)
-{
-	$d = time()-$t;
-	if ($d < 60)
-	{
-		return $d.LANG_SECONDS;
-	}
-	$d = intval($d/60);
-	if ($d < 60)
-	{
-		return $d.LANG_MINUTES;
-	}
-	$d = intval($d/60);
-	if ($d < 24)
-	{
-		return $d.LANG_HOURS;
-	}
-	$d = intval($d/24);
-	if ($d < 30)
-	{
-		return $d.LANG_DAYS;
-	}
-	$d = intval($d/30);
-	if ($d < 12)
-	{
-		return $d.LANG_MONTHS;
-	}
-	return intval($d/12).LANG_YEARS;
-}
+
 
 
 /*
