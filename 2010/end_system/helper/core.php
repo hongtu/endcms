@@ -26,7 +26,7 @@ function model($f,$path = false)
 		die("Load model error! Class '$_class_name' not found in file $_file");
 }
 
-function helper($f)
+function helper($f,$mute = false)
 {
 	$loaded = false;
 	if (file_exists($_file = END_MODULE_DIR.'helper/'.$f.'.php'))
@@ -39,7 +39,7 @@ function helper($f)
 		include_once($_file);
 		$loaded = true;
 	}
-	if (!$loaded) die("load helper error! File not found: $f.php");
+	if (!$loaded && !$mute) echo "<span style='color:red'>load helper error! File not found: $f.php</span>";
 }
 
 
