@@ -21,44 +21,69 @@ $_time_start = (float)$_usec + (float)$_sec;
 //获得并设置系统执行的路径
 $_system_folder = dirname(__FILE__);
 $_system_folder = str_replace("\\", "/", $_system_folder);
+
+//END_SYSTEM_DIR 是指end_system的路径
 define('END_SYSTEM_DIR',$_system_folder.'/');
+//END_ROOT 表示 end_system所在文件夹的路径，也就是系统的根目录
 define('END_ROOT',preg_replace('/\/end_system\/?$/','/',$_system_folder));
+//当前模块的路径
 define('END_MODULE_DIR',END_ROOT.'end_'.END_MODULE.'/');
-//基础函数
+
+//载入 end_system 下面的核心辅助函数库
 include_once(END_SYSTEM_DIR.'helper/core.php');
-//钩子函数
-helper('hooks');
-//处理输出相关函数
+
+//载入系统所需的输出相关辅助函数库，包含 ip() ,cn_substr(), en_substr() ,end_page() 等最常用的辅助函数
 helper('html');
 
+//载入外部模块的钩子函数文件，在 END_MODULE_DIR/helper/hooks.php，可以不存在
+helper('hooks',1);
+
+//默认载入外部公共辅助函数库, 可以不存在
+helper('common',1);
+
+//调用钩子
 function_exists('end_on_begin') && end_on_begin();
 
+//定义默认不使用多语言模式
+//由于define一个变量之后，再次define是无效的，所以在入口文件定义的END_ENABLE_LANGUAGE不会被覆盖
 define('END_ENABLE_LANGUAGE',false);
+
+//载入system下的config
 include_once(END_SYSTEM_DIR.'config.php');
+//载入mysql类， 包含了贯穿全局的DB类
 include_once(END_SYSTEM_DIR.'library/mysql.php');
+//载入model基础类，其他所有的model都是继承自MODEL类
 include_once(END_SYSTEM_DIR.'library/model.php');
 
-//载入对应模块的config.php
+//载入当前模块下的config.php
 if (file_exists(END_MODULE_DIR.'config.php')) include_once(END_MODULE_DIR.'config.php');
 
 //连接数据库
+//$db变量会贯穿程序的整个执行过程，以统计整个页面运行了多少次 SQL 查询
 $db = new DB;
 $db->connect($mysql['server'],$mysql['username'],$mysql['password'],$mysql['database']);
 
-//hook
+//从数据库中读取config信息，覆盖掉$config变量
+//这样做的好处就是，在config.php中可以写默认值，可以在后台添加一个同名的设置变量，就可以覆盖该值
+if (!is_array($config)) $config = array();
+$r = $db->get_all("SELECT * FROM `".END_MYSQL_PREFIX."config` ORDER BY order_id ASC");
+foreach($r as $arr) trim($arr['name']) && $config[trim($arr['name'])] = $arr['value'];
+
+//钩子
 function_exists('end_on_after_db') && end_on_after_db();
 
+//发送header声明页面编码
 header("CONTENT-TYPE:text/html; CHARSET=".END_CHARSET);
 
-//get main controller
+//根据url中的p变量来确定对应的controller
 $_page = ($_GET['p'])?$_GET['p']:'index';
 $_page = preg_replace('/[^a-zA-Z0-9_]/','',$_page);
 define('END_CONTROLLER',$_page);
 $_controller = $_page.'.php';
 $_viewer = $_page.'.'.END_VIEWER_EXT;
 
-language('common');
-language($_page);
+//如果开启多语言模式，那么载入当前模块下的 common.lang 和 对应页面的 .lang 文件
+if (END_ENABLE_LANGUAGE) { language('common'); language($_page); }
 
 //common scripts
 include_once(END_SYSTEM_DIR.'common.php');
@@ -79,9 +104,6 @@ if (!$view_html)
 	$_viewer_dir = END_VIEWER_DIR;
 	function_exists('end_on_template_begin') && end_on_template_begin();
 	$_template = template($_viewer);
-	
-	
-	
 	
 	$r_path = dirname($_SERVER['REQUEST_URI'].'index.php');
 	if (!$r_path || $r_path == '/') $r_path = '.';
