@@ -44,7 +44,7 @@ define('END_MYSQL_PREFIX','end_');
 //mysql information
 $mysql = array(
 	'username' => "endcms",
-	'password' => "2012",
+	'password' => "endcms",
 	'server' => "localhost",
 	'database' => "endcms",
 );
