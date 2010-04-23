@@ -20,6 +20,7 @@ navi_user=用户管理
 navi_account=账号
 navi_archive=Archive
 NAVI_AUCTION=拍卖
+navi_extension=扩展
 REAL_INDEX = 首页
 CATEGORIES = 分类
 DELETE = 删除
