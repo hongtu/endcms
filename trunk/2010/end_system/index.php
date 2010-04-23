@@ -49,6 +49,7 @@ function_exists('end_on_begin') && end_on_begin();
 define('END_ENABLE_LANGUAGE',false);
 
 //载入system下的config
+if (!file_exists(END_SYSTEM_DIR.'config.php')) die("config.php not found in end_system!");
 include_once(END_SYSTEM_DIR.'config.php');
 //载入mysql类， 包含了贯穿全局的DB类
 include_once(END_SYSTEM_DIR.'library/mysql.php');
