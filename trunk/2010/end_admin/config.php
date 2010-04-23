@@ -110,6 +110,23 @@ $end_models['page'] = array(
 );
 
 
+$end_models['fragment'] = array(
+	'name'=>"<span style='color:#49e'>内容片段</span>",
+	'category_fields'=>array(
+		'name'=>array(
+			'name'=>'片段名称',
+			'type'=>'text',
+			'null'=>false
+		),
+		'content' => array(
+			'name'=>'片段内容',
+			'type'=>'richtext',
+			'null'=>true,
+		)
+	)
+);
+
+
 $end_models['link'] = array(
 	'name'=>"<span style='color:#872398'>链接</span>",
 	'category_fields'=>array(
