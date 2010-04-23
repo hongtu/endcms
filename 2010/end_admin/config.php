@@ -1,9 +1,10 @@
 <?php
 
+//数据库记录单个管理员后台操作的最大条数
+define('END_ADMIN_LOG_NUM',1000);
+
 
 $end_models = array();
-
-
 $end_models['config'] = array(
 	'name'=>"系统设置",
 	'type'=>'list',
@@ -158,7 +159,7 @@ $end_models['folder'] = array(
 	)
 );
 
-
+//权限的种类
 $end_rights = array
 (
 	array(
