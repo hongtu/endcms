@@ -56,4 +56,4 @@ a img { border:0;}
 
 .block_comments .info { font-style:italic; line-height:18px; margin-top:5px; }
 .block_comments .info a { font-style:normal; color:#000; }
-.block_comments .content a.comment {  }
+.block_comments .content a.comment { display:block; line-height:16px; margin-bottom:9px; }

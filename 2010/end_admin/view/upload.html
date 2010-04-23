@@ -12,8 +12,8 @@
 		<option value=''> </option>
 		<!-- BEGIN recent -->
 		<option 
-			value="{myurlencode:filepath}" fname="{name}">
-			({format_date:mtime}) {name}
+			value="{myurlencode(filepath)}" fname="{name}">
+			({format_date(mtime)}) {name}
 		</option>
 		<!-- END -->
 	</select>
@@ -71,7 +71,7 @@ function get_display_html(url,fname)
 
 <!-- IF file_url -->
 //如果上传成功
-var html = get_display_html('{myurlencode:file_url}','{filename}');
+var html = get_display_html('{myurlencode(file_url)}','{filename}');
 var ftype = '{filename}'.split('.');
 ftype = ftype[ftype.length-1].toLowerCase();
 ckeditor_insert(html);

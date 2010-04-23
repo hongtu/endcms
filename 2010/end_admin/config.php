@@ -182,8 +182,13 @@ $end_rights = array
 		'rights'=> array('add','update','update_password','delete')
 	),
 	array(
+		'name'=>'extension',
+		'description'=>'扩展管理',
+		'rights'=>array('view','add','update','delete')
+	),
+	array(
 		'name'=>'config',
-		'description'=>'系统设置',
+		'description'=>'设置数据管理',
 		'rights'=> array('add','update','delete')
 	),
 	array(

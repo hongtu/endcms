@@ -156,7 +156,7 @@ function language($path)
 	}
 	else
 	{
-		die('language file not found:'.$_f);
+		//die('language file not found:'.$_f);
 	}
 }
 
