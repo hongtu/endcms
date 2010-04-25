@@ -1,4 +1,6 @@
-#EndCMS --面向开发者的开源内容管理系统
+#EndCMS
+
+ --面向开发者的开源内容管理系统
 
 = Introduction =
 
