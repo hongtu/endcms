@@ -1,15 +1,6 @@
 <?php
 
-/*
-get fragment content from item table by name
-*/
-function fragment($name)
-{
-	global $loader;
-	$obj = model('category');
-	$obj = $obj->get_one( array('alias'=>$name) );
-	return $obj['content'];
-}
+
 
 /*
 find a image url from a text
@@ -79,7 +70,6 @@ function html_pager($url,$total_page,$page = 1)
 function end_page($obj,$cond = array(),$per_page)
 {
 	global $view_data;
-
 	$cond['select'] = 'count(1)';
 	$total = $obj->get_list( $cond );
 	$total = $total[0]['count(1)'];
@@ -97,9 +87,26 @@ function end_page($obj,$cond = array(),$per_page)
 	$url = preg_replace('/\??&?page=[0-9]{1,}/','',$url);
 	$pager.=html_pager($url,$total_page,$page);
 	$view_data['pager'] = $pager;
-	$view_data['older_entries'] = ($page == $total_page)?'':"<a href='{$url}?page=".($page+1)."'>".LANG_OLDER_ENTRIES."</a>";
-	$view_data['newer_entries'] = ($page == 1)?'':"<a href='{$url}?page=".($page-1)."'>".LANG_NEWER_ENTRIES."</a>";
+	$sep=(preg_match('/\?/',$url))?'&':'?';
+	$view_data['older_entries'] = ($page == $total_page)?'':"<a href='{$url}{$sep}page=".($page+1)."'>".LANG_OLDER_ENTRIES."</a>";
+	$view_data['newer_entries'] = ($page == 1)?'':"<a href='{$url}{$sep}page=".($page-1)."'>".LANG_NEWER_ENTRIES."</a>";
+	define('END_PAGER_PAGER',$pager);
+	define('END_PAGER_OLDER',$view_data['older_entries']);
+	define('END_PAGER_NEWER',$view_data['newer_entries']);
 	return $obj->get_list( $cond );
+}
+
+function pager_older($s = "older entries")
+{
+	return str_replace(LANG_OLDER_ENTRIES,$s,END_PAGER_OLDER);
+}
+function pager_newer($s = "newer entries")
+{
+	return str_replace(LANG_NEWER_ENTRIES,$s,END_PAGER_NEWER);
+}
+function get_pager()
+{
+	return END_PAGER_PAGER;
 }
 
 /*
