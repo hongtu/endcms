@@ -32,8 +32,10 @@
 (function($) {
 	$.extend($.fx.step,{
 	    backgroundPosition: function(fx) {
-            if (fx.state === 0 && typeof fx.end == 'string') {
+            if (fx.state === 0 && typeof fx.end == 'string') 
+			{
                 var start = $.curCSS(fx.elem,'backgroundPosition');
+				if (!start ) start = '0 0';
                 start = toArray(start);
                 fx.start = [start[0],start[2]];
                 var end = toArray(fx.end);
@@ -55,3 +57,5 @@
         }
 	});
 })(jQuery);
+
+
