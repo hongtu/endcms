@@ -56,9 +56,16 @@ foreach($_fields as $name=>$attr)
 				{
 					if ($attr['filter']) $file_url  = $attr['filter']($file_url);
 					$data[$name] = $file_url;
+					
 					if (is_array($attr['resize']))
 					{
-						$__re = thumb($file_url,$attr['resize']['width'],$attr['resize']['height'],$file_url);
+						foreach($attr['resize'] as $_r)
+						{
+							if (is_array($_r) && $_r['width'] && $_r['height'])
+							{
+								$__re = thumb($file_url,$_r['width'],$_r['height']);
+							}
+						}
 					}
 				}
 				else
