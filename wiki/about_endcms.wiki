@@ -32,4 +32,11 @@ Longbill :
 精通Javascript客户端脚本，DOM操作，AJAX交互，JQuery库等
 熟练掌握DIV+CSS布局，Actionscript 3
 对程序算法(ACM)有过比较深入的研究
+现供职于优米网( www.umiwi.com )
+}}}
+
+{{{
+EndTo:
+SEO专家
+...
 }}}
