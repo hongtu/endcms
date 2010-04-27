@@ -6,39 +6,55 @@
 
 */
 if (!is_array($_fields)) $fields = array();
+
 foreach($_fields as $name=>$attr)
 {
+	//过滤掉开始为__的字段
 	if (preg_match('/^__/',$name)) continue;
+	//默认输入类型为text
+	if (!$attr['type']) $attr['type'] = 'text';
 	
-	//文件上传
-	if ($attr['type'] == 'file')
+	//处理文件或者图片上传
+	if ($attr['type'] == 'file' || $attr['type'] == 'image')
 	{
 		//如果选择了文件
 		if ($_FILES[$name] && $_FILES[$name]['tmp_name'])
 		{
 			$file = $_FILES[$name];
 			$ftype = getext($file['name']);
-			if (!$ftype 
-				|| !preg_match("/\*\.$ftype;/i",$config['upload_file_types']) 
-				|| !in_array($ftype,$attr['allowed_exts']))
+			
+			//如果是图片，那么只能上传这几种文件类型
+			if ($attr['type'] == 'image') $attr['filetype'] = array('jpg','jpeg','png','gif');
+			
+			//验证文件类型
+			if (!$config['upload_file_types'])
+			{
+				$errors[$name] = '尚未配置整站允许上传的文件类型(config.upload_file_types)';
+			}
+			else if (!$attr['filetype'])
+			{
+				$errors[$name] = '尚未配置'.$name.'字段允许的文件类型';
+			}
+			else if ( !preg_match("/\*\.$ftype;/i",$config['upload_file_types']) 
+				|| !in_array($ftype,$attr['filetype']) )
 			{
 				$errors[$name] = '文件类型不允许';
 			}
 			else
 			{
-				if ($attr['rename'])
-				{
+				$file_url = basename($file['name']);
+				//如果文件名是一般的字母数字和-_，则不改变文件名
+				if (preg_match('/^[a-z0-9\_\-\s\.]+$/i',$file_url))
+					$_n = preg_replace('/\s+/','_',$file_url);
+				else //否则改成时间和随机数
 					$file_url = date('Y_m_d_H_i_s_').rand(1111,9999).'.'.$ftype;
-				}
-				else
-				{
-					$file_url = basename($file['name']);
-				}
-				
+
 				if (!$file_url) 
 				{
 					$errors[$name] = '错误';
 				}
+				
+				//保存到什么地方
 				if (!$attr['saveto'])
 				{
 					end_mkdir(END_UPLOAD_DIR);
@@ -50,20 +66,26 @@ foreach($_fields as $name=>$attr)
 					$file_url = $attr['saveto'].$file_url;
 				}
 				
+				//避免重名
+				while (file_exists(END_ROOT.$file_url))
+				{
+					$file_url = dirname($file_url).'/'.preg_replace('/\.[a-z0-9]+$/i','',basename($file_url)).rand(1111,9999).'.'.$ftype;
+				}
 				
-				
+				//保存文件
 				if (@move_uploaded_file($file["tmp_name"],END_ROOT.$file_url))
 				{
 					if ($attr['filter']) $file_url  = $attr['filter']($file_url);
 					$data[$name] = $file_url;
-					
-					if (is_array($attr['resize']))
+					//更改图片尺寸
+					if ($attr['type'] == 'image' && is_array($attr['resize']))
 					{
 						foreach($attr['resize'] as $_r)
 						{
 							if (is_array($_r) && $_r['width'] && $_r['height'])
 							{
-								$__re = thumb($file_url,$_r['width'],$_r['height']);
+								//调整图片尺寸，保存为
+								$__re = thumb($file_url,$_r['width'],$_r['height']); 
 							}
 						}
 					}

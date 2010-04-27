@@ -6,6 +6,7 @@
 	foreach($view_data['fields'] as $name=>$data)
 	{
 		if (preg_match('/^__/',$name)) continue;
+		if (!$data['type']) $data['type'] = 'text';
 		echo "<tr><td>$data[name]";
 		if (!$data['null']) echo '<span style="color:red">*</span>';
 		echo "</td>";
@@ -41,14 +42,17 @@
 			echo " />";
 		}
 		//文件
-		elseif ($data['type'] == 'file')
+		elseif ($data['type'] == 'file' || $data['type'] == 'image')
 		{
 			if ($view_data['content'][$name])
 			{
-				echo lang("uploaded_file").$view_data['content'][$name]."<br />";
+				echo '<a href="'.$view_data['content'][$name].'" target="_blank">'.lang("uploaded_file").$view_data['content'][$name]."</a><br />";
 				echo "<input type='hidden' name='$name' value='$view_data[content][$name]' />";
 			}
-			echo "<input type='file' name='$name' style='$_style' />";
+			echo "<input type='file' name='$name' style='";
+			if ($data['width']) echo $_style;
+			echo "' />";
+			if (!$data['description']) $data['description'] = lang('upload_image_descriptioin');
 		}
 		//多行文本
 		elseif ($data['type'] == 'textarea')

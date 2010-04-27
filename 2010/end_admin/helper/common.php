@@ -218,7 +218,6 @@ function myurlencode($url)
 	return str_replace( array('+','%2F'),array('%20','/'),urlencode($url));
 }
 
-
 function thumb($orig_path,$mw=100,$mh=100,$thumb=false,$method='fill')
 {
 	if (!$orig_path) return 'about:blank';
@@ -330,6 +329,10 @@ function end_show_edit_button($id)
 function end_show_delete_button($id)
 {
 	echo ' <a href="javascript:;//'.$id.'" onclick="delete_item(\''.$id.'\',this)">'.LANG_DELETE.'</a> ';
+}
+function end_show_update_status_button($id,$status,$m)
+{
+	echo ' <a href="javascript:;" onclick="change_status(\''.$id.'\',\''.$status.'\',this)">'.$m.'</a> ';
 }
 
 function get_admin_id()

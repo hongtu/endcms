@@ -8,4 +8,8 @@
 can_not_update = false;
 can_not_delete = false;
 can_not_add = false;
+
+try {
+	document.execCommand("BackgroundImageCache",false,true);
+}catch(e){ }
 </script>
