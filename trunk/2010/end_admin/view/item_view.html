@@ -34,6 +34,12 @@
 			$t = $view_data['content'][$name];
 			echo "<a href='$t' target='_blank'>$t</a>";
 		}
+		//文件
+		elseif ($data['type'] == 'image')
+		{	
+			$t = $view_data['content'][$name];
+			echo "<img src='$t' />";
+		}
 		//多行文本
 		elseif ($data['type'] == 'textarea')
 		{

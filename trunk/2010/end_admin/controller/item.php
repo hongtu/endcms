@@ -203,11 +203,14 @@ if ($item_type)
 		else if ($_GET['order'])
 			$cond['order'] = $_GET['order'].' desc';
 		
+		$pagesize = isset($end_models[$item_type.'_list']['list_items'])?$end_models[$item_type.'_list']['list_items']:20; //默认20条每页
+		if (isset($_GET['export'])) $pagesize = 100000;
+		
 		//分页
 		$items = end_page(
 				$item,
 				$cond,
-				isset($end_models[$item_type.'_list']['list_items'])?$end_models[$item_type.'_list']['list_items']:20 //默认20条每页
+				$pagesize
 			);
 
 		$view_data['categories'] = $categories;
@@ -255,6 +258,32 @@ if ($item_type)
 	
 	$list_tmp->assign($view_data);
 	$view_data['list_content'] = $list_tmp->result();
+	if (isset($_GET['export']))
+	{
+		$s = strip_tags($view_data['list_content'],'<table><thead><tbody><tr><td><th><span>');
+		$s = preg_replace('/\<table[^\>]+\>/','<table>',$s);
+		$s = preg_replace('/\<th\s[^\>]+\>/','<th>',$s);
+		$arr = explode('<table>',$s);$s = '<table border="1">'.$arr[1];
+		$s = preg_replace('/\<\/table\>(\n*.*\n*)*$/','</table>',$s);
+
+		$s = '<meta http-equiv="Content-Type" content="application/vnd.ms-excel; charset=UTF-8" />'.$s.'';
+		
+		$filename = $this_category['name'].'_'.date("YmdHi").'.xls';
+		if (preg_match('/MSIE/',$_SERVER['HTTP_USER_AGENT']))  $filename = rawurlencode($filename);  
+		
+		header('Pragma: public');  
+		header('Last-Modified: '.gmdate('D, d M Y H:i:s') . ' GMT');  
+		header('Cache-Control: no-store, no-cache, must-revalidate, pre-check=0, post-check=0, max-age=0');  
+		header('Pragma: no-cache');  
+		//header('Content-Transfer-Encoding: binary');  
+		header('Content-Encoding: utf-8');  
+
+		header("Content-type: application/vnd.ms-excel; charset=utf-8; format=attachment;");
+		header('Content-Disposition: attachment; filename="'.$filename.'"');  
+		header("Content-length:".strlen($s));
+		echo $s;
+		die;
+	}
 }
 $view_data['position'] = $category->position_category($category_id);
 $_tree = $category->tree_category(0);

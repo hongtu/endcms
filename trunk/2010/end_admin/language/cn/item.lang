@@ -51,3 +51,4 @@ item_status=状态
 
 click_to_edit_category=此栏目不是一个列表型栏目，要编辑此栏目内容
 click_here=请点击这里
+upload_image_descriptioin=仅限图片文件(*.jpg;*.jpeg;*.png;*.gif;)

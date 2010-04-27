@@ -29,8 +29,6 @@ rights_category=栏目
 rights_upload=附件上传
 rights_admin=管理员管理
 rights_rights=权限管理
-#rights_comment=评论管理
-#rights_user=用户管理
 
 rights_rating=投票管理
 rights_audience=观众管理
