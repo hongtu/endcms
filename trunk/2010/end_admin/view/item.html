@@ -118,7 +118,7 @@ $(function()
 
 function delete_item(id,o)
 {
-	if (!confirm('确定要删除吗？')) return;
+	if (!confirm('{DELETE_CONFIRM}')) return;
 	$(o).attr('to_be_delete','yes').html('{DELETING}').unbind('click');
 	$.post('admin.php?p=ajax&m=delete&table={table}&id='+id,{ },delete_callback);
 }

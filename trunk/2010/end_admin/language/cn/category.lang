@@ -29,7 +29,7 @@ CATEGOTY_NEW_ERROR = 新建栏目出错，原因未知
 CATEGORY_DELETE_ERROR = 删除栏目出错，原因未知
 CATEGORY_OPTIONS = 操作
 
-DELETE_CONFIRM = 确定要执行删除操作吗?
+DELETE_CONFIRM = 删除的数据将无法恢复，您确定要执行删除操作吗?
 ROOT_CATEGORY = 根栏目
 MANAGE = 管理
 CATEGORY_NAME = 栏目名称

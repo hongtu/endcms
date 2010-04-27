@@ -318,17 +318,17 @@ function load_models()
 	$end_models = $_models;
 }
 
-function end_show_view_button($id)
+function end_show_view_button($id,$s=LANG_VIEW)
 {
-	echo ' <a href="admin.php?p=item&action=view_item&category_id='.END_ADMIN_CATEGORY_ID.'&item_id='.$id.'">'.LANG_VIEW.'</a> ';
+	echo ' <a href="admin.php?p=item&action=view_item&category_id='.END_ADMIN_CATEGORY_ID.'&item_id='.$id.'">'.$s.'</a> ';
 }
-function end_show_edit_button($id)
+function end_show_edit_button($id,$s=LANG_EDIT)
 {
-	echo ' <a href="admin.php?p=item&action=edit_item&category_id='.END_ADMIN_CATEGORY_ID.'&item_id='.$id.'">'.LANG_EDIT.'</a> ';
+	echo ' <a href="admin.php?p=item&action=edit_item&category_id='.END_ADMIN_CATEGORY_ID.'&item_id='.$id.'">'.$s.'</a> ';
 }
-function end_show_delete_button($id)
+function end_show_delete_button($id,$s = LANG_DELETE)
 {
-	echo ' <a href="javascript:;//'.$id.'" onclick="delete_item(\''.$id.'\',this)">'.LANG_DELETE.'</a> ';
+	echo ' <a href="javascript:;//'.$id.'" onclick="delete_item(\''.$id.'\',this)">'.$s.'</a> ';
 }
 function end_show_update_status_button($id,$status,$m)
 {
