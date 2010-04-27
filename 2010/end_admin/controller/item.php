@@ -45,6 +45,8 @@ if ($item_type)
 		check_allowed($item_type,'update');
 	else if ($m == 'new_item')
 		check_allowed($item_type,'add');
+	else if (!$m)
+		check_allowed($item_type,'view');
 	
 	//添加或者修改，提交处理部分
 	if ($m == 'edit_item' || $m == 'new_item')

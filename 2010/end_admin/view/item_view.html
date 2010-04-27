@@ -11,7 +11,7 @@
 		echo "<tr><th>".$data['name'];
 		echo "</th>";
 		echo "<td>";
-		
+		if (!$data['type'] ) $data['type'] = 'text';
 		//显示之前的预处理
 		if ($data['prefilter'] && function_exists($data['prefilter']))
 		{
