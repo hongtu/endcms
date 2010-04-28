@@ -1,0 +1,49 @@
+<div id="footer">
+	
+	<div class="block block_comments">
+		<h3>最新评论</h3>
+		<div class="content">
+			<ul>
+				{foreach(model('comment')->get_list() as $c)}
+				<li>
+					<div class="info"><a href="{$c['url']}" target="_blank">{$c['name']}</a> 在 {get_past_time($c['time'])}前 说:</div>
+					<a class="comment" href="/?id={$c[blog_id]}">{cn_substr($c['content'],0,20,'...')}</a>
+				</li>
+				{/foreach}
+			</ul>
+		</div>
+	</div>
+	
+	<div class="block">
+		<h3>Categories</h3>
+		<div class="content">
+			<ul>
+				<li><a href="./">Index</a></li>
+				<li><a href="./about/">About</a></li>
+				<li><a href="./">Works</a></li>
+			</ul>
+		</div>
+	</div>
+	<div class="block">
+		<h3>Categories</h3>
+		<div class="content">
+			<ul>
+				<li><a href="./">Index</a></li>
+				<li><a href="./about/">About</a></li>
+				<li><a href="./">Works</a></li>
+			</ul>
+		</div>
+	</div>
+	<div class="clear"></div>
+</div>
+
+<div id="bottom">
+	<div class="content">Copyright &copy; Longbill 2008-{date('Y')} , Designed by <a href="http://www.endto.com" target="_blank">EndTo</a></div>
+</div>
+
+
+
+
+</div>
+</body>
+</html>

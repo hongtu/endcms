@@ -1,0 +1,20 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" lang="zh-CN"> 
+<head>
+	<!-- INCLUDE meta.html -->
+</head>
+<body>
+<div id='main'>
+
+<div id="header">
+	<div class="title">
+		<h1>{$config['site_name']}</h1>
+		<h2>{$config['sub_title']}</h2>
+	</div>
+
+	<ul class="navs">
+		{foreach(get_cats('navigation') as $navi)}
+		<li><a href="{category_link($navi)}" target="{$navi['target']}">{$navi['name']}</a></li>
+		{/foreach}
+	</ul>
+</div>
