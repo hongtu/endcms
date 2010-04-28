@@ -1,0 +1,59 @@
+body { color:#555; font:12px Arial,Helvetica,sans-serif; line-height:200%; }
+a { color:#555; text-decoration:none;}
+a:hover { color:#000; text-decoration:underline;}
+ul,li { list-style:none;margin:0;padding:0; }
+a img { border:0;}
+.clear { height:0; font-size:0; clear:both;}
+
+#main { width:900px; margin:0 auto;}
+#header { height:135px; }
+
+#header .title { height:80px; border-bottom:1px solid #BBB; }
+#header .title h1 { display:block; float:left;  color:#000; font-size:30px; line-height:30px;}
+#header .title h2 { display:block; float:left; font-size:12px;line-height:50px; margin-left:20px; font-style:italic;}
+
+#header .navs { list-style:none; display:block; margin:0; padding:0; margin-top:10px;}
+#header .navs li { float:left; display:block; padding:0 10px; }
+
+#content { margin-top:20px;}
+
+#content #left { width:650px; float:left; overflow:hidden;}
+
+#content #right { width:250px; float:right; overflow:hidden;}
+
+#left .entry { margin-bottom:30px; }
+#left .entry h2 { color:#000; font-style:italic; font-size:22px; margin:0;padding-left:30px; float:left; background:#fff url(../images/e.gif) no-repeat 0 50%;}
+#left .entry .time { float:right;text-transform:uppercase; font-size:12px;font-style:italic; line-height:40px;color:#666;}
+#left .entry .intro { clear:both;}
+#left .entry .info { text-align:right; font-size:12px;}
+#left .entry .info a.more { margin-right:10px;}
+#left .entry .info a.comments { padding-left:16px; background:#fff url(../images/comments.gif) no-repeat 0 50%;}
+
+.comments {  }
+.comments .comment { background-color:#eee; padding:5px; margin-bottom:20px;}
+.comments .comment .info { background-color:#ddd; padding-left:5px; }
+
+
+
+#right .block { margin:10px 0 30px 80px; width:170px; overflow:hidden;}
+#right .block h3 { color:#000; font-style:italic;font-size:16px; margin:0;}
+#right .block .content { margin-left:10px; }
+
+
+#footer { border-top:1px solid #bbb; }
+
+#footer .block { float:left; margin:30px 0 0 30px; width:270px; overflow:hidden;}
+#footer .block h3 { color:#000; font-style:italic;font-size:16px; margin:0;}
+#footer .block .content { margin-left:10px; }
+
+
+#bottom { border-top:1px solid #bbb; margin-top:30px;}
+#bottom .content { padding:20px;}
+
+
+.block_links a.link-name { color:#000;font-weight:bold; line-height:14px; display:block; margin-top:5px;}
+.block_links .link-description { line-height:16px; font-size:12p;font-style:italic; margin-bottom:10px;}
+
+.block_comments .info { font-style:italic; line-height:18px; margin-top:5px; }
+.block_comments .info a { font-style:normal; color:#000; }
+.block_comments .content a.comment { display:block; line-height:16px; margin-bottom:9px; }
