@@ -2,4 +2,4 @@
 
 =配置文件出现的位置=
 
-  *  end__ModuleName_/model/
+{{{  end_ModuleName/model/ModelName/ModelName.config.php }}}
