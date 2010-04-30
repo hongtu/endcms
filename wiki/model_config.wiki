@@ -1,0 +1,5 @@
+#summary Model(数据模型)的配置文件说明
+
+=配置文件出现的位置=
+
+  *  end__ModuleName_/model/
