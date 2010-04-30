@@ -4,3 +4,47 @@
 
   `end_ModuleName/model/ModelName/ModelName.config.php`  
 其中 ModuleName 为模块名子，比如 end_blog或者 end_news等; ModelName为模型名称。比如： end_blog/model/link/link.config.php
+
+=此文件中必须提供的数据=
+
+{{{
+$end_models['ModelName'] = array(
+	'type' => 'list', 
+	'name' => '使用此模型的栏目名称',	 
+	'no_category'=>true,
+
+	'category_fields'=> array(
+		'name'=>array(
+			'name'=>'栏目标题',
+			'type'=>'text',
+			'null'=>false
+		),
+		...
+	),
+
+	'fields' => array(  
+		'name'=>array( 
+			'name'=>'字段名称', 
+			'type'=>'text', 
+			'null'=>false, 
+			'width'=>100, 
+		),
+		...
+	),
+
+	'list_fields' => array(
+		'member_id'=>array(
+			'name'=>'ID',
+			'width'=>'30',
+			'sort'=>true,
+			'align'=>'center'
+		),
+		...
+	)
+);
+
+
+
+
+
+}}}
