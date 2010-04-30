@@ -8,6 +8,10 @@
 =此文件中必须提供的数据=
 
 {{{
+
+/*
+* 模型字段配置
+*/
 $end_models['ModelName'] = array(
 	'type' => 'list', 
 	'name' => '使用此模型的栏目名称',	 
@@ -43,7 +47,14 @@ $end_models['ModelName'] = array(
 	)
 );
 
-
+/*
+* 模型权限配置
+*/
+$end_rights[] = array(
+	'name'=>'ModelName',
+	'description'=>'权限名字',
+	'rights'=>array('view','add','update','delete')
+);
 
 
 
