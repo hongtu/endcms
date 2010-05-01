@@ -1,7 +1,5 @@
 <?php
 
-
-
 /*
 find a image url from a text
 */
@@ -30,39 +28,47 @@ function html_pager($url,$total_page,$page = 1)
 {
 	$page_span = 4;
 	$pager = '';
+	$sep=(preg_match('/\?/',$url))?'&':'?';
+	// if ($page>1)
+	// 	$pager .= ' <a href="'.$url.$sep.'page=1">'.LANG_PAGER_FIRST.'</a> ';
+	// else
+	// 	$pager .= ' <a href="javascript:;" class="grey">'.LANG_PAGER_FIRST.'</a> ';
 	if ($page>1)
-		$pager .= ' <a href="'.$url.'&page=1">'.LANG_PAGER_FIRST.'</a> ';
-	else
-		$pager .= ' <a href="javascript:;" class="grey">'.LANG_PAGER_FIRST.'</a> ';
-	if ($page>1)
-		$pager.= ' <a href="'.$url.'&page='.($page-1).'">'.LANG_PAGER_PREV.'</a> ';
+		$pager.= ' <a href="'.$url.$sep.'page='.($page-1).'">'.LANG_PAGER_PREV.'</a> ';
 	else
 		$pager.= ' <a href="javascript:;" class="grey">'.LANG_PAGER_PREV.'</a> ';
 	
+	$numbers = '';
 	if ($page>$page_span)
-		$pager.= '...';
+		$numbers.= ' <a href="'.$url.'">1</a>';
+	if ($page>$page_span+1)
+		$numbers.= '...';
 	
 	for($i=$page-$page_span+1;$i<$page+$page_span;$i++)
 	{
 		if ($i<=0 || $i>$total_page) continue;
 		if ($page == $i)
-			$pager.= " [{$i}] ";
+			$numbers.= " [{$i}] ";
 		else
-			$pager.= ' <a href="'.$url.'&page='.$i.'">'.$i.'</a> ';
+			$numbers.= ' <a href="'.$url.$sep.'page='.$i.'">'.$i.'</a> ';
 	}
 	
 	if ($total_page-$page>$page_span)
-		$pager.= '...';
-	
+		$numbers.= '...';
+	if ($total_page-$page>$page_span-1) 
+		$numbers.= '<a href="'.$url.$sep.'page='.$total_page.'">'.$total_page.'</a> ';
+
+	$GLOBALS['END_PAGER_NUMBERS'] = $numbers;
+	$pager.= $numbers;
 	
 	if ($page<$total_page)
-		$pager.= ' <a href="'.$url.'&page='.($page+1).'">'.LANG_PAGER_NEXT.'</a> ';
+		$pager.= ' <a href="'.$url.$sep.'page='.($page+1).'">'.LANG_PAGER_NEXT.'</a> ';
 	else
 		$pager .= ' <a href="javascript:;" class="grey">'.LANG_PAGER_NEXT.'</a> ';
-	if ($page<$total_page)
-		$pager .= ' <a href="'.$url.'&page='.$total_page.'">'.LANG_PAGER_LAST.'</a> ';
-	else
-		$pager .= ' <a href="javascript:;" class="grey">'.LANG_PAGER_LAST.'</a> ';
+	// if ($page<$total_page)
+	// 	$pager .= ' <a href="'.$url.$sep.'page='.$total_page.'">'.LANG_PAGER_LAST.'</a> ';
+	// else
+	// 	$pager .= ' <a href="javascript:;" class="grey">'.LANG_PAGER_LAST.'</a> ';
 	return $pager;
 }
 
@@ -83,6 +89,9 @@ function end_page($obj,$cond = array(),$per_page)
 	$cond['from'] = ($page-1)*$per_page;
 	$cond['total'] = $per_page;
 	$pager = LANG_PAGER_TOTAL.$total.LANG_PAGER_ITEMS.$total_page.LANG_PAGER_PAGE.'<br />';
+	$GLOBALS['END_PAGER_ITEM_TOTAL'] = $total;
+	$GLOBALS['END_PAGER_PAGE_TOTAL'] = $total_page;
+	
 	$url = $_SERVER['REQUEST_URI'];
 	$url = preg_replace('/\??&?page=[0-9]{1,}/','',$url);
 	$pager.=html_pager($url,$total_page,$page);
@@ -90,23 +99,26 @@ function end_page($obj,$cond = array(),$per_page)
 	$sep=(preg_match('/\?/',$url))?'&':'?';
 	$view_data['older_entries'] = ($page == $total_page)?'':"<a href='{$url}{$sep}page=".($page+1)."'>".LANG_OLDER_ENTRIES."</a>";
 	$view_data['newer_entries'] = ($page == 1)?'':"<a href='{$url}{$sep}page=".($page-1)."'>".LANG_NEWER_ENTRIES."</a>";
-	define('END_PAGER_PAGER',$pager);
-	define('END_PAGER_OLDER',$view_data['older_entries']);
-	define('END_PAGER_NEWER',$view_data['newer_entries']);
+	$GLOBALS['END_PAGER_PAGER'] = $pager;
+	$GLOBALS['END_PAGER_OLDER'] = $view_data['older_entries'];
+	$GLOBALS['END_PAGER_NEWER'] = $view_data['newer_entries'];
 	return $obj->get_list( $cond );
 }
 
-function pager_older($s = "older entries")
+function pager_next($s = "older entries")
 {
-	return str_replace(LANG_OLDER_ENTRIES,$s,END_PAGER_OLDER);
+	return str_replace(LANG_OLDER_ENTRIES,$s,$GLOBALS['END_PAGER_OLDER']);
 }
-function pager_newer($s = "newer entries")
+function pager_prev($s = "newer entries")
 {
-	return str_replace(LANG_NEWER_ENTRIES,$s,END_PAGER_NEWER);
+	return str_replace(LANG_NEWER_ENTRIES,$s,$GLOBALS['END_PAGER_NEWER']);
 }
-function get_pager()
+function pager_numbers()
 {
-	return END_PAGER_PAGER;
+	if ($GLOBALS['END_PAGER_PAGE_TOTAL'] > 1)
+		return $GLOBALS['END_PAGER_NUMBERS'];
+	else 
+		return '';
 }
 
 /*

@@ -106,7 +106,7 @@ if (!$view_html)
 	function_exists('end_on_template_begin') && end_on_template_begin();
 	$_template = template($_viewer);
 	
-	$r_path = dirname($_SERVER['REQUEST_URI'].'index.php');
+	$r_path = dirname($_SERVER['SCRIPT_NAME'].'index.php');
 	if (!$r_path || $r_path == '/') $r_path = '.';
 	$_url_base = str_replace('//','/',$_SERVER['HTTP_HOST'].'/'.$r_path.'/');
 	$view_data['url_base'] = 'http://'.$_url_base;
