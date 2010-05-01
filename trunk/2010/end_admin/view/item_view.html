@@ -39,6 +39,13 @@
 		{	
 			$t = $view_data['content'][$name];
 			echo "<img src='$t' />";
+			if (is_array($data['resize']))
+			{
+				foreach($data['resize'] as $arr)
+				{
+					echo "<img src='".thumb($t,$arr['width'],$arr['height'])."' />";
+				}
+			}
 		}
 		//多行文本
 		elseif ($data['type'] == 'textarea')

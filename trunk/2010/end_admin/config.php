@@ -6,7 +6,7 @@ define('END_ADMIN_LOG_NUM',1000);
 
 $end_models = array();
 $end_models['config'] = array(
-	'name'=>"系统设置",
+	'name'=>"<span style='color:blue'>系统设置</span>",
 	'type'=>'list',
 	'list_items'=>10,
 	'category_fields'=>array(
@@ -182,7 +182,7 @@ $end_rights = array
 	array(
 		'name'=>'category',
 		'description'=>'分类管理',
-		'rights'=> array('add','update','delete')
+		'rights'=> array('view','add','update','delete')
 	),
 	array( 
 		'name'=>'item',
@@ -197,7 +197,7 @@ $end_rights = array
 	array(
 		'name'=>'admin',
 		'description'=>'管理员管理',
-		'rights'=> array('add','update','update_password','delete')
+		'rights'=> array('view','add','update','update_password','delete')
 	),
 	array(
 		'name'=>'extension',
@@ -207,7 +207,7 @@ $end_rights = array
 	array(
 		'name'=>'config',
 		'description'=>'设置数据管理',
-		'rights'=> array('add','update','delete')
+		'rights'=> array('view','add','update','delete')
 	),
 	array(
 		'name'=>'upload',
@@ -217,7 +217,7 @@ $end_rights = array
 	array(
 		'name'=>'rights',
 		'description'=>'角色/权限管理',
-		'rights'=>array('add','update','delete')
+		'rights'=>array('view','add','update','delete')
 	)
 );
 

@@ -35,8 +35,10 @@ foreach($_fields as $name=>$attr)
 			{
 				$errors[$name] = '尚未配置'.$name.'字段允许的文件类型';
 			}
-			else if ( !preg_match("/\*\.$ftype;/i",$config['upload_file_types']) 
-				|| !in_array($ftype,$attr['filetype']) )
+			else if ( 
+				( $config['upload_file_types'] && !preg_match("/\*\.$ftype;/i",$config['upload_file_types']) )
+				|| 
+				!in_array($ftype,$attr['filetype']) )
 			{
 				$errors[$name] = '文件类型不允许';
 			}
@@ -86,14 +88,19 @@ foreach($_fields as $name=>$attr)
 							{
 								//调整图片尺寸，保存为
 								$__re = thumb($file_url,$_r['width'],$_r['height']); 
+								if ($_r['saveas'])
+								{
+									$data[$_r['saveas']] = $__re;
+								}
 							}
 						}
 					}
 				}
-				else
+				
+				if (!file_exists(END_ROOT.$file_url))
 				{
 					$errors[$name] = '文件上传错误';
-				}
+				}	
 			}
 		}
 		//如果本来就有值，表示没有修改

@@ -222,6 +222,8 @@ function thumb($orig_path,$mw=100,$mh=100,$thumb=false,$method='fill')
 {
 	if (!$orig_path) return 'about:blank';
 	$path = END_ROOT.$orig_path;
+	
+	
 	$ftype = array_pop(explode('.',$path));
 	$etag = basename($path).$mw.'x'.$mh.'.jpg';
 
@@ -231,7 +233,7 @@ function thumb($orig_path,$mw=100,$mh=100,$thumb=false,$method='fill')
 		$thumb = dirname($path).'/'.$etag;
 	//echo 'thumb file:'.$thumb.'<br />';
 	//overwrite ?
-	if (file_exists($thumb)) return $thumb;
+	if (file_exists($thumb)) return dirname($orig_path).'/'.$etag;
 
 	if (!$imgarr=@getimagesize($path)) return ''; 
 	$width_orig=$imgarr[0];

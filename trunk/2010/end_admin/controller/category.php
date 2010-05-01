@@ -47,8 +47,11 @@ else if ($m == 'edit_category')
 	{
 		$data['parent_id'] = intval($_POST['parent_id']);
 	}
-	//处理提交的数据
-	include('edit_field.php');
+	if ($_fields)
+	{
+		//处理提交的数据
+		include('edit_field.php');
+	}
 	//提交数居后的处理
 	if ($_fields['__after_edit']) $_fields['__after_edit']($data);
 
