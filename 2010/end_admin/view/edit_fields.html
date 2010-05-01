@@ -47,7 +47,7 @@
 			if ($view_data['content'][$name])
 			{
 				echo '<a href="'.$view_data['content'][$name].'" target="_blank">'.lang("uploaded_file").$view_data['content'][$name]."</a><br />";
-				echo "<input type='hidden' name='$name' value='$view_data[content][$name]' />";
+				echo "<input type='hidden' name='$name' value='".$view_data['content'][$name]."' />";
 			}
 			echo "<input type='file' name='$name' style='";
 			if ($data['width']) echo $_style;

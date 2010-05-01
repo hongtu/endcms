@@ -37,10 +37,13 @@ if ($file['tmp_name'])
 	if (strpos(',jpg,jpeg,gif,png,bmp',','.$ftype.',') !== false)
 	{
 		$view_data['is_img'] = true;
-		include_once('library/image.php');
-		$img = new Image;
-		$img->filepath = END_ROOT.$file_url;
-		$img->resize_width($config['max_image_width']?$config['max_image_width']:500);
+		if ($config['max_image_width'])
+		{
+			include_once('library/image.php');
+			$img = new Image;
+			$img->filepath = END_ROOT.$file_url;
+			$img->resize_width($config['max_image_width']);
+		}
 	}
 	$view_data['file_url'] = $file_url;
 	$view_data['filename'] = $file['name'];
