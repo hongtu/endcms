@@ -80,7 +80,7 @@ function get_extensions($path = false)
 						$end_extension[$v]['path'] = $path.'/'.$v.'/';
 						if (!$end_extension[$v]['icon'])
 						{
-							$end_extension[$v]['icon'] = 'end_admin/view/default/images/default_extension_icno.png';
+							$end_extension[$v]['icon'] = 'end_admin/view/images/default_extension_icon.png';
 						}
 						else
 						{
