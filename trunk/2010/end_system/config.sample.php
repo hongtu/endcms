@@ -11,6 +11,11 @@
   system configuration
 */
 
+/*
+* 是否使用php压缩页面成gzip，有些IIS会出问题
+* 取值只能是 true/false
+*/
+define('END_GZIP_OUTPUT',false);
 
 //模板文件所用的字符集，推荐utf-8
 define('END_CHARSET','UTF-8');
