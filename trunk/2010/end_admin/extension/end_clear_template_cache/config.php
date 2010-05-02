@@ -1,5 +1,5 @@
 <?php
-$end_extension['clear_template_cache'] = array(
+$end_extension['end_clear_template_cache'] = array(
 	'name'=>'清除模板缓存',
 	'icon'=>'icon.png',
 	'content'=>'clear_template_cache.php',

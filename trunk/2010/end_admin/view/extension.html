@@ -71,12 +71,13 @@
 				{if($extension)}
 					<?php
 					$url = 'admin.php?p=extension&extension='.$_GET['extension'];
-					include(END_ROOT.$extension['path'].$extension['content']);
+					chdir(END_ROOT.$extension['path']);
+					include($extension['content']);
 					?>
 				{else}
 					{foreach($exts as $name=>$attr)}
 					{$icon = thumb_png($attr['icon'],100,100)}
-						<a class="extension" href="admin.php?p=extension&extension={$name}">
+						<a class="extension" title="{$attr['description']}" href="admin.php?p=extension&extension={$name}">
 							<div class="icon" 
 								style="background-image:url({$icon});			filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='{$icon}', sizingMethod='image');_background-image:none;">
 							</div>
