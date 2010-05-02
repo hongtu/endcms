@@ -134,7 +134,8 @@ if (function_exists('end_on_end'))
 	end_on_end();
 else
 {
-	echo end_gzip($view_html);
+	//echo end_gzip($view_html);
+	echo $view_html;
 	die;
 }
 ?>
