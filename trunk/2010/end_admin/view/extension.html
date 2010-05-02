@@ -50,12 +50,15 @@
 	    	<div class="module">
 				<h2></h2>
 				<ul class="admin-left">
-					<li {if (!$_GET['module'])}class="on"{/if}><a href="admin.php?p=extension">所有扩展</a></li>
+					<li {if (!$_GET['module'] && !$_GET['action'])}class="on"{/if}><a href="admin.php?p=extension">所有扩展</a></li>
 					{foreach($modules as $name=>$attr)}
 					<li
 						{if ($_GET['module'] == $name)}class="on"{/if}
 					><a href="admin.php?p=extension&module={$name}">{$attr['name']} 扩展</a></li>
 					{/foreach}
+					<li {if ($_GET['action'] == 'edit')}class="on"{/if}>
+						<a href="admin.php?p=extension&action=edit">管理扩展</a>
+					</li>
 			    </ul>
 			</div>
 		</div>
