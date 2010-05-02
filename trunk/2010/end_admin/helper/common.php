@@ -218,58 +218,74 @@ function myurlencode($url)
 	return str_replace( array('+','%2F'),array('%20','/'),urlencode($url));
 }
 
-function thumb($orig_path,$mw=100,$mh=100,$thumb=false,$method='fill')
+function thumb_png($orig_path,$mw=100,$mh=100,$thumb=false,$method='fill')
+{
+	return thumb($orig_path,$mw,$mh,$thumb,$method,true);
+}
+
+function thumb($orig_path,$mw=100,$mh=100,$thumb=false,$method='fill',$png=false)
 {
 	if (!$orig_path) return 'about:blank';
 	$path = END_ROOT.$orig_path;
 	
 	
 	$ftype = array_pop(explode('.',$path));
-	$etag = basename($path).$mw.'x'.$mh.'.jpg';
+	$etag = basename($path).$mw.'x'.$mh;
+	$etag.= $png ? '.png':'.jpg';
 
 	if (!file_exists($path)) return '';
 	
 	if ($thumb === false)
 		$thumb = dirname($path).'/'.$etag;
-	//echo 'thumb file:'.$thumb.'<br />';
-	//overwrite ?
+
 	if (file_exists($thumb)) return dirname($orig_path).'/'.$etag;
 
 	if (!$imgarr=@getimagesize($path)) return ''; 
 	$width_orig=$imgarr[0];
 	$height_orig=$imgarr[1];
-	//echo 'orig_width='.$width_orig.'  orig_height='.$height_orig.'<br />';
+
 	$mime_orig=$imgarr["mime"];
 	$mime=str_replace("image/","",$mime_orig);
 	$mime=($mime=="bmp")?"wbmp":$mime;
 	if (!function_exists("imagecreatefrom$mime")) return false;
 
-		$p = $mw/$width_orig;
-		$_p = $mh/$height_orig;
-		if ($_p>$p)
-		{
-			$p = $_p;
-			$width = $p*$width_orig;
-			$height = $p*$height_orig;
-			$cut_height = 0;
-			$cut_width = intval(($width_orig - $mw/$p)/2);
-		}
-		else
-		{
-			$width = $p*$width_orig;
-			$height = $p*$height_orig;
-			$cut_height = intval(($height_orig - $mh/$p)/2);;
-			$cut_width = 0;
-		}
-		$width = $mw;
-		$height = $mh;
+	$p = $mw/$width_orig;
+	$_p = $mh/$height_orig;
+	if ($_p == 1 && $p == 1) //如果尺寸相同
+	{
+		return $orig_path;
+	}
+	if ($_p>$p)
+	{
+		$p = $_p;
+		$width = $p*$width_orig;
+		$height = $p*$height_orig;
+		$cut_height = 0;
+		$cut_width = intval(($width_orig - $mw/$p)/2);
+	}
+	else
+	{
+		$width = $p*$width_orig;
+		$height = $p*$height_orig;
+		$cut_height = intval(($height_orig - $mh/$p)/2);;
+		$cut_width = 0;
+	}
+	$width = $mw;
+	$height = $mh;
 	
 	$image_p = @imagecreatetruecolor($width, $height);
 	$_func = 'imagecreatefrom'.$mime;
 	$image = @$_func($path);
+	if ($png) //保存透明
+	{
+		imagealphablending($image_p,true);
+		$tcolor = imagecolortransparent($image_p, imagecolorallocatealpha($image_p, 0, 0, 0,127));
+		imagefill($image_p, 0, 0, $tcolor);
+		imagesavealpha($image_p, true);
+	}
 	@imagecopyresampled($image_p, $image, 0, 0, $cut_width, $cut_height, $width, $height, $mw/$p, $mh/$p);
-	$_func = 'image'.$mime;
-	imagejpeg($image_p,$thumb,90);
+	$_func = $png?'imagepng':'imagejpeg';
+	imagepng($image_p,$thumb);
 	return (file_exists($thumb))?dirname($orig_path).'/'.$etag:false;
 }
 
@@ -341,3 +357,4 @@ function get_admin_id()
 {
 	return $_SESSION['login_user']['admin_id'];
 }
+

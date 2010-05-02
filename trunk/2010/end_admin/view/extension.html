@@ -2,6 +2,40 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" lang="zh-CN"> 
 <head>
 	<!-- INCLUDE meta.html -->
+	<style>
+	#extension_canvas
+	{
+		position:relative;
+		margin:10px;
+	}
+	a.extension
+	{
+		cursor:pointer;
+		display:block;
+		width:100px;
+		height:120px;
+		float:left;
+		margin-right:10px;
+		_display:inline;
+	}
+	a.extension:hover
+	{
+		background-color:#eee;
+	}
+	a.extension .icon
+	{
+		width:100px;
+		height:100px;
+	}
+	a.extension .name
+	{
+		line-height:20px;
+		height:20px;
+		display:block;
+		overflow:hidden;
+		text-align:center;
+	}
+	</style>
 </head>
 <body>
 <div class='maindiv'>
@@ -15,11 +49,13 @@
 		<div id="admin_left_b">
 	    	<div class="module">
 				<h2></h2>
-				{menus=model('log')->count_menu(10)}
 				<ul class="admin-left">
-					<!-- BEGIN menus -->
-					<li><a href="{url}">{info}</a></li>
-					<!-- END -->
+					<li {if (!$_GET['module'])}class="on"{/if}><a href="admin.php?p=extension">所有扩展</a></li>
+					{foreach($modules as $name=>$attr)}
+					<li
+						{if ($_GET['module'] == $name)}class="on"{/if}
+					><a href="admin.php?p=extension&module={$name}">{$attr['name']} 扩展</a></li>
+					{/foreach}
 			    </ul>
 			</div>
 		</div>
@@ -27,12 +63,30 @@
     <div id='main'>    
         <div id="main_b">
 			<div id="position">
-				{CURRENT_POSITION}: 后台首页
+				{CURRENT_POSITION}: 扩展 
+				{if($page_name)}&gt; {$page_name}{/if} 
+				{if($extension)}&gt; {$extension['name']}{/if}
 			</div>
-        	欢迎使用ENDCMS内容管理系统。<br />
-			<br />
-			程序开发： Longbill ( <a href="http://longbill.cn" target="_blank">http://longbill.cn</a> longbill.cn@gmail.com)<br />
-			界面设计： EndTo ( <a href="http://endto.com" target="_blank">http://endto.com</a> )
+        	<div id="extension_canvas">
+				{if($extension)}
+					<?php
+					$url = 'admin.php?p=extension&extension='.$_GET['extension'];
+					include(END_ROOT.$extension['path'].$extension['content']);
+					?>
+				{else}
+					{foreach($exts as $name=>$attr)}
+					{$icon = thumb_png($attr['icon'],100,100)}
+						<a class="extension" href="admin.php?p=extension&extension={$name}">
+							<div class="icon" 
+								style="background-image:url({$icon});			filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='{$icon}', sizingMethod='image');_background-image:none;">
+							</div>
+							<div class="name">
+								{$attr['name']}
+							</div>
+						</a>
+					{/foreach}
+				{/if}
+			</div>
         </div>
         
     </div>

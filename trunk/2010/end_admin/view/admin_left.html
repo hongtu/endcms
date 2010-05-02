@@ -1,9 +1,9 @@
 <div class="module">
 	<h2></h2>
 	<ul class="admin-left">
-		<li><a href="admin.php?p=admin">管理管理员</a></li>
+		<li {if($_GET['p'] == 'admin')}class="on"{/if}><a href="admin.php?p=admin">管理管理员</a></li>
 		<?php if($_SESSION['login_user']['allowed_controllers']['rights']){?>
-        <li><a href="admin.php?p=rights">管理角色</a></li>
+        <li {if($_GET['p'] == 'rights')}class="on"{/if}><a href="admin.php?p=rights">管理角色</a></li>
 		<?php }?>
     </ul>
 </div>

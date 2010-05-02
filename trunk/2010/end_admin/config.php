@@ -3,6 +3,7 @@
 //数据库记录单个管理员后台操作的最大条数
 define('END_ADMIN_LOG_NUM',1000);
 
+$end_module['admin'] = array('name'=>'后台模块');
 
 $end_models = array();
 $end_models['config'] = array(
