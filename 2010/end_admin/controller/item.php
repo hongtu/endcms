@@ -62,9 +62,6 @@ if ($item_type)
 				$data['category_id'] = intval($_POST['category_id']);
 		}
 		
-		/*
-			TODO 保存状态
-		*/
 		
 		//点击保存草稿或者直接发布按钮
 		if (isset($_POST['saveas']))

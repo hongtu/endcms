@@ -14,10 +14,10 @@
 		$_style = ($data['width'])?'width:'.$data['width'].'px;':'width:600px;';
 		$_style.= ($data['height'])?'height:'.$data['height'].'px;':'';
 		
+		$view_data['content']['__orig_'.$name] = $view_data['content'][$name];
 		//显示之前的预处理
 		if ($data['prefilter'] && function_exists($data['prefilter']))
 		{
-			$view_data['content']['__orig_'.$name] = $view_data['content'][$name];
 			$view_data['content'][$name] = $data['prefilter']($view_data['content'][$name]);
 		}
 		
