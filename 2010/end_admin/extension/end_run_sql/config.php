@@ -1,6 +1,7 @@
 <?php
 $end_extension['end_run_sql'] = array(
 	'name'=>'运行SQL语句',
+	'version'=>'1.0',
 	'icon'=>'icon.png',
 	'content'=>'end_run_sql.php',
 	'author'=>'Longbill',

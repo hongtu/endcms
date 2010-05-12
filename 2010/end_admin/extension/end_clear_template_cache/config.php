@@ -1,6 +1,7 @@
 <?php
 $end_extension['end_clear_template_cache'] = array(
 	'name'=>'清除模板缓存',
+	'version'=>'1.0',
 	'icon'=>'icon.png',
 	'content'=>'clear_template_cache.php',
 	'author'=>'Longbill',

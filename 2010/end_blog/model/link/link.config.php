@@ -88,7 +88,7 @@ $end_models['link'] = array(
 $end_rights[] = array(
 	'name'=>'link',
 	'description'=>'链接数据管理',
-	'rights'=>array('add','update','delete')
+	'rights'=>array('view','add','update','delete')
 );
 
 function show_link_status($status,$statuses)

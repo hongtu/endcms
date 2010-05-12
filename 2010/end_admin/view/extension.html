@@ -35,6 +35,44 @@
 		overflow:hidden;
 		text-align:center;
 	}
+	.extension2
+	{
+		height:60px;
+		margin-bottom:10px;
+	}
+	.extension2 .icon
+	{
+		height:60px;
+		width:60px;
+		float:left;
+	}
+	.extension2 .info
+	{
+		float:left;
+	}
+	.extension2 .info .name
+	{
+		color:#000;
+		font-weight:bold;
+	}
+	table.running_table
+	{
+		border-collapse:collapse;
+	}
+	table.running_table td
+	{
+		padding:2px 10px;
+		border:1px solid #999;
+	}
+	table.running_table th
+	{
+		padding:0 2px;
+		border:1px solid #888;
+		background-color:#999;
+		color:#fff;
+		text-align:center;
+	}
+	
 	</style>
 </head>
 <body>
@@ -59,6 +97,9 @@
 					<li {if ($_GET['action'] == 'edit')}class="on"{/if}>
 						<a href="admin.php?p=extension&action=edit">管理扩展</a>
 					</li>
+					<li {if ($_GET['action'] == 'running')}class="on"{/if}>
+						<a href="admin.php?p=extension&action=running">运行中的扩展</a>
+					</li>
 			    </ul>
 			</div>
 		</div>
@@ -78,17 +119,81 @@
 					include($extension['content']);
 					?>
 				{else}
-					{foreach($exts as $name=>$attr)}
-					{$icon = thumb_png($attr['icon'],100,100)}
-						<a class="extension" title="{$attr['description']}" href="admin.php?p=extension&extension={$name}">
-							<div class="icon" 
-								style="background-image:url({$icon});			filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='{$icon}', sizingMethod='image');_background-image:none;">
+					{if($_GET['action']=='edit')}
+						{foreach($exts as $name=>$attr)}
+						{$icon = thumb_png($attr['icon'],60,60)}
+							<div class="extension2">
+								<div class="icon" 
+									style="background-image:url({$icon});			filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='{$icon}', sizingMethod='image');_background-image:none;">
+								</div>
+								<div class="info">
+									<div><span class="name">{$attr['name']}</span>&nbsp; &nbsp;
+										版本:{$attr['version']}&nbsp; 
+										作者:<a href="{$attr['url']}" target="_blank">{$attr['author']}</a> &nbsp;
+										{$attr['email']} &nbsp;
+										</div>
+									<div class="description">{$attr['description']}</div>
+									<div class="options">
+										<a href="admin.php?p=extension&extension={$name}">打开</a> 
+										<!-- a href="admin.php?p=extension&action=edit&edit={$name}">编辑</a --> 
+										<a onclick="return confirm('确定要删除 <?php echo $attr['name'];?> 吗？');" href="admin.php?p=extension&action=edit&delete={$name}">删除</a> 
+									</div>
+								</div>
 							</div>
-							<div class="name">
-								{$attr['name']}
-							</div>
-						</a>
-					{/foreach}
+						{/foreach}
+					{elseif($_GET['action'] == 'running')}
+						{if($running)}
+							{if($info)}{$info}<br />{/if}
+							<table class="running_table">
+								<tr>
+									<th>状态</th>
+									<th>扩展</th>
+									<th>标题</th>
+									<th>位置</th>
+									<th>运行时间</th>
+									<th>操作</th>
+								</tr>
+							{foreach($running as $h)}
+							<tr>
+								<td>
+									{if($h['status'] == 'running')}
+									<span style="color:#49e;">运行中</span>
+									{elseif($h['status'] == 'pause')}
+									<span style="color:#94e;">已暂停</span>
+									{else}
+										{$h['status']}
+									{/if}
+								</td>
+								<td>{$GLOBALS['end_extension'][$h['create_by']]['name']}</td>
+								<td>{$h['title']}</td>
+								<td>{$GLOBALS['end_module'][$h['module']]['name']}:{$GLOBALS['end_module'][$h['module']]['hooks'][$h['hook']]}</td>
+								<td>{get_past_time($h['create_time'])}</td>
+								<td>
+									{if($h['status']=='running')}
+									<a href="admin.php?p=extension&action=running&pause={$h['hook_id']}">暂停</a>
+									{else}
+									<a href="admin.php?p=extension&action=running&resume={$h['hook_id']}">启动</a>
+									{/if}
+									<a href="admin.php?p=extension&extension={$h['create_by']}&hook_id={$h['hook_id']}">修改</a>
+									<a href="admin.php?p=extension&action=running&delete={$h['hook_id']}" onclick="">删除</a>
+								</td>
+							</tr>
+							{/foreach}
+							</table>
+						{/if}
+					{else}
+						{foreach($exts as $name=>$attr)}
+						{$icon = thumb_png($attr['icon'],100,100)}
+							<a class="extension" title="{$attr['description']}" href="admin.php?p=extension&extension={$name}">
+								<div class="icon" 
+									style="background-image:url({$icon});			filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='{$icon}', sizingMethod='image');_background-image:none;">
+								</div>
+								<div class="name">
+									{$attr['name']}
+								</div>
+							</a>
+						{/foreach}
+					{/if}
 				{/if}
 			</div>
         </div>
