@@ -228,7 +228,8 @@ function cn_substr($str, $start, $len,$dotted='')
 {
 	$str = htmlspecialchars_decode(strip_tags($str));
 	$str = str_replace('&nbsp;',' ',$str);
-	$str = preg_replace('/\s+/',' ',$str);
+	$str = preg_replace('/\s{2,}/',' ',$str);
+
 	$tmpstr = "";
 	$strlen = strlen($str);
 	$cnt = 0;
