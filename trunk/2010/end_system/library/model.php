@@ -50,6 +50,11 @@ class MODEL
 		return ($GLOBALS['db']->query($sql));
 	}
 	
+	function truncate()
+	{
+		return $GLOBALS['db']->query('TRUNCATE TABLE `'.$this->table.'`');
+	}
+	
 	//get one row
 	function get_one($id)
 	{
@@ -146,6 +151,7 @@ class MODEL
 			$sql.= " WHERE 1=1 ";
 		return $sql;
 	}
+
 
 	function make_update_sql($table,$data,$cond_arr)
 	{

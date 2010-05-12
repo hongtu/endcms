@@ -180,8 +180,6 @@ function lang($key)
 
 
 
-
-
 function end_gzip($s)
 { 
 	if( !headers_sent() && extension_loaded("zlib") && strstr($_SERVER["HTTP_ACCEPT_ENCODING"],"gzip"))
@@ -192,4 +190,20 @@ function end_gzip($s)
 		header("Content-Length: ".strlen($s));
 	}
 	return $s;
+}
+
+
+function end_add_hook($module,$hook,$func_file,$func_name,$settings,$create_by = '',$title = '',$status='running')
+{
+	return model('hook')->add(array(
+		'module'=>$module,
+		'hook'=>$hook,
+		'func_file'=>$func_file,
+		'func_name'=>$func_name,
+		'settings'=>$settings,
+		'create_time'=>time(),
+		'create_by'=>$create_by,
+		'title'=>$title,
+		'status'=>$status,
+	));
 }

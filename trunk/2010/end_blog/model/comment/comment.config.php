@@ -100,7 +100,7 @@ $end_models['comment'] = array(
 $end_rights[] = array(
 	'name'=>'comment',
 	'description'=>'评论数据管理',
-	'rights'=>array('add','update','delete')
+	'rights'=>array('view','add','update','delete')
 );
 
 function show_comment_date($t)

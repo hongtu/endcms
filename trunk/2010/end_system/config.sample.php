@@ -23,8 +23,8 @@ define('END_CHARSET','UTF-8');
 //默认缓存模板文件
 define('END_CACHE_VIEW',true);
 
-//允许上传的文件类型
-define('END_UPLOAD_FILE_TYPES',',jpg,jpeg,gif,bmp,png,doc,rar,pdf,zip,ppt,docx,xls,');
+//允许上传的文件类型 (废弃) 
+//define('END_UPLOAD_FILE_TYPES',',jpg,jpeg,gif,bmp,png,doc,rar,pdf,zip,ppt,docx,xls,');
 
 //上传文件保存到的目录路径，如果不存在，会自动建立
 define('END_UPLOAD_DIR','public/'.date('Y/m/'));
@@ -42,10 +42,10 @@ define('END_MYSQL_PREFIX','end_');
 
 //MYSQL数据库信息
 $mysql = array(
-	'username' => "endcms", //数据库用户名
-	'password' => "endcms", //密码
-	'server' => "localhost", //数据库服务器地址，绝大部分是 localhost
-	'database' => "endcms", //网站数据表所在的数据库名称 (一个数据库服务器有多个数据库)
+	'username' => "--endcms-username--", //数据库用户名
+	'password' => "--endcms-password--", //密码
+	'server' => "--endcms-server--", //数据库服务器地址，绝大部分是 localhost
+	'database' => "--endcms-database--", //网站数据表所在的数据库名称 (一个数据库服务器有多个数据库)
 );
 
 

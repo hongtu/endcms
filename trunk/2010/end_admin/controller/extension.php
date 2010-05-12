@@ -5,7 +5,7 @@ load_modules_config();
 
 $view_data['modules'] = $end_module;
 
-
+$action = $_GET['action'];
 $module = $_GET['module'];
 $extension = $_GET['extension'];
 
@@ -20,6 +20,51 @@ else
 	$view_data['page_name'] = lang('all_extension');
 }
 
+
+if ($action == 'edit')
+{
+	if ($_GET['delete'])
+	{
+		if ($ext = $end_extension[$_GET['delete']])
+		{
+			if (end_rmdir(END_ROOT.$ext['path']))
+			{
+				end_exit("删除成功！",'admin.php?p=extension&action=edit',1);
+			}
+			else
+			{
+				end_exit("删除失败！",'admin.php?p=extension&action=edit',3);
+			}
+		}
+	}
+}
+else if ($action == 'running')
+{
+	if ($hid = intval($_GET['pause']))
+	{
+		if (model('hook')->update($hid,array('status'=>'pause')))
+			$view_data['info'] = "操作成功";
+		else
+			$view_data['info'] = "操作失败";
+	}
+	if ($hid = intval($_GET['resume']))
+	{
+		if (model('hook')->update($hid,array('status'=>'running')))
+			$view_data['info'] = "操作成功";
+		else
+			$view_data['info'] = "操作失败";
+	}
+	if ($hid = intval($_GET['delete']))
+	{
+		if (model('hook')->delete($hid))
+			$view_data['info'] = "操作成功";
+		else
+			$view_data['info'] = "操作失败";
+	}
+	
+	$view_data['running'] = model('hook')->get_list(array('order'=>'create_time desc'));
+}
+
 $view_data['exts'] = $end_extension;
 
 if ($extension && $end_extension[$extension])
@@ -27,7 +72,22 @@ if ($extension && $end_extension[$extension])
 	$view_data['extension'] = $end_extension[$extension];
 }
 
-
+//删除目录
+function end_rmdir($p)
+{
+	if (is_dir($p))
+	{
+		$h = opendir($p);
+		while( ($v = readdir($h)) != false)
+		{
+			if ($v == '.' || $v == '..') continue;
+			if (is_file($p.'/'.$v)) unlink($p.'/'.$v);
+			else end_rmdir($p.'/'.$v);
+		}
+		rmdir($p);
+	}
+	return !is_dir($p);
+}
 
 
 function load_modules_config()
