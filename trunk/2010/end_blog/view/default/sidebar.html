@@ -1,7 +1,7 @@
 <div id="right">
 	
 	<div class="block">
-		<h3>Categories</h3>
+		<h3>文章分类</h3>
 		<div class="content">
 			<ul>
 				{foreach(get_cats('blog_cats') as $cat)}
@@ -12,7 +12,7 @@
 	</div>
 	
 	<div class="block block_links">
-		<h3>Links</h3>
+		<h3>友情链接</h3>
 		<div class="content">
 			<ul>
 				<?php /*
@@ -26,7 +26,7 @@
 				*/?>
 				{foreach(get_items('links',array('status'=>1)) as $link)}
 				<li>
-					<a class="link-name" title="{$link['description']}" href="{$link['url']}" target="_blank">{$link['name']}</a>
+					<a class="link-name" rel="{$link['rel']}" title="{$link['description']}" href="{$link['url']}" target="_blank">{$link['name']}</a>
 					<div class="link-description">{$link['description']}</div>
 				</li>
 				{/foreach}

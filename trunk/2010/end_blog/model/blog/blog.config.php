@@ -8,7 +8,7 @@
 $blog_status = array( 
 	0 => '<span style="color:blue">草稿</span>',
 	1 => '<span style="color:green">已发布</span>',
-	-1 => '<span style="color:grey">已删除</span>'
+	-1 => '<span style="color:grey">隐藏</span>'
 );
 
 $end_models['blog'] = array(
@@ -44,6 +44,11 @@ $end_models['blog'] = array(
 			'null'=>false, //可选，是否允许为空
 			'width'=>600, //输入框宽度
 		),
+		'url'=>array(
+			'name'=>'URL',
+			'type'=>'text',
+			'null'=>true,
+		),
 		'content'=>array(
 			'name'=>'内容',
 			'type'=>'richtext',
@@ -63,8 +68,8 @@ $end_models['blog'] = array(
 			'align'=>'center',
 		),
 		'order_id'=>array(
-			'name'=>'优先级',
-			'width'=>'50',
+			'name'=>'排序',
+			'width'=>'35',
 			'edit'=>true,
 			'sort'=>true,
 			'align'=>'center',
@@ -78,6 +83,13 @@ $end_models['blog'] = array(
 			'search'=>true,
 			'edit'=>true
 		),
+		// 'url'=>array(
+		// 		'name'=>'URL',
+		// 		'width'=>'auto',
+		// 		'sort'=>true,
+		// 		'search'=>true,
+		// 		'edit'=>true,
+		// 	),
 		'create_time'=>array(
 			'name'=>'创建日期',
 			'width'=>120,
@@ -92,14 +104,25 @@ $end_models['blog'] = array(
 		'status'=>array(
 			'name'=>'状态',
 			'width'=>50,
-			//'filter'=>'show_blog_status',
 			'edit'=>true,
 			'type'=>'select',
 			'options'=>$blog_status
 		),
+		'view_count'=>array(
+			'name'=>'浏览',
+			'width'=>'35',
+			'align'=>'center',
+			'sort'=>true
+		),
+		'comment_count'=>array(
+			'name'=>'评论',
+			'width'=>'35',
+			'align'=>'center',
+			'sort'=>true
+		),
 		'_options'=>array(
 			'name'=>'操作',
-			'width'=>100,
+			'width'=>120,
 			'filter'=>'show_blog_options'
 		)
 	)
@@ -111,12 +134,6 @@ $end_rights[] = array(
 	'rights'=>array('view','add','update','delete')
 );
 
-function show_blog_status($status,$statuses)
-{
-	$status = intval($status);
-	return $statuses[$status]?$statuses[$status]:'unkown';
-}
-
 function show_blog_date($t)
 {
 	return date('Y-m-d H:i:s',$t);
@@ -124,7 +141,8 @@ function show_blog_date($t)
 
 function show_blog_options($blog)
 {
+	end_show_view_button($blog['blog_id']);
 	end_show_edit_button($blog['blog_id']);
 	end_show_delete_button($blog['blog_id']);
-	echo ' <a href="admin.php?p=item&item_type=comment&blog_id='.$blog['blog_id'].'">评论</a> ';
+	echo ' <a href="admin.php?p=item&item_type=comment&search[blog_id]='.$blog['blog_id'].'">评论</a> ';
 }

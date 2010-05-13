@@ -1,9 +1,4 @@
-<?php
-$id = intval($_GET['id']);
-$blog = model('blog')->get_one($id);
-$comments = model('comment')->get_list(array('blog_id'=>$id));
-$title = $blog['name'];
-?><!-- INCLUDE header.html -->
+<!-- INCLUDE header.html -->
 
 <div id='content'>
 	<div id='left'>
@@ -12,19 +7,10 @@ $title = $blog['name'];
 			<div class="time">{date("F/jS Y",$blog['create_time'])}</div>
 			<div class="intro">{$blog['content']}</div>
 			<div class="info">
-				<a class="comments">10 Comments</a>
+				<a class="comments">{$blog['comment_count']} Comments</a>
 			</div>
 		</div>
-		<a name="comments" ></a>
-		<div class="comments">
-			{foreach($comments as $c)}
-			<a name="comment{$c['comment_id']}" ></a>
-			<div class="comment">
-				<div class="info">{date("Y-m-d H:i",$c['time'])} {$c['name']}:</div>
-				<div class="content">{$c['content']}</div>
-			</div>
-			{/foreach}
-		</div>
+		<!-- INCLUDE comment.html -->
     </div>
 	<!-- INCLUDE sidebar.html -->
 	<div class="clear"></div>

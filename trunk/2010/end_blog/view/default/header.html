@@ -13,8 +13,9 @@
 	</div>
 
 	<ul class="navs">
-		{foreach(get_cats('navigation') as $navi)}
-		<li><a href="{category_link($navi)}" target="{$navi['target']}">{$navi['name']}</a></li>
+		<li><a href="./" >Index</a></li>
+		{foreach(get_items('page_cat',array('status'=>1)) as $navi)}
+		<li><a href="{item_link($navi)}" >{$navi['name']}</a></li>
 		{/foreach}
 	</ul>
 </div>
