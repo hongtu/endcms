@@ -19,6 +19,8 @@ class MODEL_CATEGORY extends MODEL
 	function delete($id)
 	{
 		check_allowed_category($id,END_RESPONSE == 'text');
+		$cat = $this->get_one($id);
+		if ($cat['system'] == 'yes' && END_DEBUG == false) return false;
 		return parent::delete($id);
 	}
 	
@@ -28,6 +30,10 @@ class MODEL_CATEGORY extends MODEL
 		{
 			check_allowed_category($data['parent_id'],END_RESPONSE == 'text');
 		}
+		
+		if (!$data['url']) $data['url'] =  $data['name']?$data['name']:date('Y-m-d-H-i-s');
+		$data['url'] = $this->unique_url($data['url']);
+		
 		if (!$data['create_time']) $data['create_time'] = time();
 		$re = parent::add($data);
 		return $re;
@@ -37,11 +43,17 @@ class MODEL_CATEGORY extends MODEL
 	{
 		check_allowed_category($id,END_RESPONSE == 'text');
 		if (!$data['update_time']) $data['update_time'] = time();
+		if (isset($data['url']))
+		{
+			$data['url'] = $this->unique_url($data['url'],$id);
+		}
+		
 		$re = parent::update($id,$data);
 		if ($re && $data['url'] && defined('MAKE_HTML') && MAKE_HTML)
 		{
 			end_mkdir(END_ROOT.$data['url']);
 		}
+		
 		return $re;
 	}
 
@@ -122,6 +134,19 @@ class MODEL_CATEGORY extends MODEL
 			$data['where'] .= 'category_id IN ('.$_SESSION['login_user']['allowed_categories'].')';
 		}
 		return parent::get_list($data);
+	}
+	
+	function unique_url($url,$id=0)
+	{
+		if (!$url) $url = date('Y-m-d-H-i-s');
+		$_i = 2;
+		$_url = $url;
+		while($this->exists(array('url'=>$url,'where'=>$this->id.'!='.$id)))
+		{
+			$url = $_url.$_i;
+			$_i++;
+		}
+		return $url;
 	}
 }
 ?>

@@ -9,7 +9,7 @@
 		//输出 select 类型 字段 的 选择源数据
 		foreach($view_data['list_fields'] as $_key=>$field)
 		{
-			if ($field['edit'] && $field['type'] == 'select' && is_array($field['options']))
+			if ($field['type'] == 'select' && is_array($field['options']))
 			{
 				$select_id = 'select_source_'.$_key;
 				echo '<select id="'.$select_id.'">'."\n";
@@ -139,5 +139,5 @@
             </table>
 </div>
 {pager} &nbsp; 
-<a href="javascript:;" onclick="window.location = window.location.href +'&export';">导出XLS</a>
+<!-- <a href="javascript:;" onclick="window.location = window.location.href +'&export';">导出XLS</a> -->
 

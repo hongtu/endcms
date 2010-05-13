@@ -23,8 +23,7 @@ set_magic_quotes_runtime(0);
 //default time zone
 function_exists('date_default_timezone_set') && @date_default_timezone_set('Etc/GMT-8');
 
-
-if (!defined('SESSION_STARTED'))
+if (!defined('SESSION_STARTED') && END_OPEN_SESSION != false)
 {
 	isset($_REQUEST['PHPSID']) && session_id($_REQUEST['PHPSID']);
 	session_start();

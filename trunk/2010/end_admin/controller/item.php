@@ -18,8 +18,16 @@ if ($category_id || $item_type)
 		$item_type = preg_replace('/_list$/i','',$this_category['status']);
 		define('END_ADMIN_CATEGORY_ID',$category_id);
 	}
+	else
+	{
+		$this_category = $category->get_one(array('status'=>$item_type.'_list'));
+		$category_id = $this_category['category_id'];
+		define('END_ADMIN_CATEGORY_ID',$category_id);
+	}
 	if ($item_type)
+	{
 		define('END_ADMIN_ITEM_TYPE',$item_type);
+	}
 	else
 		die('please provide valid category_id or item_type!');
 }
