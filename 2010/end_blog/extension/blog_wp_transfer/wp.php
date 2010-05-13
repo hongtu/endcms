@@ -49,7 +49,7 @@ else
 		//添加分类
 		$category_id = model('category')->add($cdata);
 		//获取此分类的文章
-		$posts = $GLOBALS['db']->get_all("SELECT * FROM `wp_posts` WHERE `ID` IN (SELECT `object_id` as `ID` FROM `wp_term_relationships` WHERE `term_taxonomy_id` = '$tid') AND post_type='post' AND post_status='publish'");
+		$posts = $GLOBALS['db']->get_all("SELECT * FROM `wp_posts` WHERE `ID` IN (SELECT `object_id` as `ID` FROM `wp_term_relationships` WHERE `term_taxonomy_id` = '$tid') AND post_type='post' AND post_status='publish' LIMIT 1");
 		foreach($posts as $p)
 		{
 			$data = array();
