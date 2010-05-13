@@ -11,9 +11,9 @@ $link_status = array(
 	-1 => '<span style="color:grey">已删除</span>'
 );
 
-$end_models['link'] = array(
+$end_models['friendlink'] = array(
 	'type' => 'list', //表示这是一个列表型的模型，对应一个数据库的表
-	'name' => '链接列表',	//某型的名字，可以把一个栏目配置成某个模型
+	'name' => '友情链接列表',	//某型的名字，可以把一个栏目配置成某个模型
 	'status' => $link_status,
 	'list_items'=>20,
 	'fields' => array(  //编辑字段
@@ -86,16 +86,16 @@ $end_models['link'] = array(
 );
 
 $end_rights[] = array(
-	'name'=>'link',
-	'description'=>'链接数据管理',
+	'name'=>'friendlink',
+	'description'=>'友情链接管理',
 	'rights'=>array('view','add','update','delete')
 );
-
-function show_link_status($status,$statuses)
-{
-	$status = intval($status);
-	return $statuses[$status]?$statuses[$status]:'unkown';
-}
+// 
+// function show_link_status($status,$statuses)
+// {
+// 	$status = intval($status);
+// 	return $statuses[$status]?$statuses[$status]:'unkown';
+// }
 
 function show_link_date($t)
 {
@@ -104,7 +104,7 @@ function show_link_date($t)
 
 function show_link_options($link)
 {
-	end_show_view_button($link['link_id']);
-	end_show_edit_button($link['link_id']);
-	end_show_delete_button($link['link_id']);
+	end_show_view_button($link['friendlink_id']);
+	end_show_edit_button($link['friendlink_id']);
+	end_show_delete_button($link['friendlink_id']);
 }

@@ -65,9 +65,9 @@ function category_link($o=false)
 	if ($o['status'] == 'link')
 		return $o['url'];
 	else if (  $o['status'] == 'page')
-		return '?p=page&cid='.$o['category_id'];
+		return 'page/'.$o['url'].'/';
 	else
-		return '?cid='.$o['category_id'];
+		return 'cat/'.$o['url'].'/';
 }
 
 /**
@@ -80,7 +80,7 @@ function category_link($o=false)
 function item_link($o=false)
 {
 	if (!$o) $o = $GLOBALS['view_data'];
-	return '?p=blog&id='.$o['blog_id'];
+	return 'blog/'.$o['url'].'/';
 }
 
 
@@ -119,4 +119,41 @@ function get_past_time($t,$second='秒',$minite='分',$hour='小时',$day='天',
 	return intval($d/12).$year;
 }
 
-?>
+
+/*
+获得过多少天
+*/
+function get_past_day($t)
+{
+	$d = time()-$t;
+	$d = intval($d/60);
+	$d = intval($d/60);
+	$d = intval($d/24);
+	if ($d <= 0) return '今天';
+	else if ($d == 1) return '昨天';
+	else if ($d == 2) return '前天';
+	
+	if ($d < 10)
+	{
+		return $d.'天前';
+	}
+	
+	if (date('Y') == date('Y',$t))
+	{
+		$d = date('m') - date('m',$t);
+	
+		if ($d == 0) return '本月'.date('d',$t).'号';
+		else if ($d == 1) return '上月'.date('d',$t).'号';
+		else return date('m月d号',$t);
+	}
+	
+	return date('Y年m月d号',$t);
+}
+
+function show_plaint($s)
+{
+	$s = str_replace("\t","&nbsp;&nbsp;&nbsp;&nbsp;",$s);
+	$s = str_replace(" ","&nbsp;",$s);
+	$s = str_replace("\n","<br>",$s);
+	return $s;
+}

@@ -1,5 +1,6 @@
 <?php
 END_MODULE != 'admin' && die('Access Denied');
+die('under construction');
 global $end_module,$end_extension;
 $do = $_GET['do'];
 $hook_id = intval($_GET['hook_id']);
@@ -12,7 +13,6 @@ else
 {
 	$settings = array();
 }
-
 
 
 if ($do == 'save')

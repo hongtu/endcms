@@ -1,0 +1,103 @@
+<a name="comments" ></a>
+<div class="comments">
+	{foreach($comments as $c)}
+	<div class="comment" id="comment_div_{$c['comment_id']}">
+		<a class="comment-anchor" name="comment{$c['comment_id']}" ></a>
+		<img class="avatar" src="http://www.gravatar.com/avatar/{md5($c['email'])}?s=32&r=G&d=monsterid" />
+		<div class="name">
+			{if($c['url'])}<a href="{$c['url']}" rel="nofollow">{/if}
+				<span id="comment_name_{$c['comment_id']}">{$c['name']}</span>
+			{if($c['url'])}</a>{/if}
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<a href="javascript:;" class="reply" onclick="reply('{$c['name']}')">回复</a>
+		</div>
+		<div class="time">{get_past_day($c['time'])} {date('H:i',$c['time'])}</div>
+		<div class="content">{show_plaint(strip_tags($c['content']))}</div>
+	</div>
+	{/foreach}
+</div>
+
+<div class="new-comment" id="new_comment_div">
+	<div class="title">添加新的评论</div>
+	称呼:<input type="text" id="new_comment_value_name" class="input" size="20" />*<br />
+	邮件:<input type="text" id="new_comment_value_email" class="input" size="20" />*<br />
+	网站:<input type="text" id="new_comment_value_url" class="input" size="20" /><br />
+	内容:<br />
+	<textarea id="new_comment_value_content" class="text"></textarea><br />
+	<input type="button" onclick="submit_comment()" id="new_comment_submit" class="bt" value="提交" />
+</div>
+
+<script>
+
+function reply(someone)
+{
+	var content = $('#new_comment_value_content');
+	content.val( '@'+someone+' '+content.val()).focus();
+}
+
+$(function()
+{
+	$('#new_comment_value_email').add('#new_comment_value_name').blur(function()
+	{
+		if ($(this).val() == '') 
+			$(this).addClass('empty');
+		else
+			$(this).removeClass('empty');
+	});
+	$('#new_comment_value_url').blur(function()
+	{
+		var val = $(this).val();
+		if (!val) return;
+		if (!val.match(/^http/i)) val = 'http://'+val;
+		$(this).val(val);
+	});
+	
+	$('#new_comment_value_email').val($.cookie('blog_email'));
+	$('#new_comment_value_name').val($.cookie('blog_name'));
+	$('#new_comment_value_url').val($.cookie('blog_url'));
+});
+
+function submit_comment()
+{
+	var data = { };
+	data.blog_id = "<?php echo $blog['blog_id'];?>";
+	$('[id^=new_comment_value]').each(function()
+	{
+		var k = $(this).attr('id').replace('new_comment_value_','');
+		data[k] = $(this).val();
+	});
+	if (data.name == '')
+	{
+		$('#new_comment_value_name').addClass('empty').focus();
+		return;
+	}
+	if (data.email == '' || !data.email.match(/\@/))
+	{
+		$('#new_comment_value_email').addClass('empty').focus();
+		return;
+	}
+	if (data.content == '')
+	{
+		$('#new_comment_value_content').focus();
+		return;
+	}
+	$.cookie('blog_name',data.name,{ path:'/' });
+	$.cookie('blog_email',data.email, { path:'/'});
+	$.cookie('blog_url',data.url,{ path:'/'});
+	$('#new_comment_submit').attr('value','提交中...').attr('disabled','disabled');
+	$('[id^=new_comment_value]').attr('disabled','disabled');
+	$.post('index.php?p=addcomment&t='+Math.random(),data,function(s)
+	{
+		$('[id^=new_comment_value]').removeAttr('disabled');
+		$('#new_comment_submit').attr('value','提交').removeAttr('disabled');
+		if (s.match(/^comment\d+$/i))
+		{
+			window.location = window.location.href.toString().replace(/\?.*$/,'') + '?t='+ Math.floor(Math.random()*10000)+'#'+s;
+		}
+		else
+		{
+			alert("发生错误:\n" + s.substr(0,500));
+		}
+	});
+}
+</script>

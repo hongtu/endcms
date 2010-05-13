@@ -1,7 +1,7 @@
 <?php
 function end_on_begin()
 {
-	helper('common');
+	//helper('common');
 }
 
 function end_on_after_db()
