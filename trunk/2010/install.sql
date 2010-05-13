@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- 主机: localhost
--- 生成日期: 2010 年 05 月 13 日 12:02
+-- 生成日期: 2010 年 05 月 13 日 12:05
 -- 服务器版本: 5.0.41
 -- PHP 版本: 5.2.5
 
@@ -41,7 +41,7 @@ CREATE TABLE IF NOT EXISTS `end_admin` (
 
 INSERT INTO `end_admin` (`admin_id`, `rights_id`, `name`, `password`, `email`, `status`) VALUES
 (1, 1, 'longbill', '55d7e24398e9cc418e630d1602a6609f43cefef0', 'aaa@aaa.com', 'admin'),
-(35, 0, 'endcms', '77fbc280bf0900b454c5b83ab0b52fb965d30811', 'endcms@endcms.com', NULL);
+(35, 1, 'endcms', '77fbc280bf0900b454c5b83ab0b52fb965d30811', 'endcms@endcms.com', NULL);
 
 -- --------------------------------------------------------
 
@@ -245,12 +245,37 @@ CREATE TABLE IF NOT EXISTS `end_log` (
   `info` varchar(200) character set utf8 collate utf8_unicode_ci NOT NULL,
   PRIMARY KEY  (`log_id`),
   KEY `admin_id` (`admin_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=25 ;
 
 --
 -- 转存表中的数据 `end_log`
 --
 
+INSERT INTO `end_log` (`log_id`, `admin_id`, `controller`, `url`, `menu`, `time`, `info`) VALUES
+(1, 1, 'admin', 'admin.php?p=admin', 1, 1273723473, ' 管理管理员'),
+(2, 1, 'login', '/admin.php?p=login&m=logout&module=admin&backurl=index.php', 0, 1273723476, ''),
+(3, 0, 'login', '/admin.php?p=login&module=admin&backurl=admin.php%3F', 0, 1273723482, ''),
+(4, 0, 'login', '/admin.php?p=login&module=admin&m=login&backurl=admin.php%3F', 0, 1273723485, ''),
+(5, 35, '', '/admin.php?', 0, 1273723485, ''),
+(6, 35, '', '/admin.php', 0, 1273723490, ''),
+(7, 35, 'login', '/admin.php?p=login&m=logout&module=admin&backurl=index.php', 0, 1273723492, ''),
+(8, 0, 'login', '/admin.php?p=login&module=admin&backurl=admin.php%3Fp%3Dextension', 0, 1273723497, ''),
+(9, 0, 'login', '/admin.php?p=login&module=admin&m=login&backurl=admin.php%3Fp%3Dextension', 0, 1273723499, ''),
+(10, 1, 'extension', '/admin.php?p=extension', 0, 1273723499, ''),
+(11, 1, 'admin', 'admin.php?p=admin', 1, 1273723501, ' 管理管理员'),
+(12, 1, 'ajax', '/admin.php?p=ajax&m=update&table=admin&column=rights_id&id=35', 0, 1273723503, ''),
+(13, 1, 'login', '/admin.php?p=login&m=logout&module=admin&backurl=index.php', 0, 1273723506, ''),
+(14, 0, 'login', '/admin.php?p=login&module=admin&backurl=admin.php%3Fp%3Dextension', 0, 1273723509, ''),
+(15, 0, 'login', '/admin.php?p=login&module=admin&m=login&backurl=admin.php%3Fp%3Dextension', 0, 1273723512, ''),
+(16, 35, 'extension', '/admin.php?p=extension', 0, 1273723512, ''),
+(17, 35, 'admin', 'admin.php?p=admin', 1, 1273723516, ' 管理管理员'),
+(18, 35, 'category', 'admin.php?p=category', 1, 1273723517, ' 栏目管理'),
+(19, 35, 'item', '/admin.php?p=item', 0, 1273723519, ''),
+(20, 35, '', '/admin.php', 0, 1273723520, ''),
+(21, 35, 'item', '/admin.php?p=item', 0, 1273723521, ''),
+(22, 35, 'category', 'admin.php?p=category', 1, 1273723522, ' 栏目管理'),
+(23, 35, 'extension', '/admin.php?p=extension', 0, 1273723524, ''),
+(24, 35, 'extension', '/admin.php?p=extension&extension=end_show_log', 0, 1273723525, '');
 
 -- --------------------------------------------------------
 
