@@ -74,6 +74,13 @@ $end_models['config'] = array(
 	),
 );
 
+
+if (END_DEBUG === false)
+{
+	$end_models['config']['list_fields']['description']['edit'] = false;
+}
+
+
 $end_models['page'] = array(
 	'name'=>"<span style='color:#49e'>页面</span>",
 	'category_fields'=>array(

@@ -1,41 +1,5 @@
 <?php
 
-/*
-end_mail( to email address, subject,body[,reply to email address, reply to name ])
-*/
-function end_mail($to,$subject,$body,$replyto='',$replyto_name='')
-{
-	global $config;
-	include_once(END_SYSTEM_DIR.'plugin/phpmailer/class.phpmailer.php');
-	try {
-		$mail = new PHPMailer(true); //New instance, with exceptions enabled
-		$body = preg_replace('/\\\\/','', $body); //Strip backslashes
-		if ($config['mail_method'] == 'smtp') $mail->IsSMTP();            
-		$mail->SMTPDebug = false;
-		$mail->CharSet = 'utf-8';
-		if ($config['smtp_auth']) $mail->SMTPAuth   = true; 
-		if ($config['smtp_port']) $mail->Port       = $config['smtp_port']; 
-		if ($config['smtp_secure']) $mail->SMTPSecure = $config['smtp_secure'];
-		if ($config['smtp_host']) $mail->Host = $config['smtp_host'];
-		if ($config['smtp_username']) $mail->Username  = $config['smtp_username'];
-		if ($config['smtp_password']) $mail->Password  = $config['smtp_password'];
-		$mail->From = $config['mail_from'];
-		$mail->FromName = $config['mail_fromname'];
-		!$replyto && $replyto = $config['mail_from'];
-		$mail->AddReplyTo($replyto,$replyto_name);
-		$mail->AddAddress($to);
-		$mail->Subject  = $subject;
-		$mail->WordWrap   = 80; // set word wrap
-		$mail->MsgHTML($body);
-		$mail->IsHTML(true); // send as HTML
-		$mail->Send();
-		return true;
-	} catch (phpmailerException $e) {
-		echo $e->errorMessage();
-		return false;
-	}
-}
-
 function check_show($action)
 {
 	$controller = defined('ITEM_TYPE')?ITEM_TYPE:END_CONTROLLER;
