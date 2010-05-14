@@ -45,7 +45,6 @@
 <div id="bottom">
 	<div class="content">
 		Copyright &copy; Longbill 2008-{date('Y')} , Designed by <a href="http://www.endto.com" target="_blank">EndTo</a> , Powered by <a href="http://www.endcms.com" target="_blank">EndCMS</a>
-		<span style="color:#eee">{$db->query_num}</span>
 	</div>
 </div>
 
@@ -53,7 +52,7 @@
 <script>
 $(function()
 {
-	//处理高亮代码显示
+	//处理高亮代码显示， 如果博客不需要代码高亮，那么可以删除此段
 	if ($('pre').length > 0)
 	{
 		$('pre').each(function()

@@ -58,5 +58,5 @@ define('END_MODEL_DIR',END_ROOT.'end_'.END_MODULE.'/model/');
 define('END_PLUGIN_DIR',END_ROOT.'end_'.END_MODULE.'/plugin/');
 define('END_THEME_DIR',END_ROOT.'end_'.END_MODULE.'/view/');
 
-
-
+$end_extension = array();
+$end_module = array();

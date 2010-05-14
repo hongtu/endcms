@@ -2,7 +2,7 @@
 
 $blog = model('blog',END_ROOT.'end_blog/model/blog/');
 $comment = model('comment',END_ROOT.'end_blog/model/comment/');
-$link = model('link',END_ROOT.'end_blog/model/link/');
+$link = model('friendlink',END_ROOT.'end_blog/model/friendlink/');
 $blog_item_category_id = 5; //博客文章所在分类ID
 
 
@@ -22,7 +22,8 @@ foreach($r as $t)
 ?>
 </select><br / -->
 <input type="hidden" name="do" value="yes" />
-是否清空现有的博客分类和文章: <input type="checkbox" name="clear" /><br />
+请先将WordPress的数据表和EndCMS的放在一起。<br />
+是否清空现有的博客分类和文章: <input type="checkbox" name="clear" /> 谨慎使用！！<br />
 <input type="submit" value="下一步" />
 </form>
 <?php
@@ -83,7 +84,38 @@ else
 			}
 		}
 	}
-	$GLOBALS['db']->query("INSERT INTO end_link(category_id,order_id,name,description,url,status,rel) SELECT 18 as category_id,link_rating as order_id,link_name as name,link_description as description,link_url as url,1 as status,link_rel as rel FROM wp_links ORDER BY link_id ASC");
+	//导入链接
+	$GLOBALS['db']->query("INSERT INTO end_friendlink(category_id,order_id,name,description,url,status,rel) SELECT 18 as category_id,link_rating as order_id,link_name as name,link_description as description,link_url as url,1 as status,link_rel as rel FROM wp_links ORDER BY link_id ASC");
+	//导入页面
+	$posts = $GLOBALS['db']->get_all("SELECT * FROM `wp_posts` WHERE post_type='page' AND post_status='publish' ORDER BY `post_date_gmt` ASC");
+	foreach($posts as $p)
+	{
+		$data = array();
+		$data['name'] = $p['post_title'];
+		$data['content'] = $p['post_content'];
+		$data['status'] = 1;
+		$data['url'] = $p['post_name'];
+		$data['category_id'] = 3; //页面分类的id
+		$data['create_time'] = strtotime($p['post_date_gmt']);
+		$data['comment_count'] = $p['comment_count'];
+		$data['update_time'] = strtotime($p['post_modified_gmt']);
+		
+		$new_id = $blog->add($data);
+		echo $new_id.':'.$data['name'].'<br />';
+		$comments = $GLOBALS['db']->get_all("SELECT * FROM `wp_comments` WHERE comment_post_ID='".$p['ID']."' AND comment_approved=1 ORDER BY comment_ID ASC");
+		foreach($comments as $c)
+		{
+			$data = array();
+			$data['blog_id'] = $new_id;
+			$data['email'] = $c['comment_author_email'];
+			$data['name'] = $c['comment_author'];
+			$data['content'] = $c['comment_content'];
+			$data['url'] = $c['comment_author_url'];
+			$data['time'] = strtotime($c['comment_date_gmt']);
+			$data['status'] = 1;
+			$comment->add($data);
+		}
+	}
 ?>
 <?php
 }

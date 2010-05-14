@@ -1,0 +1,10 @@
+<div style="padding:10px;">
+	<h1>评论页面：<a href="{$url}">{blog.name}</a></h1>
+	您在 {date('Y-m-d H:i:s',$old['time'])} 说:<br />
+	{old.content}<br />
+	<br />
+	{comment.name} 在 {date('Y-m-d H:i:s')} 回复您: <br />
+	{comment.content}<br />
+	<br />
+	<a href="{$url}" target="_blank">点击这里回复他</a>
+</div>

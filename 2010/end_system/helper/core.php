@@ -1,5 +1,58 @@
 <?php
 
+
+/*
+end_mail( to email address, subject,body[,reply to email address, reply to name ])
+*/
+function end_mail($to,$subject,$body,$replyto='',$replyto_name='')
+{
+	if (file_exists(END_SYSTEM_DIR.'config/smtp.config.php'))
+		require(END_SYSTEM_DIR.'config/smtp.config.php');
+	else
+		return;
+		
+	
+	include_once(END_SYSTEM_DIR.'plugin/phpmailer/class.phpmailer.php');
+	try {
+		$mail = new PHPMailer(true); //New instance, with exceptions enabled
+		$body = preg_replace('/\\\\/','', $body); //Strip backslashes
+		
+		
+		if ($config['use_smtp']) 
+		{
+			$mail->IsSMTP();
+			$mail->SMTPDebug = false;
+			$mail->CharSet = 'utf-8';
+			$mail->SMTPAuth   = true; 
+			if ($config['smtp_port']) $mail->Port  = $config['smtp_port']; 
+			if ($config['smtp_secure']) $mail->SMTPSecure = $config['smtp_secure'];
+			if ($config['smtp_host']) $mail->Host = $config['smtp_host'];
+			if ($config['smtp_username']) $mail->Username  = $config['smtp_username'];
+			if ($config['smtp_password']) $mail->Password  = $config['smtp_password'];
+		}
+		else
+		{
+			$mail->IsMail();
+		}
+		$mail->From = $config['smtp_fullemail'];
+		$mail->FromName = $config['smtp_fullname'];
+		!$replyto && $replyto = $config['smtp_fullemail'];
+		!$replyto_name && $replyto_name = $cofnig['smtp_fullname'];
+		$mail->AddReplyTo($replyto,$replyto_name);
+		$mail->AddAddress($to);
+		$mail->Subject  = $subject;
+		$mail->WordWrap   = 80; // set word wrap
+		$mail->MsgHTML($body);
+		$mail->IsHTML(true); // send as HTML
+		$mail->Send();
+		return true;
+	} catch (phpmailerException $e) {
+		echo $e->errorMessage();
+		return false;
+	}
+}
+
+
 /**
  * 载入一个model
  *

@@ -56,7 +56,7 @@ blockquote
 
 #footer { border-top:1px solid #bbb; }
 
-#footer .block { float:left; margin:30px 0 0 30px; width:270px; overflow:hidden;}
+#footer .block { float:left; margin:30px 0 0 30px; width:270px; overflow:hidden; _display:inline;}
 #footer .block h3 { color:#000; font-size:16px; margin:0;}
 #footer .block .content { margin-left:10px; }
 

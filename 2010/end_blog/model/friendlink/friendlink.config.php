@@ -29,6 +29,13 @@ $end_models['friendlink'] = array(
 			'null'=>false, 
 			'width'=>400, 
 		),
+		'rel'=>array(
+			'name'=>'Rel描述',
+			'type'=>'text',
+			'width'=>'200',
+			'null'=>true,
+			'description'=>'链接标签上的Rel属性，不清楚作用请不要填写'
+		),
 		'description'=>array(
 			'name'=>'描述',
 			'type'=>'textarea',
