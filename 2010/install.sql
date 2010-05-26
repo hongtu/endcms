@@ -1,5 +1,5 @@
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
-  
+   
 
 DROP TABLE IF EXISTS `end_admin`;
 CREATE TABLE IF NOT EXISTS `end_admin` (
