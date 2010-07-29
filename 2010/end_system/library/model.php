@@ -41,6 +41,21 @@ class MODEL
 		return intval($r['total'])>0;
 	}
 	
+	function set($val,$cond)
+	{
+		$old = $this->get_one($cond);
+		if ($old && $old[$this->id])
+		{
+			$old_id = $old[$this->id];
+			$this->update($old_id,$val);
+		}
+		else
+		{
+			$old_id = $this->add($val);
+		}
+		return $old_id;
+	}
+	
 	//update a row by its id
 	function update( $id, $data = array())
 	{
