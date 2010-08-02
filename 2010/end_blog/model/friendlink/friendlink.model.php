@@ -11,7 +11,7 @@ class MODEL_FRIENDLINK extends MODEL
 	{
 		$this->table = END_MYSQL_PREFIX.'friendlink';
 		$this->id = 'friendlink_id';
-		$this->order_id = NULL;
+		$this->order_id = 'order_id';
 	}
 	
 }

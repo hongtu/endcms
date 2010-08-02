@@ -8,7 +8,6 @@
                    		<th style="width:70px;">{CATEGORY_STATUS}</th>
 						<!-- IF debug -->
 						<th style="width:30px;">{CATEGORY_SYSTEM}</th>
-						<th style="width:70px;">{CATEGORY_ALIAS}</th>
 						<!-- ENDIF -->
                         <th style="width:150px;">{CATEGORY_OPTIONS}</th>
                     </tr>
@@ -42,12 +41,6 @@
 					                    admin_select_source_id="category_system_select"
 					                    admin_trigger="click" status_category_id="{category_id}"
 										>{system}</div>
-								</td>
-								<td>
-									<div admin_type="text"
-					              	admin_para="m=update&table=category&column=alias&id={category_id}" 
-					                    admin_trigger="click"
-										>{alias}</div>
 								</td>
 								<!-- ENDIF -->
 		                        <td>

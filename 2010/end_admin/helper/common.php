@@ -87,7 +87,7 @@ function show_day($t)
 
 /*
 get a short type date string 
-e.g.	today 21:23 (when it's the same day)
+e.g.	today 21:23 (when it s the same day)
 		yesterday 21:23 (when it's yesterday)
 */
 function format_date_short($t)

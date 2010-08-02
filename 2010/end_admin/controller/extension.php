@@ -100,6 +100,7 @@ function load_modules_config()
 		if (in_array($v,array('end_system','end_content'))) continue;
 		$p = END_ROOT.$v;
 		if (!is_dir($p)) continue;
+		if (!file_exists($p.'/config.php')) continue;
 		include_once($p.'/config.php');
 	}
 	closedir($h);
