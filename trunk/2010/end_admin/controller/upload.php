@@ -4,85 +4,103 @@ $action = $_GET['action'];
 $m = $_GET['m'];
 $file = $_FILES['upfile'];
 if (!is_dir(END_ROOT.END_UPLOAD_DIR)) end_mkdir(END_ROOT.END_UPLOAD_DIR,0777);
-$err = true;
 
 //权限检查
 if (!$_SESSION['login_user']['rights']['upload_add'])
 {
-	die(LANG_ACCESS_DENIED);
+	alert(LANG_ACCESS_DENIED);
 }
-if ($file['tmp_name'])
+
+//文件保存目录路径
+$save_path = END_ROOT.END_UPLOAD_DIR;
+//文件保存目录URL
+$save_url = END_UPLOAD_DIR;
+
+//最大文件大小
+$max_size = 1000000;
+
+//有上传文件时
+if (empty($_FILES) === false) 
 {
-	$myfile=$file["tmp_name"];
-	$ftype = getext($file['name']);
-	if (!$ftype || !preg_match("/\*\.$ftype;/i",$config['upload_file_types']))
-	{
-		$err = true;
-		$msg = lang('type_not_allowed');
+	//原文件名
+	$file_name = $_FILES['imgFile']['name'];
+	//服务器上临时文件名
+	$tmp_name = $_FILES['imgFile']['tmp_name'];
+	//文件大小
+	$file_size = $_FILES['imgFile']['size'];
+	//检查文件名
+	if (!$file_name) {
+		alert("请选择文件。");
 	}
-	else
-	{
-		//$file_url = END_UPLOAD_DIR.basename($file['name']);
-		$file_url = END_UPLOAD_DIR.date('m_d_H_i_s_').rand(1111,9999).'.'.$ftype;
-		if (@move_uploaded_file($myfile,END_ROOT.$file_url))
-		{
-			$err = false;
-			$msg = lang('success');
-		}
-		else
-		{
-			$err = lang('failed');
-		}
+	//检查目录
+	if (@is_dir($save_path) === false) {
+		alert("上传目录不存在。");
 	}
-	if (strpos(',jpg,jpeg,gif,png,bmp',','.$ftype.',') !== false)
+	//检查目录写权限
+	if (@is_writable($save_path) === false) {
+		alert("上传目录没有写权限。");
+	}
+	//检查是否已上传
+	if (@is_uploaded_file($tmp_name) === false) {
+		alert("临时文件可能不是上传文件。");
+	}
+	//检查文件大小
+	if ($file_size > $max_size) {
+		alert("上传文件大小超过限制。");
+	}
+	//获得文件扩展名
+	$temp_arr = explode(".", $file_name);
+	$file_ext = array_pop($temp_arr);
+	$file_ext = trim($file_ext);
+	$file_ext = strtolower($file_ext);
+	//检查扩展名
+
+	if (!$config['upload_file_types'])
 	{
-		$view_data['is_img'] = true;
-		if ($config['max_image_width'])
+		alert('请设置允许上传的文件类型！');
+	}
+
+	if (!$file_ext || !preg_match("/\*\.$file_ext;/i",$config['upload_file_types']))
+	{
+		alert(lang('type_not_allowed'));
+	}
+
+
+	
+	
+	//新文件名
+	$new_file_name = date("YmdHis") . '_' . rand(10000, 99999) . '.' . $file_ext;
+	//移动文件
+	$file_path = $save_path . $new_file_name;
+	if (move_uploaded_file($tmp_name, $file_path) === false) {
+		alert("上传文件失败。");
+	}
+	@chmod($file_path, 0777);
+	
+	if (strpos(',jpg,jpeg,gif,png,bmp',','.$file_ext.',') !== false)
+	{
+		if ($config['max_image_width'] > 0)
 		{
-			include_once('library/image.php');
+			$isimg = true;
+			include_once(END_SYSTEM_DIR.'library/image.php');
 			$img = new Image;
-			$img->filepath = END_ROOT.$file_url;
+			$img->filepath = $file_path;
 			$img->resize_width($config['max_image_width']);
 		}
 	}
-	$view_data['file_url'] = $file_url;
-	$view_data['filename'] = $file['name'];
-	$view_data['err'] = $err;
-	$view_data['msg'] = $msg;
+	
+	$file_url = $save_url . $new_file_name;
+	
+	header('Content-type: text/html; charset=UTF-8');
+	echo json_encode(array('error' => 0, 'url' => $file_url, 'isimg'=>$isimg));
+	exit;
 }
 
-$handler = @opendir(END_ROOT.END_UPLOAD_DIR);
-$recent = array();
-while(($val = readdir($handler)) !== false)
-{
-	if ($val == '.' || $val == '..' || !is_file(END_ROOT.END_UPLOAD_DIR.$val)) continue;
-	$fname = $val;
-	$ftype = strtolower(getext($val));
-	$encode = (preg_replace('/[a-zA-Z0-9_\.\{\}\[\]\(\)]*/i','',$val) != '');
-	$recent[] = array( 
-		'name'=>$fname,
-		'filepath'=>END_UPLOAD_DIR.$val,
-		'mtime'=>filemtime(END_ROOT.END_UPLOAD_DIR.$val),
-		'ftype'=>$ftype,
-		'encode'=>$encode?'yes':'no',
-		'isimg'=>(strpos(',jpg,jpeg,gif,png,bmp',','.$ftype.',') === false)?'no':'yes'
-	 );
+function alert($msg) {
+	header('Content-type: text/html; charset=UTF-8');
+	echo json_encode(array('error' => 1, 'message' => $msg));
+	exit;
 }
-closedir($handler);
-usort($recent,"cmp_time");
-$view_data['recent'] = array();
-$view_data['for'] = $_GET['for'];
-foreach($recent as $arr)
-{
-	$view_data['recent'][] = $arr;
-	if (count($view_data['recent']) > 20) break;
-}
-unset($recent);
 
-function cmp_time($a,$b)
-{
-	if ($a['mtime'] == $b['mtime']) return 0;
-	return ($a['mtime'] < $b['mtime'])?1:-1;
-}
 		
 ?>
