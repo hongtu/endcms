@@ -1,4 +1,3 @@
-TITLE = 首页
-INDEX_DESCRIPTION = ENDCMS内容管理系统
-CATEGORIES_LIST = 列表
-INDEX_PAGE_CONTENT  = 欢迎登陆ENDCMS内容管理系统
+TITLE = 后台
+my_most_url=常用操作
+welcome= 欢迎使用EndCMS

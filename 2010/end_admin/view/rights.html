@@ -20,7 +20,7 @@
         <div id="main_b">
 	
 			<div id="position">
-				{CURRENT_POSITION}: <a href="admin.php?p=admin">管理员</a> &gt; <a href="admin.php?p=rights">角色管理</a>
+				{CURRENT_POSITION}: <a href="admin.php?p=admin">{NAVI_ADMIN}</a> &gt; <a href="admin.php?p=rights">{TITLE}</a>
 			</div>
 			
 	        <!-- IF err_msg -->
@@ -36,8 +36,6 @@
 	        <!-- ENDIF -->
         
         <div id="admin_content">
-		
-			
 
 			<!-- IF this_group -->
 				<!-- INCLUDE rights_content.html -->
@@ -50,16 +48,16 @@
 			</div>
 			
 			<div id="new_rights" class="new-form" style="display:<!-- IF thisrights --><!-- ELSE -->none<!-- ENDIF -->;width:250px;">
-            	<h2>{NEW_RIGHTS_GROUP}</h2>
+            	<h2>{RIGHTS_GROUP_NEW}</h2>
         		<!-- INCLUDE rights_new.html -->
             </div>
 
 			<table class="list_table" >
 				<tr>
-	        		<th style="width:7%">{RIGHTS_ORDER_ID}</th>
+	        		<th style="width:7%">{ORDER_ID}</th>
 	        		<th style="width:25%">{RIGHTS_NAME}</th>
 	                <th style="width:45%">{RIGHTS_DESCRIPTION}</th>
-	                <th style="width:23%">{RIGHTS_OPTIONS}</th>
+	                <th style="width:23%">{OPTIONS}</th>
 	            </tr>
 				<!-- BEGIN groups -->
 				<tr>

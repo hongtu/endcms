@@ -88,7 +88,7 @@ function end_page($obj,$cond = array(),$per_page)
 	$cond['select'] = '*';
 	$cond['from'] = ($page-1)*$per_page;
 	$cond['total'] = $per_page;
-	$pager = LANG_PAGER_TOTAL.$total.LANG_PAGER_ITEMS.$total_page.LANG_PAGER_PAGE.'<br />';
+	$pager = LANG_PAGER_TOTAL.$total.LANG_PAGER_ITEMS.'<br />';
 	$GLOBALS['END_PAGER_ITEM_TOTAL'] = $total;
 	$GLOBALS['END_PAGER_PAGE_TOTAL'] = $total_page;
 	

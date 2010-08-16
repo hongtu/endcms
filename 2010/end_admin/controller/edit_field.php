@@ -29,18 +29,18 @@ foreach($_fields as $name=>$attr)
 			//验证文件类型
 			if (!$config['upload_file_types'])
 			{
-				$errors[$name] = '尚未配置整站允许上传的文件类型(config.upload_file_types)';
+				$errors[$name] = lang('need_config_upload_file_types');
 			}
 			else if (!$attr['filetype'])
 			{
-				$errors[$name] = '尚未配置'.$name.'字段允许的文件类型';
+				$errors[$name] = lang('file_type_not_configed');
 			}
 			else if ( 
 				( $config['upload_file_types'] && !preg_match("/\*\.$ftype;/i",$config['upload_file_types']) )
 				|| 
 				!in_array($ftype,$attr['filetype']) )
 			{
-				$errors[$name] = '文件类型不允许';
+				$errors[$name] = lang('not_allowed_file_type');
 			}
 			else
 			{
@@ -53,7 +53,7 @@ foreach($_fields as $name=>$attr)
 
 				if (!$file_url) 
 				{
-					$errors[$name] = '错误';
+					$errors[$name] = 'error';
 				}
 				
 				//保存到什么地方
@@ -95,11 +95,19 @@ foreach($_fields as $name=>$attr)
 							}
 						}
 					}
+					
+					if ($attr['type'] == 'image' && $attr['max_width'])
+					{
+						include_once(END_ROOT.'end_system/library/image.php');
+						$img = new Image;
+						$img->filepath = END_ROOT.$file_url;
+						$img->resize_width($attr['max_width']);
+					}
 				}
 				
 				if (!file_exists(END_ROOT.$file_url))
 				{
-					$errors[$name] = '文件上传错误';
+					$errors[$name] = lang('upload_error');
 				}	
 			}
 		}
@@ -110,7 +118,7 @@ foreach($_fields as $name=>$attr)
 		}
 		else if (!$attr['null'])
 		{
-			$errors[$name] = '不能为空';
+			$errors[$name] = lang('is_empty');
 		}
 	}
 	else if ($attr['type'] == 'datetime')
@@ -136,7 +144,7 @@ foreach($_fields as $name=>$attr)
 		}
 		if (!$attr['null'] && !$data[$name] && $attr['type'] != 'checkbox') 
 		{
-			$errors[$name] = '不能为空';
+			$errors[$name] = lang('is_empty');
 		}
 	}
 }//end of foreach

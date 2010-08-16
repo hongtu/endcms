@@ -1,4 +1,4 @@
-<h3>查看内容</h3>
+<h3>{VIEW_ITEM_CONTENT}</h3>
 <table cellpadding="0" cellspacing="0" border="0" id="item_table" class="view_table">
 <?php
 
@@ -75,7 +75,7 @@
 	}
 	if ($view_data['statuses'])
 	{
-		echo '<tr><th>状态</th>';
+		echo '<tr><th>{STATUS}</th>';
 		echo '<td>';
 		foreach($view_data['statuses'] as $_val=>$_name)
 		{
@@ -87,6 +87,6 @@
 <tr>
 	<td colspan="2" style="text-align:center;"><a href="<?php 
 		echo $_SESSION['end_last_list_page']?$_SESSION['end_last_list_page']:'admin.php?p=item&category_id='.$view_data['category_id'];
-	?>">返回</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="admin.php?p=item&action=edit_item&item_id={item_id}&category_id={category_id}">编辑</a></td>
+	?>">{RETURN}</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="admin.php?p=item&action=edit_item&item_id={item_id}&category_id={category_id}">{EDIT}</a></td>
 </tr>
 </table>

@@ -88,14 +88,14 @@
 	    	<div class="module">
 				<h2></h2>
 				<ul class="admin-left">
-					<li {if (!$_GET['module'] && !$_GET['action'])}class="on"{/if}><a href="admin.php?p=extension">所有扩展</a></li>
+					<li {if (!$_GET['module'] && !$_GET['action'])}class="on"{/if}><a href="admin.php?p=extension">{ALL_EXTENSION}</a></li>
 					{foreach($modules as $name=>$attr)}
 					<li
 						{if ($_GET['module'] == $name)}class="on"{/if}
-					><a href="admin.php?p=extension&module={$name}">{$attr['name']} 扩展</a></li>
+					><a href="admin.php?p=extension&module={$name}">{$attr['name']}</a></li>
 					{/foreach}
 					<li {if ($_GET['action'] == 'edit')}class="on"{/if}>
-						<a href="admin.php?p=extension&action=edit">管理扩展</a>
+						<a href="admin.php?p=extension&action=edit">{lang('Manage Extension')}</a>
 					</li>
 					<!-- <li {if ($_GET['action'] == 'running')}class="on"{/if}>
 											<a href="admin.php?p=extension&action=running">运行中的扩展</a>
@@ -107,7 +107,7 @@
     <div id='main'>    
         <div id="main_b">
 			<div id="position">
-				{CURRENT_POSITION}: 扩展 
+				{CURRENT_POSITION}: {lang('Extension')}
 				{if($page_name)}&gt; {$page_name}{/if} 
 				{if($extension)}&gt; {$extension['name']}{/if}
 			</div>
@@ -128,15 +128,14 @@
 								</div>
 								<div class="info">
 									<div><span class="name">{$attr['name']}</span>&nbsp; &nbsp;
-										版本:{$attr['version']}&nbsp; 
-										作者:<a href="{$attr['url']}" target="_blank">{$attr['author']}</a> &nbsp;
+										{lang('Version')}:{$attr['version']}&nbsp; 
+										{lang('Author')}:<a href="{$attr['url']}" target="_blank">{$attr['author']}</a> &nbsp;
 										{$attr['email']} &nbsp;
 										</div>
 									<div class="description">{$attr['description']}</div>
 									<div class="options">
-										<a href="admin.php?p=extension&extension={$name}">打开</a> 
-										<!-- a href="admin.php?p=extension&action=edit&edit={$name}">编辑</a --> 
-										<a onclick="return confirm('确定要删除 <?php echo $attr['name'];?> 吗？');" href="admin.php?p=extension&action=edit&delete={$name}">删除</a> 
+										<a href="admin.php?p=extension&extension={$name}">{lang('Open')}</a> 
+										<a onclick="return confirm('{lang('delete confirm')}');" href="admin.php?p=extension&action=edit&delete={$name}">{lang('delete')}</a> 
 									</div>
 								</div>
 							</div>

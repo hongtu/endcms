@@ -28,7 +28,7 @@
     <div id='main'>
 		<div id="main_b">
 			<div id="position">
-				{CURRENT_POSITION}:{NAVI_CATEGORY} > <a href="admin.php?p=category">{CATEGORY_ROOT}</a> > 
+				{CURRENT_POSITION}:{NAVI_CATEGORY} > <a href="admin.php?p=category">{ROOT_CATEGORY}</a> > 
 				<!-- BEGIN position -->
 				 <a href="admin.php?p=category&category_id={category_id}">{name}</a> > 
 				<!-- END -->
@@ -41,7 +41,7 @@
 		
 				<!-- IF !page_content -->
 				<div class="nav_wrapper">
-					&nbsp;{AVAIL_ACTIONS}:
+					&nbsp;{FUNCTION}:
 					<?php if (check_show('add')):?>
 
 						<a class="nav" href="javascript:new_category()" id='new_category_a'>

@@ -1,5 +1,5 @@
 <div id="new_category" class="new-form" style="width:300px;">
-	<h2>{NEW_CATEGORY}</h2>
+	<h2>{NEW_CHILD_CATEGORY}</h2>
 	<form action="admin.php?m=new_category&p=category&category_id={category_id}" method="post"
 		onsubmit="return (this.name.value!='');"
 	>
@@ -10,7 +10,7 @@
 			</tr>
 			<tr>
 				<td colspan="2" align="center">
-			    	<input type="submit" value="{CATEGORY_SUBMIT}" />
+			    	<input type="submit" value="{SUBMIT}" />
 				    &nbsp;
 				    <input type="button" onclick="cancel_new_category(); return false;" value="{CANCEL}" />
 			    </td>

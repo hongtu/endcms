@@ -222,6 +222,7 @@ function language($path)
 function lang($key)
 {
 	$name = 'LANG_'.strtoupper($key);
+	$name = preg_replace('/\s+/','_',$name);
 	if (defined($name))
 		return constant($name);
 	else
