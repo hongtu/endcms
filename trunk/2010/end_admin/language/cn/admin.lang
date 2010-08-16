@@ -1,5 +1,6 @@
 ADMIN_ADMIN=管理员管理
 TITLE = 管理管理员
+POSITION = 管理员
 NEW_ADMIN = 新建管理员
 EDIT_ADMIN = 编辑管理员
 ADMIN_INDEX = 管理员列表
@@ -28,3 +29,5 @@ RIGHTS_GROUP= 角色
 DISPLAY=显示
 SHOW_ALL=所有角色
 DEFAULT_RIGHTS_GROUP=默认角色
+admins=管理员
+ROLES=角色/权限

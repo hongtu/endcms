@@ -29,11 +29,11 @@ if ($action == 'edit')
 		{
 			if (end_rmdir(END_ROOT.$ext['path']))
 			{
-				end_exit("删除成功！",'admin.php?p=extension&action=edit',1);
+				end_exit(lang('delete_success'),'admin.php?p=extension&action=edit',1);
 			}
 			else
 			{
-				end_exit("删除失败！",'admin.php?p=extension&action=edit',3);
+				end_exit(lang('delete_failed'),'admin.php?p=extension&action=edit',3);
 			}
 		}
 	}
@@ -43,23 +43,23 @@ else if ($action == 'running')
 	if ($hid = intval($_GET['pause']))
 	{
 		if (model('hook')->update($hid,array('status'=>'pause')))
-			$view_data['info'] = "操作成功";
+			$view_data['info'] = lang('Success');
 		else
-			$view_data['info'] = "操作失败";
+			$view_data['info'] = lang('Failed');
 	}
 	if ($hid = intval($_GET['resume']))
 	{
 		if (model('hook')->update($hid,array('status'=>'running')))
-			$view_data['info'] = "操作成功";
+			$view_data['info'] = lang('Success');
 		else
-			$view_data['info'] = "操作失败";
+			$view_data['info'] = lang('Failed');
 	}
 	if ($hid = intval($_GET['delete']))
 	{
 		if (model('hook')->delete($hid))
-			$view_data['info'] = "操作成功";
+			$view_data['info'] = lang('Success');
 		else
-			$view_data['info'] = "操作失败";
+			$view_data['info'] = lang('Failed');
 	}
 	
 	$view_data['running'] = model('hook')->get_list(array('order'=>'create_time desc'));

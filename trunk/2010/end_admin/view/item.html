@@ -78,8 +78,8 @@
 			
 			<!-- ELSE -->
 				<!-- IF category_id -->
-					<h2>栏目类型: {category_type}</h2>
-					<a href="admin.php?p=category&action=edit_category&category_id={category_id}">编辑</a>
+					<h2>{CATEGORY_TYPE}: {category_type}</h2>
+					<a href="admin.php?p=category&action=edit_category&category_id={category_id}">{EDIT}</a>
 					<table class="view-table">
 					<?php
 					foreach($view_data['category_fields'] as $key=>$field)

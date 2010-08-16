@@ -1,80 +1,60 @@
-CURRENT_POSITION=当前位置
-NOT_ALLOWED=权限不足
-INDEX = 后台首页
-SITE_TITLE = 后台
-SITE_INDEX = 网站首页
+ACCESS_DENIED = 权限不足
+CURRENT_LOGIN_USER=当前用户
+HEAD_CHANGE_PASSWORD=&nbsp;&nbsp;&nbsp;修改密码
+HEAD_LOGOUT = &nbsp;&nbsp;&nbsp;注销&nbsp;&nbsp;
+
+Description=描述
+Please_select=请选择...
+#导航
 NAVI_CATEGORY = 栏目管理
 navi_ITEM = 内容管理
-navi_upload=上传
-navi_RIGHTS=权限
 navi_admin=管理员
-navi_user=用户管理
 navi_extension=扩展
-REAL_INDEX = 首页
-CATEGORIES = 分类
+CURRENT_POSITION=当前位置
+INDEX = 后台首页
+RETURN=返回
+
+#功能
+NOT_ALLOWED= 权限不足
 DELETE = 删除
 DELETING = ...
-END_UPLOAD_DIR = 上传
-IMAGE = 图片
-MANAGE = 管理
-DELETE = 删除
 UPDATE= 更新
-NEW = 添加
+NEW = 新增
 EDIT = 编辑
+function=操作
+view=查看
+options=操作
+DELETE_CONFIRM=确定要删除吗？
 
-USER = 用户
+
+#表单 form
+INPUT_ALL=请填写所有带*的项
+cancel=取消
+submit=提交
+order_id=排序
+
+#sign out
 EXIT_TITLE = 系统消息
-EXIT_CLICK_HERE = 如果没有自动跳转，请点击这里
+EXIT_CLICK_HERE = 
 LOGIN_FIRST = 请先登录
-LOGOUT = 注销登陆
-LOGOUT_SUCCESS = 注销成功
+LOGOUT = 注销
+LOGOUT_SUCCESS = 成功注销
 
-select_all =全选
-select_inverse=反选
 
-ACCESS_DENIED = 权限不足
-CONFIG = 设置
-MY_ACCOUNT = 帐号
+CONFIG = 配置
 
 HIGH_LIGHT = #FFFF99
-make_html = 生成网页
-PAGER_FIRST = 第一页
-PAGER_LAST = 最后一页
-PAGER_PREV = 上一页
-PAGER_NEXT = 下一页
+
+#分页
+PAGER_PREV = ◀
+PAGER_NEXT = ►
 PAGER_PER_PAGE = 每页
-PAGER_ITEMS = 条
-PAGER_PAGE = 页
+PAGER_ITEMS = 条记录
 PAGER_TOTAL = 共
-CANCEL = 取消
-
-year = 年
-years = 年
-month = 月
-months = 月
-day = 日
-days = 天
-hour = 时
-hours = 小时
-minute = 分
-minutes = 分钟
-second = 秒
-seconds = 秒
-tdat = 后天
-tomorrow = 明天
-yesterday = 昨天
-today = 今天
-uploaded_file=已上传文件:
-
-URL_NAME = URL
-
-CONTRACT=收缩
-EXPAND=展开
-AVAIL_ACTIONS=可用操作
-UNKNOWN=未知
-INPUT_VAR_ERROR=参数错误
-function=功能
-view=查看
+PAGER_PAGE = 页
 
 
-END_UPLOAD_DIR_ATTACHMENT=上传附件
+uploaded_file=上传:
+
+UNKNOWN=unknown
+INPUT_VAR_ERROR=input var error

@@ -41,7 +41,7 @@ else if ($m == 'edit_category')
 	
 	if ( intval($_POST['parent_id']) < 0 )
 	{
-		$errors[] = "请选择上级分类";
+		$errors[] = lang('Please choose a parent category');
 	}
 	else
 	{

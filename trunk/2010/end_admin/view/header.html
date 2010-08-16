@@ -1,9 +1,9 @@
 <div id="admin_logo">
-	<h1><a href="#" title="易思cms">易思cms</a></h1>
+	<h1><a href="./" target="_blank">{config.site_name}</a></h1>
 	<div id="admin_info">
-		当前登录为: <span class="username">{_session.login_user.name}</span> 
-		<a href="admin.php?p=account">修改密码</a> 
-		<a href="admin.php?p=login&m=logout&module=admin&backurl=index.php">注销登录</a>
+		{CURRENT_LOGIN_USER}: <span class="username">{_session.login_user.name}</span> 
+		<a href="admin.php?p=account">{HEAD_CHANGE_PASSWORD}</a> 
+		<a href="admin.php?p=login&m=logout&module=admin&backurl=index.php">{HEAD_LOGOUT}</a>
 	</div>
 </div>
 <div id="admin_menu">

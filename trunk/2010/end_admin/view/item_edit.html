@@ -8,7 +8,7 @@
 	<table >
 		<tr>
 			<th class="sys_tit_bg" colspan="2">
-				<h2 class="sys_h2">{if ($item_id)}编辑{else}添加内容{/if}</h2>
+				<h2 class="sys_h2">{if ($item_id)}{EDIT_ITEM}{else}{ADD_ITEM}{/if}</h2>
 			</th>
 		</tr>
     	<tr>
@@ -28,10 +28,10 @@
 
         <tr>
         	<td colspan="2" align="center">
-				<input type="submit" name="save" value="保存" /> &nbsp;
+				<input type="submit" name="save" value="{SAVE}" /> &nbsp;
 				<!-- IF statuses -->
 				<!-- BEGIN statuses -->
-				<input type="submit" name="saveas[{_key}]" value="保存为'{strip_tags(_value)}'" /> &nbsp;
+				<input type="submit" name="saveas[{_key}]" value="{SAVE_AS}'{strip_tags(_value)}'" /> &nbsp;
 				<!-- END -->
 				<!-- ENDIF -->
 				<input type="button" value="{RETURN}"  onclick="if (confirm('{RETURN_ALERT}')) history.go(-1);" /> &nbsp;

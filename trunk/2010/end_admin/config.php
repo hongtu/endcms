@@ -3,46 +3,49 @@
 //数据库记录单个管理员后台操作的最大条数
 define('END_ADMIN_LOG_NUM',1000);
 
-$end_module['admin'] = array('name'=>'后台模块');
+language('common');
+language('config_php');
+
+$end_module['admin'] = array('name'=>lang('admin module'));
 
 $end_models = array();
 $end_models['config'] = array(
-	'name'=>"<span style='color:blue'>系统设置</span>",
+	'name'=>"<span style='color:blue'>".lang('admin system config')."</span>",
 	'type'=>'list',
 	'list_items'=>10,
 	'category_fields'=>array(
 		'name'=>array(
-			'name'=>'页面名称',
+			'name'=>lang('admin cat name'),
 			'type'=>'text',
 			'null'=>false
 		),
 		'description'=> array(
-			'name'=>'描述',
+			'name'=>lang('category description'),
 			'type'=>'text',
 			'null'=>true,
 		)
 	),
 	'list_fields'=>array(
 		'order_id'=>array(
-			'name'=>'优先级',
+			'name'=>lang('Order'),
 			'edit'=>true,
 			'width'=>50,
 			'sort'=>true
 		),
 		'name'=>array(
-			'name'=>'变量名',
+			'name'=>lang('config var name'),
 			'search'=>true,
 			'width'=>100,
 			'sort'=>true
 		),
 		'description'=>array(
-			'name'=>'描述',
+			'name'=>lang('Description'),
 			'edit'=>true,
 			'search'=>true,
 			'sort'=>true
 		),
 		'value'=>array(
-			'name'=>'值',
+			'name'=>lang('config value'),
 			'edit'=>true,
 			'type'=>'textarea',
 			'height'=>'20',
@@ -50,23 +53,23 @@ $end_models['config'] = array(
 			'sort'=>true
 		),
 		'_options'=>array(
-			'name'=>'操作',
+			'name'=>lang('options'),
 			'filter'=>'end_config_options'
 		),
 	),
 	'fields'=>array(
 		'name'=>array(
-			'name'=>'变量名',
+			'name'=>lang('config var name'),
 			'type'=>'text',
 			'width'=>200
 		),
 		'description'=>array(
-			'name'=>'描述',
+			'name'=>lang('description'),
 			'width'=>200,
 			'type'=>'text'
 		),
 		'value'=>array(
-			'name'=>'值',
+			'name'=>lang('config value'),
 			'width'=>400,
 			'height'=>200,
 			'type'=>'textarea',
@@ -82,35 +85,35 @@ if (END_DEBUG === false)
 
 
 $end_models['page'] = array(
-	'name'=>"<span style='color:#49e'>页面</span>",
+	'name'=>"<span style='color:#49e'>".lang('admin page')."</span>",
 	'category_fields'=>array(
 		'name'=>array(
-			'name'=>'页面名称',
+			'name'=>lang('page name'),
 			'type'=>'text',
 			'null'=>false
 		),
 		'page_title'=> array(
-			'name'=>'网页标题',
+			'name'=>lang('page title'),
 			'type'=>'text',
 			'null'=>false,
 		),
 		'description'=> array(
-			'name'=>'网页描述',
+			'name'=>lang('page description'),
 			'type'=>'text',
 			'null'=>true,
 		),
 		'keywords'=> array(
-			'name'=>'网页关键词',
+			'name'=>lang('page keywords'),
 			'type'=>'text',
 			'null'=>true,
 		),
 		'content' => array(
-			'name'=>'页面内容',
+			'name'=>lang('page content'),
 			'type'=>'richtext',
 			'null'=>true,
 		),
 		'update_time'=>array(
-			'name'=>'更新时间',
+			'name'=>lang('update time'),
 			'type'=>'datetime',
 			'null'=>true
 		)
@@ -119,15 +122,15 @@ $end_models['page'] = array(
 
 
 $end_models['fragment'] = array(
-	'name'=>"<span style='color:#49e'>内容片段</span>",
+	'name'=>"<span style='color:#49e'>".lang('fragment')."</span>",
 	'category_fields'=>array(
 		'name'=>array(
-			'name'=>'片段名称',
+			'name'=>lang('Name'),
 			'type'=>'text',
 			'null'=>false
 		),
 		'content' => array(
-			'name'=>'片段内容',
+			'name'=>lang('Content'),
 			'type'=>'richtext',
 			'null'=>true,
 		)
@@ -136,29 +139,29 @@ $end_models['fragment'] = array(
 
 
 $end_models['link'] = array(
-	'name'=>"<span style='color:#872398'>链接</span>",
+	'name'=>"<span style='color:#872398'>".lang('link')."</span>",
 	'category_fields'=>array(
 		'name'=>array(
-			'name'=>'链接名称',
+			'name'=>lang('Name'),
 			'type'=>'text',
 			'null'=>false
 		),
 		'url'=>array(
-			'name'=>'链接地址',
+			'name'=>lang('URL'),
 			'type'=>'text',
 			'null'=>false
 		),
 		'description'=>array(
-			'name'=>'提示文字',
+			'name'=>lang('Description'),
 			'type'=>'text',
 			'null'=>true
 		),
 		'target'=>array(
-			'name'=>'打开方式',
+			'name'=>lang('target window'),
 			'type'=>'select',
 			'options'=>array(
-				'_self'=>'本窗口',
-				'_blank'=>'新窗口'
+				'_self'=>lang('target_self'),
+				'_blank'=>lang('target_blank')
 			),
 			'width'=>'100',
 			'null'=>true
@@ -167,17 +170,17 @@ $end_models['link'] = array(
 );
 
 $end_models['folder'] = array(
-	'name'=>'目录',
+	'name'=>lang('Folder'),
 	'category_fields'=>array(
 		'name'=>array
 		(
-			'name'=>'栏目名字',
+			'name'=>lang('Name'),
 			'type'=>'text',
 			'null'=>false
 		),
 		'description'=>array
 		(
-			'name'=>'栏目描述',
+			'name'=>lang('Description'),
 			'type'=>'text',
 			'null'=>true
 		)
@@ -189,42 +192,37 @@ $end_rights = array
 (
 	array(
 		'name'=>'category',
-		'description'=>'分类管理',
+		'description'=>lang('Categories'),
 		'rights'=> array('view','add','update','delete')
 	),
-	array( 
+	array(
 		'name'=>'item',
-		'description'=>'内容管理',
+		'description' => lang('Contents'),
 		'rights'=> array('view','add','update','delete')
 	),
 	array(
 		'name'=>'account',
-		'description'=>'更改密码',
+		'description'=>lang('Change password'),
 		'rights'=> array('update')
 	),
 	array(
 		'name'=>'admin',
-		'description'=>'管理员管理',
+		'description'=> lang('Administrators'),
 		'rights'=> array('view','add','update','update_password','delete')
 	),
 	array(
 		'name'=>'extension',
-		'description'=>'扩展管理',
+		'description'=>lang('Extensions'),
 		'rights'=>array('view','add','update','delete')
 	),
 	array(
-		'name'=>'config',
-		'description'=>'设置数据管理',
-		'rights'=> array('view','add','update','delete')
-	),
-	array(
 		'name'=>'upload',
-		'description'=>'文件上传',
+		'description'=>lang('Upload Files'),
 		'rights'=>array('add')
 	),
 	array(
 		'name'=>'rights',
-		'description'=>'角色/权限管理',
+		'description'=>lang('Role and ACL'),
 		'rights'=>array('view','add','update','delete')
 	)
 );
