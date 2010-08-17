@@ -1,0 +1,11 @@
+<div style="padding:10px;">
+	<h1>评论页面：<a href="{$url}">{$blog['name']}</a></h1>
+	IP: {ip()}<br />
+	时 间: {date('Y-m-d H:i:s')}<br />
+	用 户: {$comment['name']}<br />
+	邮 箱: <a href="mailto:{$comment['email']}">{$comment['email']}</a><br />
+	{if($comment['url'])}网 站: <a href="{$comment['url']}" target="_blank">{$comment['url']}</a><br />{/if}
+	内 容: {$comment['content']}<br />
+	<br />
+	<a href="{$url}" target="_blank">点击这里查看此评论</a>
+</div>

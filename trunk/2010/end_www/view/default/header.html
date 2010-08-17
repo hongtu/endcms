@@ -1,0 +1,66 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+	<!-- INCLUDE meta.html -->
+</head>
+<body>
+<div id='main'>
+<?php
+$all_cats = get_cats('all_categories');
+?>
+<div id="header">
+	<h1 class="logo"><a href="./" title="Return to Phone Accessories Homepage">{$config['index_title']}</a></h1>
+	
+	<div class="info">
+		{if($_SESSION['user'])}
+		<a href="?account">My Account</a> 
+		<a href="?logout">Sign out</a>
+		{else}
+		<a href="?register">Register</a> 
+		<a href="?login">Sign in</a> 
+		{/if}
+	</div>
+	
+	<div class="navi">
+		<div class="bg-left"></div>
+		<div class="bg-middle">
+			<a href="./" {if(!$_GET['p'])}class="hover"{/if} >
+				<div class="left"></div>
+				<div class="text">Home</div>
+				<div class="right"></div>
+			</a>
+			{foreach($all_cats as $n)}
+			<a href="?cat/{$n['category_id']}" {if($cat['category_id'] == $n['category_id'])}class="hover"{/if}>
+				<div class="left"></div>
+				<div class="text">{$n['name']}</div>
+				<div class="right"></div>
+			</a>
+			{/foreach}
+		</div>
+		<div class="bg-right"></div>
+	</div>
+	
+	<div class="search">
+		<div class="form">
+			<form action="./" method="get" onsubmit="return $(this).find('[name=q]').val() != '';">
+				<input type="hidden" name="p" value="search" />
+				<input type="text" placeholder="Search for products..." class="text" name="q" /> 
+				<select name="cid">
+					<option value="">All Categories</option>
+				{foreach($all_cats as $c)}
+					<option value="{$c['category_id']}">{$c['name']}</option>
+				{/foreach}
+				</select> 
+				<input type="image" src="end_www/view/default/images/search-bt.gif" />
+				<div class="clear"></div>
+			</form>
+		</div>
+		<div class="hots">
+			<a href="#">LG</a> | 
+			<a href="#">Samsung</a> | 
+			<a href="#">Motorola</a> | 
+			<a href="#">Apple</a> 
+		</div>
+	</div>
+</div>

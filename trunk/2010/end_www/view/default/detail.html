@@ -1,0 +1,38 @@
+<!-- INCLUDE header.html -->
+
+<div id='content'>
+	<!-- INCLUDE left.html -->
+	<div id="right">
+		<div class="page-title">{$p['name']}</div>
+		<div class="page-wrapper">
+			<div class="detail-info">
+				<img src="{$p['image']}" align="left" class="detail-image" />
+				{if($_SESSION['user'] && $_SESSION['user']['status'] == 2)}
+					Wholesale Price: <span class="price">${$p['wholesale']}</span><br />
+				{else}
+					Retail Price: <span class="price">${$p['retail']}</span><br />
+				{/if}
+				Qty:<select id="qty">
+						<option value="1">1</option>
+						<option value="2">2</option>
+						<option value="3">3</option>
+						<option value="4">4</option>
+						<option value="5">5</option>
+						<option value="6">6</option>
+						<option value="7">7</option>
+						<option value="8">8</option>
+						<option value="9">9</option>
+						<option value="10">10</option>
+				</select><br />
+				<a href="?cart/{$p['product_id']}&action=add"><img src="end_www/view/default/images/add-to-cart.gif" /></a>
+			</div>
+			<div class="detail-content">
+				{$p['content']}
+			</div>
+			<div class="clear"></div>
+		</div>
+	</div>
+	<div class="clear"></div>
+</div>
+
+<!-- INCLUDE footer.html -->

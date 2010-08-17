@@ -121,8 +121,9 @@ function pager_numbers()
 		return '';
 }
 
-/*
-make empty folder only
+/**
+* make empty folder only
+* params: $path 
 */
 function end_mkdir($path)
 {

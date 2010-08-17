@@ -147,6 +147,6 @@ $view_data['statuses'] = $statuses;
 function show_status($s)
 {
 	global $end_models;
-	return $end_models[$s]['name']?$end_models[$s]['name']:"未知";
+	return $end_models[$s]['name']?$end_models[$s]['name']:lang('unknown');
 }
 ?>

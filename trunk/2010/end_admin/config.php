@@ -211,6 +211,11 @@ $end_rights = array
 		'rights'=> array('view','add','update','update_password','delete')
 	),
 	array(
+		'name'=>'config',
+		'description'=>lang('Configuration'),
+		'rights'=> array('view','add','update','delete')
+	),
+	array(
 		'name'=>'extension',
 		'description'=>lang('Extensions'),
 		'rights'=>array('view','add','update','delete')

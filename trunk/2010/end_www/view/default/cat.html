@@ -1,0 +1,30 @@
+<!-- INCLUDE header.html -->
+
+<div id='content'>
+	<!-- INCLUDE left.html -->
+	<div id="right">
+		<div class="list-title">{$cat['name']}</div>
+		<div class="list-wrapper">
+			{foreach($items as $c)}
+			<div class="list-item">
+				<div class="title">{$c['name']}</div>
+				<div class="img">
+					<a href="?detail/{$c['product_id']}" title="{$c['name']}"><img alt="{$c['name']}" src="{thumb($c['image'],150,120)}" /></a>
+				</div>
+				<div class="info">
+					<div class="price">${$c['retail']}</div>
+					<a href="?detail/{$c['product_id']}">View Detail&gt;&gt;</a>
+				</div>
+			</div>
+			{/foreach}
+			<div class="pager">
+				{pager_prev("&lt;&lt;")}
+				{pager_numbers()}
+				{pager_next("&gt;&gt;")}
+			</div>
+		</div>
+	</div>
+	<div class="clear"></div>
+</div>
+
+<!-- INCLUDE footer.html -->

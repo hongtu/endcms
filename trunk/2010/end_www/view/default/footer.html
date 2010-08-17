@@ -1,0 +1,69 @@
+<div id="footer">
+</div>
+</div>
+<script>
+$(function()
+{
+	
+	//list items
+	var i = 0;
+	var items = $('#right .list-item');
+	var row = [],maxHeight = 0;
+	items.each(function()
+	{
+		i++;
+		var title = $(this).find('.title');
+		row[(i-1)%4] = title;
+		if (maxHeight < title.height()) maxHeight = title.height();
+		
+		if (i % 4 == 0)
+		{
+			$(this).find('.img').css('border-right','0px solid');
+			for(var j = 0;j<4;j++) $(row[j]).height(maxHeight);
+			maxHeight = 0;
+			row = [];
+		}
+		if (i % 4 == 1)
+		{
+			
+		}
+	});
+	var lastN = i % 4;
+	if (lastN == 0) lastN = 4;
+	for(var j = i;j>i-lastN;j--)
+	{
+		items.eq(j-1).css('border-bottom','0px');
+	}
+	items.eq(i-1).find('.img').css('border-right','0px');
+	
+	
+	//navigation buttons
+	$('#header .navi a.hover').data('hover',true);
+	$('#header .navi a').mouseenter(function()
+	{
+		$(this).addClass('hover');
+	}).mouseleave(function()
+	{
+		if ($(this).data('hover')) return;
+		$(this).removeClass('hover');
+	});
+	
+	
+	//placeholder
+	if (!$.browser.safari)
+	{
+		$('input[placeholder]').focus(function()
+		{
+			if ($(this).val() == $(this).attr('placeholder')) $(this).val('');
+		}).blur(function()
+		{
+			if ($(this).val() == '') $(this).val($(this).attr('placeholder'));
+		}).each(function()
+		{
+			$(this).val($(this).attr('placeholder'));
+		});
+	}
+});
+</script>
+</body>
+</html>

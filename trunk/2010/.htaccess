@@ -1,5 +1,0 @@
-RewriteEngine On
-RewriteCond $1 !^(index\.php|images|end_|css|public|robots\.txt|admin\.php)
-RewriteCond $1 !(\.php)$
-RewriteCond $2 !^(wp\-|uploadfiles)
-RewriteRule ^([^\/]+)\/?([^\/]+)?\/?([^\/]+)?\/?(.+)?$ index.php?p=$1&argv[]=$2&argv[]=$3&argv[]=$4&%{QUERY_STRING} [L]

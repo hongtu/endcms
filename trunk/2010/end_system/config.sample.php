@@ -11,6 +11,11 @@
   system configuration
 */
 
+/**
+* 默认时区
+*/
+define('END_DEFAULT_TIMEZONE','Etc/GMT-8');
+
 /*
 * 是否使用php压缩页面成gzip，有些IIS会出问题
 * 取值只能是 true/false

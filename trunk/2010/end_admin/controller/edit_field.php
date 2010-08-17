@@ -59,13 +59,19 @@ foreach($_fields as $name=>$attr)
 				//保存到什么地方
 				if (!$attr['saveto'])
 				{
-					end_mkdir(END_UPLOAD_DIR);
+					end_mkdir(END_ROOT.END_UPLOAD_DIR);
 					$file_url = END_UPLOAD_DIR.$file_url;
 				}
 				else
 				{
-					end_mkdir($attr['saveto']);
+					end_mkdir(END_ROOT.$attr['saveto']);
 					$file_url = $attr['saveto'].$file_url;
+				}
+				
+				
+				if (!is_writable(dirname($file_url)))
+				{
+					$errors[$name] = dirname($file_url).lang('is not writable');
 				}
 				
 				//避免重名
@@ -77,6 +83,7 @@ foreach($_fields as $name=>$attr)
 				//保存文件
 				if (@move_uploaded_file($file["tmp_name"],END_ROOT.$file_url))
 				{
+
 					if ($attr['filter']) $file_url  = $attr['filter']($file_url);
 					$data[$name] = $file_url;
 					//更改图片尺寸
@@ -108,7 +115,7 @@ foreach($_fields as $name=>$attr)
 				if (!file_exists(END_ROOT.$file_url))
 				{
 					$errors[$name] = lang('upload_error');
-				}	
+				}
 			}
 		}
 		//如果本来就有值，表示没有修改
