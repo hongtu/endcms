@@ -44,10 +44,10 @@ foreach($_fields as $name=>$attr)
 			}
 			else
 			{
-				$file_url = basename($file['name']);
+				$file_url = $file['name'];
 				//如果文件名是一般的字母数字和-_，则不改变文件名
 				if (preg_match('/^[a-z0-9\_\-\s\.]+$/i',$file_url))
-					$_n = preg_replace('/\s+/','_',$file_url);
+					$file_url = preg_replace('/\s+/','_',$file_url);
 				else //否则改成时间和随机数
 					$file_url = date('Y_m_d_H_i_s_').rand(1111,9999).'.'.$ftype;
 
@@ -66,12 +66,6 @@ foreach($_fields as $name=>$attr)
 				{
 					end_mkdir(END_ROOT.$attr['saveto']);
 					$file_url = $attr['saveto'].$file_url;
-				}
-				
-				
-				if (!is_writable(dirname($file_url)))
-				{
-					$errors[$name] = dirname($file_url).lang('is not writable');
 				}
 				
 				//避免重名
@@ -115,6 +109,11 @@ foreach($_fields as $name=>$attr)
 				if (!file_exists(END_ROOT.$file_url))
 				{
 					$errors[$name] = lang('upload_error');
+				}
+				
+				if (!is_writable(END_ROOT.dirname($file_url)))
+				{
+					$errors[$name] = dirname($file_url).' '.lang('is not writable');
 				}
 			}
 		}
