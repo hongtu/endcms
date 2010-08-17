@@ -11,6 +11,12 @@
   system configuration
 */
 
+
+/**
+* 默认语言
+*/
+define('END_LANGUAGE','en');
+
 /**
 * 默认时区
 */
@@ -54,8 +60,6 @@ $mysql = array(
 );
 
 
-//默认使用中文
-define('END_LANGUAGE','cn');
 //定义一些系统路径
 define('END_LANGUAGE_DIR',END_MODULE_DIR.'language/');
 define('END_CONTROLLER_DIR',END_MODULE_DIR.'controller/');
