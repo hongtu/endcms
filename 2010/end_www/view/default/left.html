@@ -1,0 +1,22 @@
+<div id='left'>
+	<div class="block">
+		<div class="top"></div>
+		<div class="bottom">
+			<div class="content">
+				<div class="title">Categories</div>
+				{foreach(get_cats('all_categories') as $c)}
+					<a class="list" href="?cat/{$c['category_id']}">{$c['name']}</a>
+				{/foreach}
+			</div>
+		</div>
+	</div>
+	
+	<div class="block2">
+			<div class="content">
+				<div class="title">Information</div>
+ 				{foreach(get_cats('info') as $c)}
+					<a class="list" href="?page/{$c['category_id']}">{$c['name']}</a>
+				{/foreach}
+			</div>
+	</div>
+</div>

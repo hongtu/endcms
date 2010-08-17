@@ -21,7 +21,7 @@ set_magic_quotes_runtime(0);
 @ini_set('magic_quotes_sybase', 0);
 
 //default time zone
-function_exists('date_default_timezone_set') && @date_default_timezone_set('Etc/GMT-8');
+function_exists('date_default_timezone_set') && @date_default_timezone_set(END_DEFAULT_TIMEZONE);
 
 if (!defined('SESSION_STARTED') && END_OPEN_SESSION != false)
 {

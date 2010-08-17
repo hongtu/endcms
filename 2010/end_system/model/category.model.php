@@ -12,8 +12,8 @@ class MODEL_CATEGORY extends MODEL
 	function get_cats($a)
 	{
 		global $db;
-		$_key = (is_numeric($s))?$this->id:'alias';
-		return $db->get_all("SELECT * FROM `$this->table` WHERE `parent_id`=(SELECT `$this->id` FROM `$this->table` WHERE `$_key`='$a') ORDER BY `$this->order_id` DESC,`$this->id` DESC");
+		$_key = (is_numeric($s))?$this->id:'url';
+		return $db->get_all("SELECT * FROM `$this->table` WHERE `parent_id`=(SELECT `$this->id` FROM `$this->table` WHERE `$_key`='$a') ORDER BY `$this->order_id` DESC,`$this->id` ASC");
 	}
 
 	function delete($id)
@@ -133,6 +133,7 @@ class MODEL_CATEGORY extends MODEL
 			$data['where'] && $data['where'] .= ' AND ';
 			$data['where'] .= 'category_id IN ('.$_SESSION['login_user']['allowed_categories'].')';
 		}
+		if (!isset($data['order'])) $data['order'] = 'category_id ASC';
 		return parent::get_list($data);
 	}
 	

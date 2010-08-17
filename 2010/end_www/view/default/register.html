@@ -1,0 +1,46 @@
+<!-- INCLUDE header.html -->
+
+<div id='content'>
+	<!-- INCLUDE left.html -->
+	<div id="right">
+		<div class="page-title">Register an Account</div>
+		<div class="page-wrapper">
+			<div class="error">{$msg}</div>
+			<form action="?register/1" method="post">
+				<table cellspacing="5" border="0" class="reg">
+					<tr>
+						<th>Account Type:</th>
+						<td>
+							<input type="radio" value="retail" checked="checked" name="type" id="retail" />
+							<label for="retail">Retail Account</lebel>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							<input type="radio" value="wholesale" name="type" id="wholesale" />
+							<label for="wholesale">Wholesale Account</lebel>
+						</td>
+					</tr>	
+					<tr>
+						<th>E-mail:</th>
+						<td>
+							<input type="text" name="email" class="text" />
+						</td>
+					</tr>	
+					<tr>
+						<th>Password:</th>
+						<td>
+							<input type="password" name="password" class="text" />
+						</td>
+					</tr>	
+					<tr>
+						<th> </th>
+						<td>
+							<input type="submit" value="Submit" />
+						</td>
+					</tr>
+				</table>
+			</form>
+			<div class="clear"></div>
+		</div>
+	</div>
+	<div class="clear"></div>
+</div>
+
+<!-- INCLUDE footer.html -->
