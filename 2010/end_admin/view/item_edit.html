@@ -42,3 +42,23 @@
         
    </form>
 </div>
+
+<script>
+$(function()
+{
+	$('option[status][status!={$this_category['status']}]').attr('disabled','disabled').each(function()
+	{
+		var depth = 0,node = this,lastNode;
+		while(node.tagName.toLowerCase() != 'select')
+		{
+			if (node.tagName.toLowerCase() == 'optgroup') depth++;
+			lastNode = node;
+			node = node.parentNode;
+		}
+		var space = '';
+		for(var i = 0;i<depth;i++) space+= ' ';
+		$('<optgroup label="'+space+$(this).html()+'"></optgroup>').insertAfter(lastNode);
+		$(this).remove();
+	});
+});
+</script>

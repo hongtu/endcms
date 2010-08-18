@@ -79,7 +79,7 @@ $(function()
 				extra = $('<img src="end_admin/view/images/desc.gif" />');
 			}			
 		}
-		$(this).append($('<a href="'+new_url+'" title="按'+text+'排序">'+text+'</a>')).append(extra);
+		$(this).append($('<a href="'+new_url+'" title="Sort by '+text+'">'+text+'</a>')).append(extra);
 	});
 	
 	//处理搜索
@@ -88,10 +88,10 @@ $(function()
 	{
 		var search = $(this).attr('search');
 		var text = $(this).data('text')?$(this).data('text'):$(this).html();
-		var dom = $('<a href="javascript:;" style="font-weight:100%;margin-left:20px;">搜</a>');
+		var dom = $('<a href="javascript:;" style="font-weight:100%;margin-left:20px;">'+endcms.lang.searchBt+'</a>');
 		dom.click(function(event)
 		{
-			$('<div class="small_popup">搜索 "'+text+'":<br /><input search="'+search+'" type="text" size="15" id="search_text" /><br />可使用通配符*</div>').css(
+			$('<div class="small_popup">'+endcms.lang.search+' "'+text+'":<br /><input search="'+search+'" type="text" size="15" id="search_text" /><br />'+endcms.lang.searchInfo+'</div>').css(
 				{
 					left:event.clientX+10,
 					top:event.clientY
@@ -120,7 +120,7 @@ $(function()
 		if (value && value.length && value[2])
 		{
 			value = decodeURI(value[2]);
-			$(this).append($('<span>:'+value+' <a style="font-size:12px;" href="javascript:close_search(\''+search+'\');" title="取消搜索"><sup>x</sup></a></span>'));
+			$(this).append($('<span>:'+value+' <a style="font-size:12px;" href="javascript:close_search(\''+search+'\');" title="'+endcms.lang.cancelSearch+'"><sup>x</sup></a></span>'));
 		}
 	});
 });

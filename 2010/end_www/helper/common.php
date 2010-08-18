@@ -159,21 +159,19 @@ function show_plaint($s)
 }
 
 
-
-function thumb($orig_path,$mw=100,$mh=100,$thumb=false,$method='fill',$png=false)
+function thumb($orig_path,$mw=100,$mh=100,$method='cut',$thumb=false,$png=false)
 {
+	if ($method != 'box' && $method != 'cut') $method = 'cut';
 	if (!$orig_path) return 'about:blank';
 	$path = END_ROOT.$orig_path;
 	
-	
 	$ftype = array_pop(explode('.',$path));
-	$etag = basename($path).$mw.'x'.$mh;
+	$etag = basename($path).$method.$mw.'x'.$mh;
 	$etag.= $png ? '.png':'.jpg';
 
 	if (!file_exists($path)) return '';
 	
-	if ($thumb === false)
-		$thumb = dirname($path).'/'.$etag;
+	$thumb = dirname($path).'/'.$etag;
 
 	if (file_exists($thumb)) return dirname($orig_path).'/'.$etag;
 
@@ -188,40 +186,52 @@ function thumb($orig_path,$mw=100,$mh=100,$thumb=false,$method='fill',$png=false
 
 	$p = $mw/$width_orig;
 	$_p = $mh/$height_orig;
-	if ($_p == 1 && $p == 1) //如果尺寸相同
-	{
-		return $orig_path;
-	}
-	if ($_p>$p)
+	
+	if ($method == 'cut' && $_p>$p)
 	{
 		$p = $_p;
-		$width = $p*$width_orig;
-		$height = $p*$height_orig;
+		$width = $mw;
+		$height = $mh;
 		$cut_height = 0;
 		$cut_width = intval(($width_orig - $mw/$p)/2);
 	}
-	else
+	else if ($method == 'cut')
 	{
-		$width = $p*$width_orig;
-		$height = $p*$height_orig;
-		$cut_height = intval(($height_orig - $mh/$p)/2);;
+		$width = $mw;
+		$height = $mh;
+		$cut_height = intval(($height_orig - $mh/$p)/2);
 		$cut_width = 0;
 	}
-	$width = $mw;
-	$height = $mh;
+	else if ($method == 'box' && $_p<$p)
+	{
+		$p = $_p;
+		if ($p > 1) $p = 1;
+		$width = $p*$width_orig;
+		$height = $p*$height_orig;
+		$cut_height = 0;
+		$cut_width = 0;
+	}
+	else if ($method == 'box')
+	{
+		if ($p > 1) $p = 1;
+		$width = $p*$width_orig;
+		$height = $p*$height_orig;
+		$cut_height = 0;
+		$cut_width = 0;
+	}
 	
 	$image_p = @imagecreatetruecolor($width, $height);
 	$_func = 'imagecreatefrom'.$mime;
 	$image = @$_func($path);
-	if ($png) //保存透明
+	if ($png)
 	{
 		imagealphablending($image_p,true);
 		$tcolor = imagecolortransparent($image_p, imagecolorallocatealpha($image_p, 0, 0, 0,127));
 		imagefill($image_p, 0, 0, $tcolor);
 		imagesavealpha($image_p, true);
 	}
-	@imagecopyresampled($image_p, $image, 0, 0, $cut_width, $cut_height, $width, $height, $mw/$p, $mh/$p);
+	@imagecopyresampled($image_p, $image, 0, 0, $cut_width, $cut_height, $width, $height, $width/$p, $height/$p);
 	$_func = $png?'imagepng':'imagejpeg';
-	imagepng($image_p,$thumb);
+	$_func($image_p,$thumb,90);
 	return (file_exists($thumb))?dirname($orig_path).'/'.$etag:false;
 }

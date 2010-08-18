@@ -34,18 +34,25 @@
 			$t = $view_data['content'][$name];
 			echo "<a href='$t' target='_blank'>$t</a>";
 		}
-		//文件
-		elseif ($data['type'] == 'image')
-		{	
-			$t = $view_data['content'][$name];
-			echo "<img src='$t' />";
-		}
-		elseif ($data['type'] == 'imagelist')
+		elseif ($data['type'] == 'filelist')
 		{	
 			$t = $view_data['content'][$name];
 			$seperator = $data['seperator']?$data['seperator']:'|';
 			$arr = explode($seperator,$t);
-			foreach($arr as $t) echo "<img src='$t' />";
+			foreach($arr as $t) echo "<a href='$t' target='_blank'>$t</a><br />";
+		}
+		//文件
+		elseif ($data['type'] == 'image')
+		{	
+			$t = $view_data['content'][$name];
+			echo '<a href="'.$t.'" target="_blank"><img src="'.thumb($t,50,50).'" /></a>';
+		}
+		elseif ($data['type'] == 'imagelist')
+		{
+			$t = $view_data['content'][$name];
+			$seperator = $data['seperator']?$data['seperator']:'|';
+			$arr = explode($seperator,$t);
+			foreach($arr as $t) echo '<a href="'.$t.'" target="_blank"><img src="'.thumb($t,50,50).'" /></a>';
 		}
 		//多行文本
 		elseif ($data['type'] == 'textarea')

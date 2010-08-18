@@ -183,7 +183,7 @@ function print_category_tree($arr,$category_id=0,$excluded=array(),$depth=0)
 		}
 		else
 		{
-			$re.= "<option value='".$c['category_id']."' ";
+			$re.= "<option status='".$c['status']."' value='".$c['category_id']."' ";
 			if ($category_id && $c['category_id'] == $category_id) $re.= " selected='selected' ";
 			$re.=">".print_space($depth).$c['name']."</option>\n";
 			$re.=print_category_tree($c['children'],$category_id,$excluded,$depth+1);

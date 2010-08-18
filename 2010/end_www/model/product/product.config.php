@@ -36,8 +36,7 @@ $end_models['product'] = array(
 		'image'=>array(
 			'name'=>'Image file',
 			'type'=>'image',
-			'null'=>false,
-			'max_width'=>400
+			'null'=>false
 		)
 	),
 	'fields' => array(

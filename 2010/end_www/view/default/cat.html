@@ -9,7 +9,7 @@
 			<div class="list-item">
 				<div class="title">{$c['name']}</div>
 				<div class="img">
-					<a href="?detail/{$c['product_id']}" title="{$c['name']}"><img alt="{$c['name']}" src="{thumb($c['image'],150,120)}" /></a>
+					<a href="?detail/{$c['product_id']}" title="{$c['name']}"><img alt="{$c['name']}" src="{thumb(array_shift(explode('|',$c['image'])),150,120)}" /></a>
 				</div>
 				<div class="info">
 					<div class="price">${$c['retail']}</div>
