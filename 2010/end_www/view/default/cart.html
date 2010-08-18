@@ -5,6 +5,10 @@
 	<div id="right">
 		<div class="page-title">Shopping Cart</div>
 		<div class="page-wrapper">
+			
+			{if (count($_SESSION['cart']) == 0)}
+			Shopping cart is empty
+			{else}
 			<table id="cart" cellspacing="0">
 				<tr>
 					<th>Product Name</th>
@@ -13,6 +17,7 @@
 					<th style="width:80px;">Total Price</th>
 					<th style="width:80px;">&nbsp;</th>
 				</tr>
+				<?php $subtotal = 0; ?>
 				{if ($_SESSION['cart'])}
 				{foreach($_SESSION['cart'] as $pid=>$p)}
 				<?php 
@@ -21,19 +26,45 @@
 				<tr>
 					<td><a href="?detail/{$pid}" target="_blank">{$p['name']}</a></td>
 					<td>${$price}</td>
-					<td style="width:50px;"><input type="text" style="width:40px;" value="{$p['qty']}" onkeyup="change_qty(this,{$pid})" /></td>
-					<td>$<span rel="total_price" pid="{$pid}" price="{$price}"><?php echo $price*$p['qty'];?></span></td>
+					<td style="width:50px;"><input type="text" style="width:40px;" value="{$p['qty']}" onkeyup="change_qty(this,{$pid})" onblur="change_zip()" /></td>
+					<td>$<span rel="total_price" pid="{$pid}" price="{$price}"><?php 
+						echo $price*$p['qty'];  
+						$subtotal+=$price*$p['qty'];
+					?></span></td>
 					<td><a href="javascript:remove_from_cart({$pid})">Remove</a></td>
 				</tr>
 				{/foreach}
 				{/if}
 				<tr>
+					<th colspan="3" style="text-align:right">Subtotal:</th>
+					<td colspan="2">$<span id="subtotal_price">{$subtotal}</span></td>
+				</tr>
+				<tr>
+					<th colspan="3" style="text-align:left">
+						Calculate Shipping<br />
+						Zip Code: <input id="zipcode" type="text" size="5" onkeyup="change_zip()" value="{$_SESSION['user']['zip']}" />
+						&nbsp;<select id="shipping_method"><option >please enter zipcode</option></select>
+					</th>
+					<td colspan="2">$<span id="shipping_price">0</span></td>
+				</tr>
+				<tr>
+					<th colspan="3" style="text-align:right">Grand total:</th>
+					<td colspan="2">$<span id="total_price">{$subtotal}</span></td>
+				</tr>
+				<tr>
+					<td colspan="5">
+						<div style="float:left"><a href="./" >&lt;&lt;Continue shopping</a></div>
+						<div style="float:right"><input disabled="disabled" type="button" id="checkoutbt" value="Checkout" onclick="checkout()" /></div>
+					</td>
+				</tr>
 			</table>
+			{/if}
 			<div class="clear"></div>
 		</div>
 	</div>
 	<div class="clear"></div>
 </div>
+{if (count($_SESSION['cart']) != 0)}
 <script>
 function remove_from_cart(pid)
 {
@@ -47,9 +78,92 @@ function change_qty(dom,pid)
 	$.post('?p=cart&action=change_qty',{ qty: dom.value ,pid:pid },function(s)
 	{
 		if (dom.value != s) dom.value = s;
+		if (dom.value == 0) dom.value = '';
 		var price = $('[rel=total_price][pid='+pid+']');
-		price.html( price.attr('price')*s );
+		price.html( trans_price(price.attr('price')*s) );
+		change_subtotal();
 	},'text');
 }
+
+function change_subtotal()
+{
+	var t = 0;
+	$('[rel=total_price]').each(function()
+	{
+		t+= $(this).html()*1;
+	});
+	$('#subtotal_price').html(trans_price(t));
+	calc_total();
+}
+
+function change_zip()
+{
+	if ($('#zipcode').val().length==5)
+	{
+		$('#checkoutbt').attr('disabled','disabled');
+		$.post('?calshipping',{ zipcode:$('#zipcode').val() },function(data)
+		{
+			var select = $('#shipping_method');
+			select.children().remove();
+			for(var i = 0; i < data.length; i++)
+			{
+				select.data(data[i].code,data[i].price);
+				select.get(0).options.add( new Option(data[i].name+'--------$'+data[i].price,data[i].code));
+			}
+			select.trigger('change');
+		},'json');
+	}
+}
+
+$(function()
+{
+	$('#shipping_method').bind('change',function()
+	{
+		var price = $(this).data($(this).val());
+		if (price)
+		{
+			$('#shipping_price').html(trans_price(price));
+			calc_total();
+		}
+		
+		if ($(this).val() && price)
+		{
+			$('#checkoutbt').removeAttr('disabled');
+		}
+	});
+	
+	change_zip();
+});
+
+function calc_total()
+{
+	var t = 0;
+	t += $('#subtotal_price').html()*1;
+	t += $('#shipping_price').html()*1;
+	$('#total_price').html(trans_price(t));
+}
+
+function trans_price(t)
+{
+	t = Math.round(t*100);
+	return t/100;
+}
+
+function checkout()
+{
+	$.post('?p=cart&action=checkout',{ 
+		shipping: $('#shipping_method').val(), 
+		total: $('#total_price').html(),
+		shipping_price: $('#shipping_price').html()
+	 },function(s)
+	{
+		if (s == 'ok') 
+			window.location = '?checkout';
+		else 
+			alert(s);
+	},'text');
+}
+
 </script>
+{/if}
 <!-- INCLUDE footer.html -->

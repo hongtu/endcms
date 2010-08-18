@@ -21,6 +21,22 @@ else if ($action == 'change_qty')
 	echo $_SESSION['cart'][$pid]['qty'];
 	die;
 }
+else if ($action == 'checkout')
+{
+	$data = filter_array($_POST,'shipping!,total!,shipping_price!');
+	if ($data)
+	{
+		$_SESSION['shipping'] = $data['shipping'];
+		$_SESSION['shipping_price'] = $data['shipping_price'];
+		$_SESSION['total'] = $data['total'];
+		echo 'ok';
+	}
+	else
+	{
+		echo 'error!';
+	}
+	die;
+}
 
 
 $view_data['title'] = 'Shopping Cart';

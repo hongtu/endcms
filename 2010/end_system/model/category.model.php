@@ -133,7 +133,7 @@ class MODEL_CATEGORY extends MODEL
 			$data['where'] && $data['where'] .= ' AND ';
 			$data['where'] .= 'category_id IN ('.$_SESSION['login_user']['allowed_categories'].')';
 		}
-		if (!isset($data['order'])) $data['order'] = 'category_id ASC';
+		if (!isset($data['order'])) $data['order'] = 'order_id DESC,category_id ASC';
 		return parent::get_list($data);
 	}
 	

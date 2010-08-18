@@ -13,9 +13,10 @@ if ($_GET['id'] == '1')
 		else if ($user)
 		{
 			$_SESSION['user'] = $user;
+			$url = ($_POST['return']) ? './?'.$_POST['return']:'./';
 			?>
 			<script>
-			window.location = './';
+			window.location = '<?php echo $url;?>';
 			</script>
 			<?php
 			die;

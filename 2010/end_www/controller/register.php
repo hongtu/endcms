@@ -25,7 +25,7 @@ if ($_GET['id'] == '1')
 			else
 			{
 				$_SESSION['user'] = $data;
-				echo 'alert("Success");';
+				echo 'alert("Thank you! Your account has been created!");';
 			}
 			echo 'window.location = "./";';
 			echo '</script>';
