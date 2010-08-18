@@ -1,12 +1,30 @@
 <!-- INCLUDE header.html -->
-
+<link rel="stylesheet" href="{VIEW_ROOT}js/cloud-zoom.css" type="text/css" media="screen" />
+<script src="{VIEW_ROOT}js/cloud-zoom.1.0.2.min.js"></script>
 <div id='content'>
 	<!-- INCLUDE left.html -->
 	<div id="right">
 		<div class="page-title">{$p['name']}</div>
 		<div class="page-wrapper">
 			<div class="detail-info">
-				<img src="{$p['image']}" align="left" class="detail-image" />
+				<div class="detail-image">
+					<a id="zoom1" class="cloud-zoom" href="{array_shift(explode('|',$p['image']))}" rel="adjustX:10, adjustY:-4,zoomWidth:300,zoomHeight:300">
+						<img alt="" src="{thumb(array_shift(explode('|',$p['image'])),300,300,'box')}" >
+					</a>
+					<ul class="detail-thumbs">
+					{foreach(explode('|',$p['image']) as $img)}
+						<li>
+							<a 
+							rel="useZoom: 'zoom1', smallImage: '{thumb($img,300,300,'box')}' "  
+							class="cloud-zoom-gallery" 
+							href="{$img}">
+								<img src="{thumb($img,50,50)}" />
+							</a>
+						</li>
+					{/foreach}
+					</ul>
+				</div>
+
 				{if($_SESSION['user'] && $_SESSION['user']['status'] == 2)}
 					Wholesale Price: <span class="price">${$p['wholesale']}</span><br />
 				{else}

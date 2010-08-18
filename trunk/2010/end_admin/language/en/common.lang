@@ -60,3 +60,8 @@ CONTRACT=contract
 EXPAND=expand
 UNKNOWN=unknown
 INPUT_VAR_ERROR=input var error
+
+search=Search
+search_button=Srch
+cancel_search=Cancel
+star_available = * available

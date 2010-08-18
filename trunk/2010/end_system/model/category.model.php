@@ -88,7 +88,7 @@ class MODEL_CATEGORY extends MODEL
 		if ($data['status'])
 		{
 			if (!$data['where']) $data['where'] = ' 1=1 ';
-			$data['where'] .= " AND (status='".$data['status']."' OR status NOT LIKE '%_list') ";
+			//$data['where'] .= " AND (status='".$data['status']."' OR status NOT LIKE '%_list') ";
 			unset($data['status']);
 		}
 		$_all = $this->get_list($data);
