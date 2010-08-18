@@ -50,13 +50,23 @@ $end_models['product'] = array(
 			'name'=>'Retail Price',
 			'type'=>'text',
 			'null'=>false,
+			'filter'=>'floatval',
 			'width'=>100
 		),
 		'wholesale'=>array(
 			'name'=>'Wholesale Price',
 			'type'=>'text',
 			'null'=>false,
+			'filter'=>'floatval',
 			'width'=>100
+		),
+		'weight'=>array(
+			'name'=>'Weight',
+			'type'=>'text',
+			'null'=>true,
+			'filter'=>'floatval',
+			'width'=>100,
+			'description'=>'lbs'
 		),
 		'image'=>array(
 			'name'=>'Image file',

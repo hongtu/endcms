@@ -15,7 +15,13 @@
 						<a href="?detail/{$c['product_id']}" title="{$c['name']}"><img alt="{$c['name']}" src="{thumb($c['image'],150,120)}" /></a>
 					</div>
 					<div class="info">
-						<div class="price">${$c['retail']}</div>
+						<div class="price">
+							{if($_SESSION['user'] && $_SESSION['user']['status'] == 2)}
+								${$c['wholesale']}
+							{else}
+								${$c['retail']}
+							{/if}
+						</div>
 						<a href="?detail/{$c['product_id']}">View Detail&gt;&gt;</a>
 					</div>
 				</div>
