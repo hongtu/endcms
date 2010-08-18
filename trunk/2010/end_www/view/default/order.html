@@ -1,0 +1,37 @@
+<!-- INCLUDE header.html -->
+
+<div id='content'>
+	<!-- INCLUDE left.html -->
+	<div id="right">
+		<div class="page-title">Order History</div>
+		<div class="page-wrapper">
+			{if (count($orders) == 0)}
+			No order history
+			{else}
+			<?php include_once(END_ROOT.'end_www/model/order/order.config.php');?>
+			<table id="order" cellspacing="0">
+				<tr>
+					<th width="130">Order Date</th>
+					<th width="300">Products</th>
+					<th style="width:50px;">Price</th>
+				</tr>
+				<?php $subtotal = 0; ?>
+				{if ($orders)}
+					{foreach($orders as $p)}
+					<tr>
+						<td align="center">{date('Y-m-d H:i',$p['create_time'])}</td>
+						<td align="center">{show_products($p['product_ids'])}</td>
+						<td align="center">${$p['total']}</td>
+					</tr>
+					{/foreach}
+				{/if}
+				
+			</table>
+			{/if}
+			<div class="clear"></div>
+		</div>
+	</div>
+	<div class="clear"></div>
+</div>
+
+<!-- INCLUDE footer.html -->

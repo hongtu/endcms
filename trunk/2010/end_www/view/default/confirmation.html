@@ -1,0 +1,38 @@
+<!-- INCLUDE header.html -->
+
+<div id='content'>
+	<!-- INCLUDE left.html -->
+	<div id="right">
+		<div class="page-title">Checkout Confirmation</div>
+		<div class="page-wrapper">
+			<div class="error">{$msg}</div>
+			<form action="?setorder" method="post">
+			<table border="0" cellpadding="0" cellspacing="3" class="text" width="90%">			  
+				<tr>
+					<td height="40" valign="bottom"><strong>Billing Information </strong></td>
+					<td height="40" valign="bottom"><strong>Shipping Information</strong></td>
+				</tr>
+				<tr>
+					<td width="50%">
+						{$billing['fname']} {$billing['lname']}<br />
+						{$billing['street']}<br />
+						{$billing['city']}, {$billing['states']} {$billing['zip']}
+					</td>
+					<td width="50%">
+						{$shipping['fname']} {$shipping['lname']}<br />
+						{$shipping['street']}<br />
+						{$shipping['city']}, {$shipping['states']} {$shipping['zip']}
+					</td>
+				</tr>
+				<tr>
+					<td  colspan="2" >&nbsp;<input type="submit" value="Continue" /></td>
+				</tr>
+			</table>
+			</form>
+			
+			<div class="clear"></div>
+		</div>
+	</div>
+	<div class="clear"></div>
+</div>
+<!-- INCLUDE footer.html -->
