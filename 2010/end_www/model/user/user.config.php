@@ -26,12 +26,65 @@ $end_models['user'] = array(
 		)
 	),
 	'fields' => array(
+		'fname'=>array( 
+			'name'=>'First Name', 
+			'type'=>'text', 
+			'null'=>false, 
+			'width'=>200, 
+		),
+		'lname'=>array( 
+			'name'=>'Last Name', 
+			'type'=>'text', 
+			'null'=>false, 
+			'width'=>200, 
+		),
+		
 		'email'=>array( 
 			'name'=>'Email', 
 			'type'=>'text', 
 			'null'=>false, 
+			'width'=>200, 
+		),
+		
+		
+		'street'=>array( 
+			'name'=>'Street', 
+			'type'=>'text', 
+			'null'=>true, 
 			'width'=>600, 
-		)	
+		),
+		'city'=>array( 
+			'name'=>'City', 
+			'type'=>'text', 
+			'null'=>true, 
+			'width'=>200, 
+		),
+		'states'=>array( 
+			'name'=>'State', 
+			'type'=>'text', 
+			'null'=>true, 
+			'width'=>200, 
+		),
+		
+		'zip'=>array( 
+			'name'=>'Zip Code', 
+			'type'=>'text', 
+			'null'=>true, 
+			'width'=>200, 
+		),
+		'phone'=>array( 
+			'name'=>'Phone', 
+			'type'=>'text', 
+			'null'=>true, 
+			'width'=>200, 
+		),
+		'fax'=>array( 
+			'name'=>'Fax', 
+			'type'=>'text', 
+			'null'=>true, 
+			'width'=>200, 
+		)
+		
 	),
 	'list_fields' => array(
 		'user_id'=>array(
@@ -40,6 +93,19 @@ $end_models['user'] = array(
 			'sort'=>true,
 			'align'=>'center',
 		),
+		'fname'=>array(
+			'name'=>'First Name',
+			'width'=>100,
+			'sort'=>true,
+			'align'=>'center'
+		),
+		'lname'=>array(
+			'name'=>'Last Name',
+			'width'=>100,
+			'sort'=>true,
+			'align'=>'center'
+		),
+
 		'email'=>array(
 			'name'=>'Email',
 			'width'=>'auto',
@@ -48,6 +114,12 @@ $end_models['user'] = array(
 			'search'=>true,
 			'edit'=>true
 		),
+	'phone'=>array(
+		'name'=>'Phone',
+		'width'=>150,
+		'sort'=>true,
+		'align'=>'center'
+	),
 
 		'create_time'=>array(
 			'name'=>'Register Date',
@@ -57,7 +129,7 @@ $end_models['user'] = array(
 		),
 		'status'=>array(
 			'name'=>'Status',
-			'width'=>50,
+			'width'=>100,
 			'edit'=>true,
 			'type'=>'select',
 			'options'=>$user_status

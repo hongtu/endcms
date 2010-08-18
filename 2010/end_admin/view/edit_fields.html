@@ -10,9 +10,13 @@
 		echo "<tr><td>$data[name]";
 		if (!$data['null']) echo '<span style="color:red">*</span>';
 		echo "</td>";
-		echo "<td>";
+		echo '<td>';
+		
 		$_style = ($data['width'])?'width:'.$data['width'].'px;':'width:600px;';
 		$_style.= ($data['height'])?'height:'.$data['height'].'px;':'';
+		
+		$seperator = $data['seperator']?$data['seperator']:'|';
+		$add_text = $data['add_text']?$data['add_text']:lang('Add row');
 		
 		$view_data['content']['__orig_'.$name] = $view_data['content'][$name];
 		//显示之前的预处理
@@ -20,6 +24,8 @@
 		{
 			$view_data['content'][$name] = $data['prefilter']($view_data['content'][$name]);
 		}
+	
+	
 		
 		//简单文字输入
 		if ($data['type'] == 'text')
@@ -52,7 +58,39 @@
 			echo "<input type='file' name='$name' style='";
 			if ($data['width']) echo $_style;
 			echo "' />";
-			if (!$data['description']) $data['description'] = lang('upload_image_descriptioin');
+			if (!$data['description'] && $data['type'] == 'image')
+				$data['description'] = lang('upload_image_descriptioin');
+		}
+		else if ($data['tpye'] == 'filelist' || $data['type'] == 'imagelist')
+		{
+			$__s = $view_data['content'][$name];
+			$name = $name.'[]';
+			if (is_array($__s))
+				$__arr = $__s;
+			else
+				$__arr = explode($seperator,$__s);
+			if ($__s && $__arr)
+			{
+				foreach($__arr as $__v)
+				{
+					echo '<div class="list-row-wrapper">';
+					echo '<a href="'.$__v.'" target="_blank">'
+						.lang("uploaded_file")
+						.$__v
+						."</a>";
+					echo "<input type='hidden' name='$name' value='".$__v."' />";
+					echo '<span class="del-row-bt">'.lang('Remove').'</span>';
+					echo '</div>';
+				}
+			}
+			echo '<div class="list-row-wrapper">';
+			echo "<input type='file' name='$name' style='";
+			if ($data['width']) echo $_style;
+			echo "' />";
+			echo '<span class="add-row-bt" remove="'.lang('Remove').'">'.$add_text.'</span>';
+			echo "</div>";
+			if (!$data['description'] && $data['type'] == 'imagelist')
+				$data['description'] = lang('upload_image_descriptioin');
 		}
 		//多行文本
 		elseif ($data['type'] == 'textarea')
@@ -106,6 +144,39 @@
 			<?php
 		}
 		if ($data['description']) echo $data['description'];
+		
+		/**
+		* 增加按钮
+		*/
+		if ($data['list'] && $data['type'] != 'richtext')
+		{
+			$__t = $data['add_text']?$data['add_text']:lang('Add row');
+			echo '<span class="add-row-bt" remove="'.lang('Remove').'">'.$__t.'</span>';
+		}
 		echo "</td></tr>\n";
 	}
 ?>
+
+<script>
+$(function()
+{
+	var remove_row;
+	$('span.del-row-bt').click(remove_row = function()
+	{
+		$(this).parents('div.list-row-wrapper').remove();
+	});
+	$('span.add-row-bt').click(function()
+	{
+		var div = $(this).parents('div.list-row-wrapper');
+		var remove = div.find('.add-row-bt').attr('remove');
+		var cloned = div.clone();
+		cloned.insertAfter(div)
+			.find('.add-row-bt')
+			.removeClass('add-row-bt')
+			.addClass('del-row-bt')
+			.html(remove)
+			.click(remove_row);
+		cloned.find('input').val('');
+	});
+});
+</script>
