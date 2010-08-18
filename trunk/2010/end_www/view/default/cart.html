@@ -1,0 +1,55 @@
+<!-- INCLUDE header.html -->
+
+<div id='content'>
+	<!-- INCLUDE left.html -->
+	<div id="right">
+		<div class="page-title">Shopping Cart</div>
+		<div class="page-wrapper">
+			<table id="cart" cellspacing="0">
+				<tr>
+					<th>Product Name</th>
+					<th style="width:50px;">Price</th>
+					<th style="width:50px;">Qty</th>
+					<th style="width:80px;">Total Price</th>
+					<th style="width:80px;">&nbsp;</th>
+				</tr>
+				{if ($_SESSION['cart'])}
+				{foreach($_SESSION['cart'] as $pid=>$p)}
+				<?php 
+					$price = ($_SESSION['user'] && $_SESSION['user']['status'] == 2)?$p['wholesale']:$p['retail']; 
+				?>
+				<tr>
+					<td><a href="?detail/{$pid}" target="_blank">{$p['name']}</a></td>
+					<td>${$price}</td>
+					<td style="width:50px;"><input type="text" style="width:40px;" value="{$p['qty']}" onkeyup="change_qty(this,{$pid})" /></td>
+					<td>$<span rel="total_price" pid="{$pid}" price="{$price}"><?php echo $price*$p['qty'];?></span></td>
+					<td><a href="javascript:remove_from_cart({$pid})">Remove</a></td>
+				</tr>
+				{/foreach}
+				{/if}
+				<tr>
+			</table>
+			<div class="clear"></div>
+		</div>
+	</div>
+	<div class="clear"></div>
+</div>
+<script>
+function remove_from_cart(pid)
+{
+	$.post('?p=cart&action=remove',{ pid: pid},function()
+	{
+		window.location.reload();
+	});
+}
+function change_qty(dom,pid)
+{
+	$.post('?p=cart&action=change_qty',{ qty: dom.value ,pid:pid },function(s)
+	{
+		if (dom.value != s) dom.value = s;
+		var price = $('[rel=total_price][pid='+pid+']');
+		price.html( price.attr('price')*s );
+	},'text');
+}
+</script>
+<!-- INCLUDE footer.html -->

@@ -73,3 +73,6 @@ table.reg th { text-align:right; }
 #right .page-wrapper .price { font-size:20px; color:#fc4303; font-weight:bold; }
 #right .page-wrapper .detail-content { display:block;  clear:both; }
 #right .page-wrapper .detail-info { line-height:30px; }
+
+#cart { empty-cell:show; border-top:1px solid #ddd; border-left:1px solid #ddd; width:90%; }
+#cart td,#cart th{ border-bottom:1px solid #ddd; border-right:1px solid #ddd; text-align:center; padding:3px; }

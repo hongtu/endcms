@@ -5,6 +5,9 @@
 	<!-- INCLUDE meta.html -->
 </head>
 <body>
+<script>
+try{ document.execCommand("BackgroundImageCache",false,true);}catch(e){ }
+</script>
 <div id='main'>
 <?php
 $all_cats = get_cats('all_categories');
@@ -13,6 +16,7 @@ $all_cats = get_cats('all_categories');
 	<h1 class="logo"><a href="./" title="Return to Phone Accessories Homepage">{$config['index_title']}</a></h1>
 	
 	<div class="info">
+		<a href="?cart">Shopping Cart</a>
 		{if($_SESSION['user'])}
 		<a href="?account">My Account</a> 
 		<a href="?logout">Sign out</a>
@@ -52,7 +56,7 @@ $all_cats = get_cats('all_categories');
 					<option value="{$c['category_id']}">{$c['name']}</option>
 				{/foreach}
 				</select> 
-				<input type="image" src="end_www/view/default/images/search-bt.gif" />
+				<input type="image" src="{VIEW_ROOT}images/search-bt.gif" />
 				<div class="clear"></div>
 			</form>
 		</div>

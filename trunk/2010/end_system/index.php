@@ -116,7 +116,8 @@ if (!$view_html)
 	$view_data['_session'] = $_SESSION;
 	$view_data['config'] = $config;
 	$view_data['debug'] = END_DEBUG;
-	
+	$view_data['view_root'] = str_replace(END_ROOT,'',END_VIEWER_DIR);
+	define('LANG_VIEW_ROOT',$view_data['view_root']);
 	//total output array by controllers
 	$_template->assign($view_data);
 	

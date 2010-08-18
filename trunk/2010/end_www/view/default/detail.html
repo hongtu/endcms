@@ -24,7 +24,7 @@
 						<option value="9">9</option>
 						<option value="10">10</option>
 				</select><br />
-				<a href="?cart/{$p['product_id']}&action=add"><img src="end_www/view/default/images/add-to-cart.gif" /></a>
+				<a href="javascript:add_to_cart({$p['product_id']});"><img src="{VIEW_ROOT}images/add-to-cart.gif" /></a>
 			</div>
 			<div class="detail-content">
 				{$p['content']}
@@ -34,5 +34,13 @@
 	</div>
 	<div class="clear"></div>
 </div>
-
+<script>
+function add_to_cart(pid)
+{
+	$.post('?p=cart&action=add',{ pid:pid,qty:$('#qty').val() },function()
+	{
+		window.location = '?cart';
+	});
+}
+</script>
 <!-- INCLUDE footer.html -->

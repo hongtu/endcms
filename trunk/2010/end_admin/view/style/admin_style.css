@@ -180,3 +180,6 @@ ul.admin-left li.on a
 }
 
 .nav_wrapper a { margin-right:5px;}
+
+
+.add-row-bt ,.del-row-bt { background-color:#235399; color:#fff; padding:2px; cursor:pointer; margin-left:10px;}

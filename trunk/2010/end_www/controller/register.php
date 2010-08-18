@@ -3,7 +3,7 @@
 
 if ($_GET['id'] == '1')
 {
-	$data = filter_array($_POST,'email!,end_encode:password!');
+	$data = filter_array($_POST,'fname!,lname!,city,states,zip,phone,fax,street,email!,end_encode:password!');
 	if ($data)
 	{
 		$data['status'] = ($_POST['type'] == 'wholesale')?'1':'0';
@@ -14,9 +14,6 @@ if ($_GET['id'] == '1')
 			$view_data['msg'] = 'This email has been used!';
 			$data = false;
 		}
-		
-		
-		
 		
 		if ($data && model('user')->add($data))
 		{

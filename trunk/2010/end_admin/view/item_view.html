@@ -39,13 +39,13 @@
 		{	
 			$t = $view_data['content'][$name];
 			echo "<img src='$t' />";
-			if (is_array($data['resize']))
-			{
-				foreach($data['resize'] as $arr)
-				{
-					echo "<img src='".thumb($t,$arr['width'],$arr['height'])."' />";
-				}
-			}
+		}
+		elseif ($data['type'] == 'imagelist')
+		{	
+			$t = $view_data['content'][$name];
+			$seperator = $data['seperator']?$data['seperator']:'|';
+			$arr = explode($seperator,$t);
+			foreach($arr as $t) echo "<img src='$t' />";
 		}
 		//多行文本
 		elseif ($data['type'] == 'textarea')

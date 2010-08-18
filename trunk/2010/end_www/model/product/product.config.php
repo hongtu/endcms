@@ -61,7 +61,7 @@ $end_models['product'] = array(
 		),
 		'image'=>array(
 			'name'=>'Image file',
-			'type'=>'image',
+			'type'=>'imagelist',
 			'null'=>false,
 			'max_width'=>500
 		),
