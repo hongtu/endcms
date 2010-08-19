@@ -9,7 +9,7 @@ function end_mail($to,$subject,$body,$replyto='',$replyto_name='')
 	if (file_exists(END_SYSTEM_DIR.'config/smtp.config.php'))
 		require(END_SYSTEM_DIR.'config/smtp.config.php');
 	else
-		return;
+		$config = array('use_smtp' => false);
 		
 	
 	include_once(END_SYSTEM_DIR.'plugin/phpmailer/class.phpmailer.php');

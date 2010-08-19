@@ -4,6 +4,9 @@
 	<!-- INCLUDE left.html -->
 	<div id="right">
 		<div id="slideshow">
+			{foreach(model('slideshow')->get_list(array('status'=>1)) as $s)}
+				<a href="{$s['url']}" title="{$s['name']}" class="slideshow-image"><img src="{thumb($s['image'],715,280)}" /></a>
+			{/foreach}
 		</div>
 		<div class="list-title">Shop by Category</div>
 		<div class="list-wrapper">
@@ -23,5 +26,30 @@
 	</div>
 	<div class="clear"></div>
 </div>
+<script>
+$(function()
+{
+	if ($('.slideshow-image').length > 1)
+	{
+		slideshow();
+		setInterval(slideshow,{intval($config['slideshow_interval'])});
+	}
+});
+function slideshow()
+{
+	var current = $('.slideshow-image[current]');
+	if (!current.length) current = $('.slideshow-image:last').attr('current','true');
+	var nxt = current.next();
+	if (!nxt.hasClass('slideshow-image'))
+	{
+		nxt = $('.slideshow-image').eq(0);
+	}
+	nxt.css('z-index',2).attr('current','true');
+	current.removeAttr('current').css('z-index',3).fadeOut(300,function()
+	{
+		$(this).css('z-index','1').show();
+	});
+}
+</script>
 
 <!-- INCLUDE footer.html -->

@@ -65,3 +65,10 @@ search=Search
 search_button=Srch
 cancel_search=Cancel
 star_available = * available
+
+Year=-
+Month=-
+Day= 
+Hour=:
+Minute=:
+Second= 

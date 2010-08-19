@@ -5,28 +5,108 @@
 	<div id="right">
 		<div class="page-title">Order History</div>
 		<div class="page-wrapper">
-			{if (count($orders) == 0)}
-			No order history
-			{else}
-			<?php include_once(END_ROOT.'end_www/model/order/order.config.php');?>
-			<table id="order" cellspacing="0">
-				<tr>
-					<th width="130">Order Date</th>
-					<th width="300">Products</th>
-					<th style="width:50px;">Price</th>
-				</tr>
-				<?php $subtotal = 0; ?>
-				{if ($orders)}
-					{foreach($orders as $p)}
+			{if($order)}
+				<table border="0" cellpadding="0" cellspacing="3" class="text" width="90%">			  
 					<tr>
-						<td align="center">{date('Y-m-d H:i',$p['create_time'])}</td>
-						<td align="center">{show_products($p['product_ids'])}</td>
-						<td align="center">${$p['total']}</td>
+						<td height="40" valign="bottom"><strong>Billing Information </strong></td>
+						<td height="40" valign="bottom"><strong>Shipping Information</strong></td>
 					</tr>
-					{/foreach}
-				{/if}
+					<tr>
+						<td width="50%">
+							{$order['billing']}
+						</td>
+						<td width="50%">
+							{$order['shipping']}
+						</td>
+					</tr>
+					<tr>
+						<td  colspan="2" height="40" valign="bottom"><strong>Products</strong></td>
+					</tr>
+					<tr>
+						<td colspan="2">
+							<table id="cart" cellspacing="0">
+								<tr>
+									<th>Product Name</th>
+									<th style="width:50px;">Price</th>
+									<th style="width:50px;">Qty</th>
+									<th style="width:80px;">Total Price</th>
+								</tr>
+								<?php $subtotal = 0; ?>
+								{if ($products)}
+								{foreach($products as $pid=>$p)}
+								<?php 
+									$price = ($_SESSION['user'] && $_SESSION['user']['status'] == 2)?$p['wholesale']:$p['retail']; 
+								?>
+								<tr>
+									<td><a href="?detail/{$pid}" target="_blank">{$p['name']}</a></td>
+									<td>${$price}</td>
+									<td style="width:50px;">{$p['qty']}</td>
+									<td>$<span rel="total_price" pid="{$pid}" price="{$price}"><?php 
+										echo $price*$p['qty'];  
+										$subtotal+=$price*$p['qty'];
+									?></span></td>
+								</tr>
+								{/foreach}
+								{/if}
+								<tr>
+									<th colspan="3" style="text-align:right">Subtotal:</th>
+									<td colspan="1">${$subtotal}</td>
+								</tr>
+								<tr>
+									<th colspan="3" style="text-align:right">
+										Shipping method: {get_ups($order['ship_method'])} 
+									</th>
+									<td colspan="1">${$order['shipping_price']}</td>
+								</tr>
+								{if($order['coupon'])}
+								<tr>
+									<th colspan="3" style="text-align:right">
+										Coupon: {$order['coupon']}
+									</th>
+									<td colspan="2">-${$order['coupon_price']}</td>
+								</tr>
+								{/if}
+								<tr>
+									<th colspan="3" style="text-align:right">Grand total:</th>
+									<td colspan="2">${$order['total']}</td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+					<tr>
+						<td  colspan="2" ><a href="?order">Return </a></td>
+					</tr>
+				</table>
+			{else}
+				{if (count($orders) == 0)}
+				No order history
+				{else}
+				<table id="cart" cellspacing="0" >
+					<tr>
+						<th width="130">Order Date</th>
+						<th width="300">Products</th>
+						<th style="width:50px;">Price</th>
+						<th width="100">&nbsp;</th>
+					</tr>
+					<?php $subtotal = 0; ?>
+					{if ($orders)}
+						{foreach($orders as $p)}
+						<tr>
+							<td align="center">{date('Y-m-d H:i',$p['create_time'])}</td>
+							<td align="center">{show_products($p['product_ids'])}</td>
+							<td align="center">${$p['total']}</td>
+							<td align="center"><a href="?order/{$p['order_id']}">detail</a></td>
+						</tr>
+						{/foreach}
+					{/if}
 				
-			</table>
+				</table>
+				{/if}
+				<div class="pager">
+					{pager_prev("&lt;&lt;")}
+					{pager_numbers()}
+					{pager_next("&gt;&gt;")}
+				</div>
 			{/if}
 			<div class="clear"></div>
 		</div>

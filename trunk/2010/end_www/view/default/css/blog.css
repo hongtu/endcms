@@ -80,3 +80,8 @@ table.reg th { text-align:right; }
 .big_text { font-size:15px; color:#EB7B40; }
 .gray_box { font-size:13px; line-height:15px;}
 .gray_box a { text-decoration:underline; }
+
+
+.slideshow-image { position:absolute; }
+
+#footer{ clear:both; height:10px; }

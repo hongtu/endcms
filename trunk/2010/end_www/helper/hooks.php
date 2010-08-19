@@ -1,7 +1,7 @@
 <?php
 function end_on_begin()
 {
-	$arr = explode('/',$_SERVER['QUERY_STRING']);
+	$arr = explode('/',array_shift(explode('&',$_SERVER['QUERY_STRING'])));
 	if ($arr[0] && !$_GET['p']) $_GET['p'] = $arr[0];
 	if ($arr[1] && !$_GET['id']) $_GET['id'] = $arr[1];
 }

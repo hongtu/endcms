@@ -25,6 +25,61 @@
 					</td>
 				</tr>
 				<tr>
+					<td  colspan="2" height="40" valign="bottom"><strong>Products</strong></td>
+				</tr>
+				<tr>
+					<td colspan="2">
+						<table id="cart" cellspacing="0">
+							<tr>
+								<th>Product Name</th>
+								<th style="width:50px;">Price</th>
+								<th style="width:50px;">Qty</th>
+								<th style="width:80px;">Total Price</th>
+							</tr>
+							<?php $subtotal = 0; ?>
+							{if ($_SESSION['cart'])}
+							{foreach($_SESSION['cart'] as $pid=>$p)}
+							<?php 
+								$price = ($_SESSION['user'] && $_SESSION['user']['status'] == 2)?$p['wholesale']:$p['retail']; 
+							?>
+							<tr>
+								<td><a href="?detail/{$pid}" target="_blank">{$p['name']}</a></td>
+								<td>${$price}</td>
+								<td style="width:50px;">{$p['qty']}</td>
+								<td>$<span rel="total_price" pid="{$pid}" price="{$price}"><?php 
+									echo $price*$p['qty'];  
+									$subtotal+=$price*$p['qty'];
+								?></span></td>
+							</tr>
+							{/foreach}
+							{/if}
+							<tr>
+								<th colspan="3" style="text-align:right">Subtotal:</th>
+								<td colspan="1">$<span id="subtotal_price">{$subtotal}</span></td>
+							</tr>
+							<tr>
+								<th colspan="3" style="text-align:right">
+									Shipping method: {get_ups($_SESSION['shipping'])} 
+								</th>
+								<td colspan="1">$<span id="shipping_price">{$_SESSION['shipping_price']}</span></td>
+							</tr>
+							{if($coupon_desc)}
+							<tr>
+								<th colspan="3" style="text-align:right">
+									Coupon: {$coupon_desc}
+									<input type="hidden" name="coupon" value="{$coupon}" />
+								</th>
+								<td colspan="2">-${$coupon_price}</td>
+							</tr>
+							{/if}
+							<tr>
+								<th colspan="3" style="text-align:right">Grand total:</th>
+								<td colspan="2">$<span id="total_price">{$subtotal+$_SESSION['shipping_price']-$coupon_price}</span></td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+				<tr>
 					<td  colspan="2" >&nbsp;<input type="submit" value="Continue" /></td>
 				</tr>
 			</table>
