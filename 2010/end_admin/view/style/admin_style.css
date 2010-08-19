@@ -46,7 +46,7 @@ a:hover { color:#c60;}
 .module dl dd ul li a{ text-decoration:none; color:#045394;}
 
 /*welcome*/
-#main{ padding-left:210px; background:url(../images/admin_xs_bg.png) left top repeat-x; overflow:hidden;}
+#main{ padding-left:210px; background:url(../images/admin_xs_bg.png) left top repeat-x; }
 #main_b{margin-top:8px; border:0px solid #bcd1e0;}
 #main_kj{  border-bottom:2px solid #033C71; height:25px;}
 #main_kj ul li{ height:25px; line-height:25px; width:60px; text-align:center; float:left; margin-right:8px;}

@@ -47,17 +47,18 @@ $data['email'] = $_SESSION['user']['email'];
 $data['user_id'] = $_SESSION['user']['user_id'];
 
 
-if ($_POST['coupon'] != '')
+if ($_SESSION['coupon'] != '')
 {
-	$c = model('coupon')->get_one(array('name'=>$_POST['coupon']));
+	$c = model('coupon')->get_one(array('name'=>$_SESSION['coupon']));
 	if ($c)
 	{
 		$shipping = $_SESSION['shipping_price'];
 		$total = $_SESSION['total'];
-		$data['coupon_price'] = model('coupon')->get_price($_POST['coupon'],$subtotal,$shipping,$total);
+		$data['coupon_price'] = model('coupon')->get_price($_SESSION['coupon'],$subtotal,$shipping,$total);
 		$data['total'] -= $data['coupon_price'];
-		$data['coupon'] = $_POST['coupon'];
+		$data['coupon'] = $_SESSION['coupon'];
 		if ($data['total'] <= 0 ) $data['total'] = 0;
+		model('coupon')->use_coupon($_SESSION['coupon']);
 	}
 }
 if (!$data['coupon_price']) $data['coupon_price'] = 0;

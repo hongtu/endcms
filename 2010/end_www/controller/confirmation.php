@@ -6,9 +6,9 @@ if (!$_SESSION['user']['user_id'])
 	die;
 }
 
-if ($_POST['coupon'] != '')
+if ($_SESSION['coupon'] != '')
 {
-	$c = model('coupon')->get_one(array('name'=>$_POST['coupon']));
+	$c = model('coupon')->get_one(array('name'=>$_SESSION['coupon']));
 	if ($c)
 	{
 		$shipping = $_SESSION['shipping_price'];
@@ -22,13 +22,13 @@ if ($_POST['coupon'] != '')
 				$subtotal += $price*$p['qty'];
 			}
 		}
-		$view_data['coupon_price'] = model('coupon')->get_price($_POST['coupon'],$subtotal,$shipping,$total);
+		$view_data['coupon_price'] = model('coupon')->get_price($_SESSION['coupon'],$subtotal,$shipping,$total);
 		$view_data['coupon_desc'] = $c['name'].'('.$c['description'].')';
 	}
-	else
+	
+	if (!$c || $view_data['coupon_price'] <= 0)
 	{
-		$view_data['coupon_desc'] = '<span style="color:red">invalid</span>';
-		
+		$view_data['coupon_desc'] = '<span style="color:red">invalid</span>';		
 	}
 }
 
@@ -38,4 +38,4 @@ $_SESSION['billing_information'] = $view_data['billing'] = $_POST['billing'];
 $_SESSION['shipping_information'] = $view_data['shipping'] = $_POST['shipping'];
 
 $view_data['title'] = 'Checkout confirmation';
-$view_data['coupon'] = $_POST['coupon'];
+$view_data['coupon'] = $_SESSION['coupon'];

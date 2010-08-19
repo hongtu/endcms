@@ -50,7 +50,8 @@ $end_models['config'] = array(
 			'type'=>'textarea',
 			'height'=>'20',
 			'search'=>true,
-			'sort'=>true
+			'sort'=>true,
+			'width'=>400
 		),
 		'_options'=>array(
 			'name'=>lang('options'),

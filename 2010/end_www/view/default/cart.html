@@ -52,6 +52,12 @@
 					<td colspan="2">$<span id="total_price">{$subtotal}</span></td>
 				</tr>
 				<tr>
+					<td colspan="3" style="text-align:right"><strong>Coupon:</strong></td>
+					<td colspan="2">
+						<input type="text" size="10" id="coupon" />
+					</td>
+				</tr>
+				<tr>
 					<td colspan="5">
 						<div style="float:left"><a href="./" >&lt;&lt;Continue shopping</a></div>
 						<div style="float:right"><input disabled="disabled" type="button" id="checkoutbt" value="Checkout" onclick="checkout()" /></div>
@@ -154,7 +160,8 @@ function checkout()
 	$.post('?p=cart&action=checkout',{ 
 		shipping: $('#shipping_method').val(), 
 		total: $('#total_price').html(),
-		shipping_price: $('#shipping_price').html()
+		shipping_price: $('#shipping_price').html(),
+		coupon: $('#coupon').val()
 	 },function(s)
 	{
 		if (s == 'ok') 

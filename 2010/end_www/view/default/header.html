@@ -13,7 +13,11 @@ try{ document.execCommand("BackgroundImageCache",false,true);}catch(e){ }
 $all_cats = get_cats('all_categories');
 ?>
 <div id="header">
-	<h1 class="logo"><a href="./" title="Return to Phone Accessories Homepage">{$config['index_title']}</a></h1>
+	<h1 class="logo">
+		<a href="./" title="Return to Homepage">
+			<img src="{VIEW_ROOT}images/logo.gif" />
+		</a>
+	</h1>
 	
 	<div class="info">
 		<a href="?cart">Shopping Cart</a>
@@ -61,10 +65,19 @@ $all_cats = get_cats('all_categories');
 			</form>
 		</div>
 		<div class="hots">
-			<a href="#">LG</a> | 
-			<a href="#">Samsung</a> | 
-			<a href="#">Motorola</a> | 
-			<a href="#">Apple</a> 
+			<?php
+			$arr = array();
+			$config['brands'] = str_replace('&nbsp;',' ',$config['brands']);
+			$config['brands'] = preg_replace('/<br\s*\/?>/',',',$config['brands']);
+			foreach(explode(',',$config['brands']) as $brand)
+			{
+				if (trim($brand))
+				{
+					$arr[] = '<a href="?search&q='.$brand.'">'.$brand.'</a>';
+				}
+			}
+			echo join(' | ',$arr);
+			?>
 		</div>
 	</div>
 </div>
