@@ -41,9 +41,9 @@ if ($_GET['do'] == 'save' && count($_POST)>0)
 		,array($_POST['username'],$_POST['password'],$_POST['server'],$_POST['database']),$s);
 		if (file_put_contents('end_system/config.php',$s))
 		{
-			unlink('install.sql');
-			unlink('install.php');
-			die("安装成功！");
+			rename('install.sql',time().'.install.sql');
+			rename('install.php',time().'.install.php');
+			echo 'Installation complete!<br /><a href="admin.php">Click here</a>';
 		}
 	}
 	
