@@ -20,9 +20,10 @@ class MODEL_COUPON extends MODEL
 		$c = $this->get_one(array('name'=>$coupon));
 		if (
 			$c['status'] != -1 
-			&& $c['from_time'] <= time()
-			&& $c['to_time'] >= time()
-			&& $c['count'] >= 0
+			&& $c['from_time'] <= time() 
+			&& $c['to_time'] >= time() 
+			&& $c['count'] >= 0 
+			&& $c['start_price'] <= $total
 		)
 		{
 			$price = str_replace(

@@ -23,12 +23,13 @@ else if ($action == 'change_qty')
 }
 else if ($action == 'checkout')
 {
-	$data = filter_array($_POST,'shipping!,total!,shipping_price!');
+	$data = filter_array($_POST,'shipping!,total!,shipping_price!,coupon');
 	if ($data)
 	{
 		$_SESSION['shipping'] = $data['shipping'];
 		$_SESSION['shipping_price'] = $data['shipping_price'];
 		$_SESSION['total'] = $data['total'];
+		$_SESSION['coupon'] = $data['coupon'];
 		echo 'ok';
 	}
 	else

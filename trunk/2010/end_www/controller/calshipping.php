@@ -18,7 +18,7 @@ if ($weight > 150) $weight = 150;
 
 $server="http://www.ups.com/using/services/rave/qcostcgi.cgi?accept_UPS_license_agreement=yes&10_action=4&13_product=3DS&14_origCountry=US&15_origPostal={$from_zip}&&19_destPostal=".$to_zip."&22_destCountry=US&23_weight=".$weight."&47_rate_chart=Customer Counter&48_container=00&&49_residential=1";
 
-$s = file_get_contents($server);
+$s = join(file($server));
 
 
 $arr = explode("\n", $s);

@@ -32,7 +32,9 @@ $(function()
 	if ($('.slideshow-image').length > 1)
 	{
 		slideshow();
-		setInterval(slideshow,{intval($config['slideshow_interval'])});
+		var t = {intval($config['slideshow_interval'])};
+		if (t <= 0) t = 3000;
+		setInterval(slideshow,t);
 	}
 });
 function slideshow()

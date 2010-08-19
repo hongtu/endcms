@@ -44,6 +44,12 @@ $end_models['coupon'] = array(
 				.'{shipping} <span style="color:#aaa">no shipping fee</span><br>'
 				.'0.5*{shipping}+10 <span style="color:#aaa">half shipping fee and $10 off</span><br>'
 		),
+		'start_price'=>array(
+			'name'=>'Starting from',
+			'type'=>'text',
+			'width'=>'100',
+			'filter'=>'floatval'
+		),
 		'description'=>array(
 			'name'=>'Description',
 			'type'=>'text',
