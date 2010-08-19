@@ -21,16 +21,16 @@
 		'admin',
 		'extension'
 	);
+	
 	foreach($display_controllers as $_p)
 	{
+		if (END_ENABLE_EXTENSION == false && $_p == 'extension') continue;
 		if (!$_SESSION['login_user']['allowed_controllers'][$_p]) continue;
 		echo "<li><a  ";
 		if (END_CONTROLLER == $_p) echo " class='hover' ";
 		echo "href='admin.php?p=$_p'>".lang('NAVI_'.$_p)."</a></li>";
 	}
 	?>
-	<!--         
-	        <li style="background:none;"><a href='admin.php?p=login&m=logout&module=admin&backurl=index.php'>{LOGOUT}</a></li> -->
 	</ul>
   </ul>
 </div>

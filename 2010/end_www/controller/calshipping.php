@@ -36,29 +36,5 @@ for($i=0; $i<count($arr)-1; $i++)
 echo json_encode($re);
 
 
-function get_ups($s)
-{
-		switch($s)
-		{
-			case "1DM":
-				return "UPS Next Day Air Early AM";
-			break;
-			case "1DA":
-				return "UPS Next Day Air";
-			break;
-			case "1DP";
-				return "UPS Next Day Air Saver";
-			break;
-			case "2DA":
-				return "UPS 2nd Day Air";
-			break;
-			case "3DS":
-				return "UPS 3 Days Selected";
-			break;
-			default:
-				return "UPS Ground";
-			break;
-	}
-}
 
 die;

@@ -121,12 +121,12 @@
 			if (is_array($t))
 				$t = mktime($t['h'],$t['i'],$t['s'],$t['m'],$t['d'],$t['y']);
 			if (!$t) $t = time();
-			echo "<input type='text' size='4' value='".date('Y',$t)."' name='".$name."[y]'>年";
-			echo "<input type='text' size='2' value='".date('m',$t)."' name='".$name."[m]'>月";
-			echo "<input type='text' size='2' value='".date('d',$t)."' name='".$name."[d]'>日 ";
-			echo "<input type='text' size='2' value='".date('H',$t)."' name='".$name."[h]'>时";
-			echo "<input type='text' size='2' value='".date('i',$t)."' name='".$name."[i]'>分";
-			echo "<input type='text' size='2' value='".date('s',$t)."' name='".$name."[s]'>秒";
+			echo "<input type='text' size='4' value='".date('Y',$t)."' name='".$name."[y]'>".lang('Year');
+			echo "<input type='text' size='2' value='".date('m',$t)."' name='".$name."[m]'>".lang('Month');
+			echo "<input type='text' size='2' value='".date('d',$t)."' name='".$name."[d]'>".lang('Day').' ';
+			echo "<input type='text' size='2' value='".date('H',$t)."' name='".$name."[h]'>".lang('Hour');
+			echo "<input type='text' size='2' value='".date('i',$t)."' name='".$name."[i]'>".lang('Minute');
+			echo "<input type='text' size='2' value='".date('s',$t)."' name='".$name."[s]'>".lang('Second');
 		}
 		//超文本编辑器
 		elseif ($data['type'] == 'richtext')

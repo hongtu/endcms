@@ -72,11 +72,22 @@ $end_models['order'] = array(
 		),
 		
 		'shipping_price'=>array( 
-			'name'=>'Shipping price', 
+			'name'=>'Shipping fee', 
 			'type'=>'text', 
 			'null'=>true, 
 			'prefilter'=>'show_dollar',
 			'width'=>100
+		),
+		'coupon'=>array( 
+			'name'=>'Coupon', 
+			'type'=>'text', 
+			'null'=>true
+		),
+		'coupon_price'=>array( 
+			'name'=>'Coupon', 
+			'type'=>'text', 
+			'prefilter'=>'show_dollar',
+			'null'=>true
 		),
 		
 		'total'=>array( 
@@ -113,7 +124,7 @@ $end_models['order'] = array(
 			'align'=>'center'
 		),
 		'total'=>array(
-			'name'=>'Price',
+			'name'=>'Total Price',
 			'width'=>100,
 			'sort'=>true,
 			'align'=>'center'

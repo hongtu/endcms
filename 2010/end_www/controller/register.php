@@ -17,6 +17,18 @@ if ($_GET['id'] == '1')
 		
 		if ($data && model('user')->add($data))
 		{
+			//注册成功 
+			$email = str_replace( 
+					array('{http_host}','{user_email}'),
+					array($_SERVER['HTTP_HOST'],
+					$data['email']),$config['reg_email']
+				);
+			
+			end_mail($data['email'],'Registeration from '.$_SERVER['HTTP_HOST'],$email);
+			
+			
+			
+			
 			echo '<script>';
 			if ($_POST['type'] == 'wholesale')
 			{
