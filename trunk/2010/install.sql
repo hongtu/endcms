@@ -1,4 +1,23 @@
+-- phpMyAdmin SQL Dump
+-- version 3.2.3
+-- http://www.phpmyadmin.net
+--
+-- 主机: localhost
+-- 生成日期: 2010 年 08 月 19 日 21:07
+-- 服务器版本: 5.0.41
+-- PHP 版本: 5.2.5
+
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
+
+--
+-- 数据库: `phone`
+--
+
+-- --------------------------------------------------------
+
+--
+-- 表的结构 `end_admin`
+--
 
 DROP TABLE IF EXISTS `end_admin`;
 CREATE TABLE IF NOT EXISTS `end_admin` (
@@ -11,9 +30,18 @@ CREATE TABLE IF NOT EXISTS `end_admin` (
   UNIQUE KEY `id` (`admin_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=37 ;
 
+--
+-- 转存表中的数据 `end_admin`
+--
 
 INSERT INTO `end_admin` (`admin_id`, `rights_id`, `name`, `password`, `email`, `status`) VALUES
 (36, 1, 'endcms', '77fbc280bf0900b454c5b83ab0b52fb965d30811', 'endcms@endcms.com', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- 表的结构 `end_category`
+--
 
 DROP TABLE IF EXISTS `end_category`;
 CREATE TABLE IF NOT EXISTS `end_category` (
@@ -38,6 +66,9 @@ CREATE TABLE IF NOT EXISTS `end_category` (
   KEY `url` (`url`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=15 ;
 
+--
+-- 转存表中的数据 `end_category`
+--
 
 INSERT INTO `end_category` (`category_id`, `parent_id`, `name`, `description`, `keywords`, `order_id`, `status`, `update_time`, `create_time`, `url`, `content`, `target`, `page_title`, `alias`, `system`, `item_count`, `image`) VALUES
 (1, 0, 'Product Categories', NULL, NULL, 0, 'folder', 1281984800, 1281984524, 'all_categories', '', '', '', '', 'no', 0, ''),
@@ -54,6 +85,11 @@ INSERT INTO `end_category` (`category_id`, `parent_id`, `name`, `description`, `
 (13, 10, 'Privacy', '', '', 0, 'page', 1282034088, 1282034082, 'Privacy', '<p>\r\n	<span class="Apple-style-span" style="color: rgb(51, 51, 51); font-family: Verdana, Arial; border-collapse: collapse; ">All information submitted to&nbsp;<span id="lblcompanyname9" style="margin-top: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; ">OnlinePhoneStore</span>&nbsp;is held private. We DO NOT sell customer data. Some data may be shared with third parties only if you, the customer agrees to participate in offers available through our site. If you accept such an offer, we will disclose your contact and billing information to that third party. All data collected is secured under 128bit Verisign protection.&nbsp;<br />\r\n	<br />\r\n	<b>Email Offer Subscriptions:</b><br />\r\n	Upon placing an order through this Site, you will automatically be enrolled in the OnlinePhoneStore.com best offers email promotion list based on the billing email address information you have provided, unless you opt-out of receiving such communications. You may request at any time to opt-out from our email promotion list by&nbsp;clicking here. This simple opt-out process allows you to unsubscribe if you decide not to receive any further promotional emails from our family of web stores. Furthermore, We will never share any personally identifiable information which you have given to us with any third party marketers. In order to make our email offers more relevant and useful to you, our servers may receive a confirmation when you open an email message from OnlinePhoneStore.com. In addition, if you have any questions about receiving communications from us you may email us at&nbsp;info@phone.com&nbsp;at any time.</span></p>\r\n', '', 'Privacy Policy', '', 'no', 0, ''),
 (14, 0, 'Customers', NULL, NULL, 0, 'user_list', 1282051762, 1282051755, 'Customers', '', '', '', '', 'no', 0, '');
 
+-- --------------------------------------------------------
+
+--
+-- 表的结构 `end_config`
+--
 
 DROP TABLE IF EXISTS `end_config`;
 CREATE TABLE IF NOT EXISTS `end_config` (
@@ -68,6 +104,9 @@ CREATE TABLE IF NOT EXISTS `end_config` (
   PRIMARY KEY  (`config_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='admin settings' AUTO_INCREMENT=12 ;
 
+--
+-- 转存表中的数据 `end_config`
+--
 
 INSERT INTO `end_config` (`config_id`, `category_id`, `name`, `value`, `updated_at`, `type`, `description`, `order_id`) VALUES
 (2, 6, 'site_name', 'Phone&nbsp;Accessories', '2010-08-17 14:37:44', 'text', 'Site Name', 10),
@@ -76,6 +115,41 @@ INSERT INTO `end_config` (`config_id`, `category_id`, `name`, `value`, `updated_
 (9, 6, 'index_description', 'Phone&nbsp;Accessories&nbsp;Online&nbsp;Store', '2010-08-17 16:58:43', '', 'Index Description (SEO)', 0),
 (10, 6, 'index_keywords', 'Phone&nbsp;Accessories', '2010-08-17 16:59:04', '', 'Index Keywords (SEO)', 0),
 (11, 6, 'index_title', 'Phone&nbsp;Accessories&nbsp;online&nbsp;shop', '2010-08-17 17:04:21', '', 'Index Title (SEO) ', 0);
+
+-- --------------------------------------------------------
+
+--
+-- 表的结构 `end_coupon`
+--
+
+DROP TABLE IF EXISTS `end_coupon`;
+CREATE TABLE IF NOT EXISTS `end_coupon` (
+  `coupon_id` int(11) NOT NULL auto_increment,
+  `name` varchar(250) NOT NULL default '',
+  `description` varchar(250) NOT NULL default '',
+  `from_time` int(11) unsigned NOT NULL default '0',
+  `to_time` int(11) unsigned NOT NULL default '0',
+  `count` int(10) unsigned NOT NULL default '0',
+  `price` varchar(200) NOT NULL default '0',
+  `status` tinyint(4) NOT NULL default '0',
+  PRIMARY KEY  (`coupon_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
+
+--
+-- 转存表中的数据 `end_coupon`
+--
+
+INSERT INTO `end_coupon` (`coupon_id`, `name`, `description`, `from_time`, `to_time`, `count`, `price`, `status`) VALUES
+(1, 'NOSHIPPING', 'free shippment', 1282207814, 1313743814, 1000, '{shipping}', 0),
+(2, 'ONE_PERCENT_OFF', '1% off', 1282207980, 1313743980, 10000, '0.01*{total}', 0),
+(3, '10', '$10 off', 1282210143, 1284888543, 100, '10', 0),
+(4, '20%subtotal', 'aa', 1282210224, 1284888624, 1000, '0.2*{subtotal}', 0);
+
+-- --------------------------------------------------------
+
+--
+-- 表的结构 `end_log`
+--
 
 DROP TABLE IF EXISTS `end_log`;
 CREATE TABLE IF NOT EXISTS `end_log` (
@@ -88,18 +162,48 @@ CREATE TABLE IF NOT EXISTS `end_log` (
   `info` varchar(200) character set utf8 collate utf8_unicode_ci NOT NULL,
   PRIMARY KEY  (`log_id`),
   KEY `admin_id` (`admin_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8 ;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+--
+-- 转存表中的数据 `end_log`
+--
 
 
-INSERT INTO `end_log` (`log_id`, `admin_id`, `controller`, `url`, `menu`, `time`, `info`) VALUES
-(1, 36, '', '/newendcms/admin.php', 0, 1282066771, ''),
-(2, 36, 'category', 'admin.php?p=category', 1, 1282066772, ' Categories'),
-(3, 36, 'item', '/newendcms/admin.php?p=item', 0, 1282066772, ''),
-(4, 36, '', '/newendcms/admin.php', 0, 1282066773, ''),
-(5, 36, 'category', 'admin.php?p=category', 1, 1282066774, ' Categories'),
-(6, 36, 'admin', 'admin.php?p=admin', 1, 1282066775, ' Administrators'),
-(7, 36, '', '/newendcms/admin.php', 0, 1282066776, '');
+-- --------------------------------------------------------
 
+--
+-- 表的结构 `end_order`
+--
+
+DROP TABLE IF EXISTS `end_order`;
+CREATE TABLE IF NOT EXISTS `end_order` (
+  `order_id` int(11) NOT NULL auto_increment,
+  `user_id` int(11) NOT NULL default '0',
+  `name` varchar(200) NOT NULL default '',
+  `email` varchar(200) NOT NULL default '',
+  `shipping` varchar(1000) NOT NULL default '',
+  `billing` varchar(1000) NOT NULL default '',
+  `create_time` int(11) NOT NULL default '0',
+  `status` int(10) NOT NULL default '0',
+  `product_ids` varchar(1000) NOT NULL default '',
+  `total` float NOT NULL default '0',
+  `shipping_price` float NOT NULL default '0',
+  `ship_method` varchar(10) NOT NULL default '',
+  `coupon` varchar(200) NOT NULL default '',
+  `coupon_price` float NOT NULL default '0',
+  PRIMARY KEY  (`order_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+--
+-- 转存表中的数据 `end_order`
+--
+
+
+-- --------------------------------------------------------
+
+--
+-- 表的结构 `end_product`
+--
 
 DROP TABLE IF EXISTS `end_product`;
 CREATE TABLE IF NOT EXISTS `end_product` (
@@ -120,12 +224,19 @@ CREATE TABLE IF NOT EXISTS `end_product` (
   KEY `url` (`url`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
 
+--
+-- 转存表中的数据 `end_product`
+--
 
 INSERT INTO `end_product` (`product_id`, `category_id`, `name`, `content`, `create_time`, `update_time`, `status`, `order_id`, `view_count`, `url`, `image`, `retail`, `wholesale`) VALUES
 (3, 2, 'AC Blue tooth adapter', '<p>\r\n	fd afda f</p>\r\n<p>\r\n	da fsda fdsa</p>\r\n<p>\r\n	&nbsp;f</p>\r\n<p>\r\n	dsa&nbsp;</p>\r\n<p>\r\n	fasd</p>\r\n<p>\r\n	&nbsp;fsd</p>\r\n<p>\r\n	a&nbsp;</p>\r\n<p>\r\n	fda</p>\r\n<p>\r\n	&nbsp;dafdsa</p>\r\n', 0, 0, 1, 0, 1, '', 'public/2010/08/2010_08_17_16_14_57_9450.png', '10', '5'),
 (4, 2, '25 Ft. Line Cord', '<p>\r\n	<meta charset="utf-8" /><span class="Apple-style-span" style="color: rgb(51, 51, 51); font-family: Verdana, Arial; border-collapse: collapse; ">This&nbsp;<span class="blackbold" style="margin-top: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; color: rgb(0, 0, 0); font-weight: bold; ">25 Ft. line cord</span>&nbsp;is a standard telephone cord set with 4-conductors and RJ11 male connectors on both ends.</span></p>\r\n', 0, 0, 1, 0, 1, '', 'public/2010/08/att 15910  .jpeg', '100', '70');
 
+-- --------------------------------------------------------
 
+--
+-- 表的结构 `end_rights`
+--
 
 DROP TABLE IF EXISTS `end_rights`;
 CREATE TABLE IF NOT EXISTS `end_rights` (
@@ -137,10 +248,41 @@ CREATE TABLE IF NOT EXISTS `end_rights` (
   UNIQUE KEY `rights_id` (`rights_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=10 ;
 
+--
+-- 转存表中的数据 `end_rights`
+--
 
 INSERT INTO `end_rights` (`rights_id`, `name`, `description`, `order_id`, `rights`) VALUES
 (1, 'Super Admin', 'All access', 9, 'category_view,category_add,category_update,category_delete,item_view,item_add,item_update,item_delete,account_update,admin_view,admin_add,admin_update,admin_update_password,admin_delete,config_view,config_add,config_update,config_delete,extension_view,extension_add,extension_update,extension_delete,upload_add,rights_view,rights_add,rights_update,rights_delete,product_view,product_add,product_update,product_delete,user_view,user_add,user_update,user_delete');
 
+-- --------------------------------------------------------
+
+--
+-- 表的结构 `end_slideshow`
+--
+
+DROP TABLE IF EXISTS `end_slideshow`;
+CREATE TABLE IF NOT EXISTS `end_slideshow` (
+  `slideshow_id` int(11) NOT NULL auto_increment,
+  `status` int(11) NOT NULL default '0',
+  `category_id` int(11) NOT NULL,
+  `name` varchar(200) character set utf8 collate utf8_unicode_ci NOT NULL,
+  `image` varchar(250) character set utf8 collate utf8_unicode_ci NOT NULL,
+  `url` varchar(250) character set utf8 collate utf8_unicode_ci NOT NULL,
+  `order_id` int(11) NOT NULL default '0',
+  PRIMARY KEY  (`slideshow_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+--
+-- 转存表中的数据 `end_slideshow`
+--
+
+
+-- --------------------------------------------------------
+
+--
+-- 表的结构 `end_user`
+--
 
 DROP TABLE IF EXISTS `end_user`;
 CREATE TABLE IF NOT EXISTS `end_user` (
@@ -152,6 +294,9 @@ CREATE TABLE IF NOT EXISTS `end_user` (
   PRIMARY KEY  (`user_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
 
+--
+-- 转存表中的数据 `end_user`
+--
 
 INSERT INTO `end_user` (`user_id`, `email`, `password`, `status`, `create_time`) VALUES
 (1, 'longbill.cn@gmail.com', '55d7e24398e9cc418e630d1602a6609f43cefef0', 0, 1282053859),
