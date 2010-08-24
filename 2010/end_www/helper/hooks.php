@@ -4,6 +4,7 @@ function end_on_begin()
 	$arr = explode('/',array_shift(explode('&',$_SERVER['QUERY_STRING'])));
 	if ($arr[0] && !$_GET['p']) $_GET['p'] = $arr[0];
 	if ($arr[1] && !$_GET['id']) $_GET['id'] = $arr[1];
+	if ($arr[2] && !$_GET['q']) $_GET['q'] = $arr[2];
 }
 
 function end_on_after_db()

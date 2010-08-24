@@ -20,7 +20,7 @@ define('END_LANGUAGE','en');
 /**
 * 默认时区
 */
-define('END_DEFAULT_TIMEZONE','Etc/GMT-8');
+define('END_DEFAULT_TIMEZONE','Etc/GMT+9');
 
 /*
 * 是否使用php压缩页面成gzip，有些IIS会出问题
@@ -46,7 +46,7 @@ define('END_VIEWER_EXT','html');
 define('END_LANGUAGE_EXT','lang');
 
 //debug模式， 开启之后后台一些危险的操作会打开，模板文件会每次访问都检查是否更新
-define('END_DEBUG',true);
+define('END_DEBUG',false);
 
 //默认数据表前缀
 define('END_MYSQL_PREFIX','end_');

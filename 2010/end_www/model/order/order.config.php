@@ -89,6 +89,11 @@ $end_models['order'] = array(
 			'prefilter'=>'show_dollar',
 			'null'=>true
 		),
+		'payment_method'=>array( 
+			'name'=>'Payment Method', 
+			'type'=>'text', 
+			'null'=>true
+		),
 		
 		'total'=>array( 
 			'name'=>'Total price', 

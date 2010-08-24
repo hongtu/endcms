@@ -33,15 +33,10 @@ $all_cats = get_cats('all_categories');
 	<div class="navi">
 		<div class="bg-left"></div>
 		<div class="bg-middle">
-			<a href="./" {if(!$_GET['p'])}class="hover"{/if} >
+			{foreach(get_items('navi') as $c)}
+				<a href="{$c['url']}" target="{$c['target']}" {if(strpos('?'.$_SERVER['QUERY_STRING'],$c['url']) !== false || (!$_SERVER['QUERY_STRING'] && $c['url'] == './' ))}class="hover"{/if} >
 				<div class="left"></div>
-				<div class="text">Home</div>
-				<div class="right"></div>
-			</a>
-			{foreach($all_cats as $n)}
-			<a href="?cat/{$n['category_id']}" {if($cat['category_id'] == $n['category_id'])}class="hover"{/if}>
-				<div class="left"></div>
-				<div class="text">{$n['name']}</div>
+				<div class="text">{$c['name']}</div>
 				<div class="right"></div>
 			</a>
 			{/foreach}
@@ -65,19 +60,10 @@ $all_cats = get_cats('all_categories');
 			</form>
 		</div>
 		<div class="hots">
-			<?php
-			$arr = array();
-			$config['brands'] = str_replace('&nbsp;',' ',$config['brands']);
-			$config['brands'] = preg_replace('/<br\s*\/?>/',',',$config['brands']);
-			foreach(explode(',',$config['brands']) as $brand)
-			{
-				if (trim($brand))
-				{
-					$arr[] = '<a href="?search&q='.$brand.'">'.$brand.'</a>';
-				}
-			}
-			echo join(' | ',$arr);
-			?>
+			{foreach(get_items('brands') as $index=>$b)}
+				{if($index > 0)} | {/if}
+				<a href="{$b['url']}" target="{$b['target']}">{$b['name']}</a>
+			{/foreach}
 		</div>
 	</div>
 </div>

@@ -33,6 +33,15 @@
 				
 				Weight: {$p['weight']} lbs<br />
 				
+				{if($p['brand'])}
+				Brand: {$p['brand']}<br />
+				{/if}
+				
+				{if($p['carrier'])}
+				Carrier: {$p['carrier']}<br />
+				{/if}
+				
+				
 				Qty:<select id="qty">
 						<option value="1">1</option>
 						<option value="2">2</option>

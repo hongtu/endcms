@@ -1,0 +1,25 @@
+<!-- INCLUDE header.html -->
+
+<div id='content'>
+	<!-- INCLUDE left.html -->
+	<div id="right">
+		<div class="list-title">Shop by Category</div>
+		<div class="list-wrapper">
+			{foreach(get_cats('all_categories') as $c)}
+			<div class="list-item">
+				<div class="title">{$c['name']}</div>
+				<div class="img">
+					<a href="?cat/{$c['category_id']}" title="{$c['name']}"><img alt="{$c['name']}" src="{thumb($c['image'],150,120)}" /></a>
+				</div>
+				<div class="info">
+					<a href="?cat/{$c['category_id']}">View All&gt;&gt;</a>
+				</div>
+			</div>
+			{/foreach}
+			<div class="clear"></div>
+		</div>
+	</div>
+	<div class="clear"></div>
+</div>
+
+<!-- INCLUDE footer.html -->
