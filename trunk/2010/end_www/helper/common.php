@@ -53,7 +53,7 @@ function sql($sql)
 function get_items($s,$cond=array())
 {
 	//判断是否是id
-	$s = (is_numeric($s))?intval($s):array('alias'=>$s);
+	$s = (is_numeric($s))?intval($s):array('url'=>$s);
 	//获得对应栏目
 	$cat = model('category')->get_one($s);
 	//获得栏目对应内容类型

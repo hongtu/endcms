@@ -1,9 +1,18 @@
 <?php
 $q = $_GET['q'];
+$id = $_GET['id'];
 $cid = intval($_GET['cid']);
 
-$cond = array('where'=>"`name` LIKE '%{$q}%'");
-if ($cid > 0) $cond['category_id'] = $cid;
+if ($id == 'special')
+{
+	$cond = array('special'=>1);
+	$view_data['special'] = true;
+}
+else
+{
+	$cond = array('where'=>"(`name` LIKE '%{$q}%' OR `brand` LIKE '%{$q}%' OR `carrier` LIKE '%{$q}%')");
+	if ($cid > 0) $cond['category_id'] = $cid;
+}
 
 $page_size = 20; //每页显示多少个
 

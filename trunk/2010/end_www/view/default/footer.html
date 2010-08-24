@@ -1,4 +1,9 @@
 <div id="footer">
+	<div class="info">
+		{foreach(get_cats('info') as $c)}
+			<a class="list" href="?page/{$c['category_id']}">{$c['name']}</a>
+		{/foreach}
+	</div>
 	{$config['copyright']}
 </div>
 </div>

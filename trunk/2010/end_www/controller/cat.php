@@ -9,7 +9,13 @@ if ($cat['status'] != 'product_list') die('404');
 
 $view_data['cat'] = $cat;
 
-$items = end_page(model('product'),array('category_id'=>$id),$page_size);
+
+$cond = array('category_id'=>$id);
+if ($_GET['brand']) $cond['brand'] = $_GET['brand'];
+if ($_GET['carrier']) $cond['carrier'] = $_GET['carrier'];
+
+$view_data['cond'] = $cond;
+$items = end_page(model('product'),$cond,$page_size);
 
 
 $view_data['items'] = $items;

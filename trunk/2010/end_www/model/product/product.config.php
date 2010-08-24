@@ -68,6 +68,16 @@ $end_models['product'] = array(
 			'width'=>100,
 			'description'=>'lbs'
 		),
+		'brand'=>array(
+			'name'=>'Brand',
+			'width'=>100,
+			'null'=>true
+		),
+		'carrier'=>array(
+			'name'=>'Carrier',
+			'width'=>100,
+			'null'=>true
+		),
 		'image'=>array(
 			'name'=>'Image file',
 			'type'=>'imagelist',
@@ -94,7 +104,28 @@ $end_models['product'] = array(
 			'sort'=>true,
 			'align'=>'center',
 		),
-		
+		'special'=>array(
+			'name'=>'Special',
+			'width'=>50,
+			'sort'=>true,
+			'edit'=>true,
+			'type'=>'select',
+			'options'=>array(
+				'0'=>'No',
+				'1'=>'Yes'
+			)
+		),
+		'new'=>array(
+			'name'=>'New',
+			'width'=>50,
+			'sort'=>true,
+			'edit'=>true,
+			'type'=>'select',
+			'options'=>array(
+				'0'=>'No',
+				'1'=>'Yes'
+			)
+		),
 		'name'=>array(
 			'name'=>'Title',
 			'width'=>'auto',

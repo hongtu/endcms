@@ -8,9 +8,9 @@
 				<a href="{$s['url']}" title="{$s['name']}" class="slideshow-image"><img src="{thumb($s['image'],715,280)}" /></a>
 			{/foreach}
 		</div>
-		<div class="list-title">Shop by Category</div>
+		<div class="list-title">Latest Products</div>
 		<div class="list-wrapper">
-			{foreach(get_cats('all_categories') as $c)}
+			{foreach(model('product')->get_list(array('new'=>1,'total'=>16)) as $c)}
 			<div class="list-item">
 				<div class="title">{$c['name']}</div>
 				<div class="img">

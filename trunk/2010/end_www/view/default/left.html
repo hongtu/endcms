@@ -13,9 +13,9 @@
 	
 	<div class="block2">
 			<div class="content">
-				<div class="title">Information</div>
- 				{foreach(get_cats('info') as $c)}
-					<a class="list" href="?page/{$c['category_id']}">{$c['name']}</a>
+				<div class="title">Shop by carriers</div>
+ 				{foreach(get_items('carriers') as $c)}
+					<a class="list" href="{$c['url']}" target="{$c['target']}">{$c['name']}</a>
 				{/foreach}
 			</div>
 	</div>

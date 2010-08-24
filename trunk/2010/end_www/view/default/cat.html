@@ -3,11 +3,31 @@
 <div id='content'>
 	<!-- INCLUDE left.html -->
 	<div id="right">
-		<div class="list-title">{$cat['name']}</div>
+		<div class="list-title">
+			{$cat['name']}
+		</div>
+		<div class="list-search">
+			Filter results by <select onchange="change_brand(this)">
+				<option value=''>All Brands</option>
+				{foreach(model('product')->get_brands(array('category_id'=>$cat['category_id'])) as $b)}
+				<?php if (!$b['brand']) continue;?>
+				<option value="{$b['brand']}" {if($_GET['brand'] == $b['brand'])}selected="selected"{/if}>{$b['brand']}</option>
+				{/foreach}
+			</select> 	<select onchange="change_carrier(this)">
+					<option value=''>All Carriers</option>
+					{foreach(model('product')->get_carriers(array('category_id'=>$cat['category_id'])) as $b)}
+					<?php if (!$b['carrier']) continue;?>
+					<option value="{$b['carrier']}" {if($_GET['carrier'] == $b['carrier'])}selected="selected"{/if}>{$b['carrier']}</option>
+					{/foreach}
+				</select>
+		</div>
 		<div class="list-wrapper">
+			{if($items)}
 			{foreach($items as $c)}
 			<div class="list-item">
-				<div class="title">{$c['name']}</div>
+				<div class="title">
+					{$c['name']}
+				</div>
 				<div class="img">
 					<a href="?detail/{$c['product_id']}" title="{$c['name']}"><img alt="{$c['name']}" src="{thumb(array_shift(explode('|',$c['image'])),150,120)}" /></a>
 				</div>
@@ -28,9 +48,30 @@
 				{pager_numbers()}
 				{pager_next("&gt;&gt;")}
 			</div>
+			{else}
+			No products
+			{/if}
 		</div>
 	</div>
 	<div class="clear"></div>
 </div>
+<script>
+function change_brand(s)
+{
+	var brand = $(s).val();
+	var url = window.location.href;
+	url = url.replace(/\&brand=[^\&]*/,'');
+	if (brand) url+= '&brand='+encodeURIComponent(brand);
+	window.location = url;
+}
+function change_carrier(s)
+{
+	var carrier = $(s).val();
+	var url = window.location.href;
+	url = url.replace(/\&carrier=[^\&]*/,'');
+	if (carrier) url+= '&carrier='+encodeURIComponent(carrier);
+	window.location = url;
+}
 
+</script>
 <!-- INCLUDE footer.html -->

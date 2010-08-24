@@ -12,7 +12,7 @@ $end_models = array();
 $end_models['config'] = array(
 	'name'=>"<span style='color:blue'>".lang('admin system config')."</span>",
 	'type'=>'list',
-	'list_items'=>10,
+	'list_items'=>20,
 	'category_fields'=>array(
 		'name'=>array(
 			'name'=>lang('admin cat name'),
@@ -81,6 +81,7 @@ $end_models['config'] = array(
 
 if (END_DEBUG === false)
 {
+	unset($end_models['config']['list_fields']['name']);
 	$end_models['config']['list_fields']['description']['edit'] = false;
 }
 

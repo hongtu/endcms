@@ -3,7 +3,7 @@
 <div id='content'>
 	<!-- INCLUDE left.html -->
 	<div id="right">
-		<div class="page-title">{if($cat['page_title'])}{$cat['page_title']}{else}$cat['name']}{/if}</div>
+		<div class="page-title">{if($cat['page_title'])}{$cat['page_title']}{else}{$cat['name']}{/if}</div>
 		<div class="page-wrapper">
 			{$cat['content']}
 			<div class="clear"></div>

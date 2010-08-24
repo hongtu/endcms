@@ -3,7 +3,13 @@
 <div id='content'>
 	<!-- INCLUDE left.html -->
 	<div id="right">
-		<div class="list-title">Search result of "{$_GET['q']}"</div>
+		<div class="list-title">
+			{if($special)}
+				Special products
+			{else}
+				Search result of "{$_GET['q']}"
+			{/if}
+		</div>
 		<div class="list-wrapper">
 			{if(!$items || count($items) == 0)}
 				Not found

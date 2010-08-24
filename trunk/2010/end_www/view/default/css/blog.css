@@ -55,8 +55,9 @@ input.text { width:300px; }
 #right { float:right; width:724px; }
 #slideshow { width:715px; height:280px; background-color:#aaa;}
 
-#right .list-title { color:#fc4303; font-size:16px; font-weight:bold; line-height:40px; }
-#right .list-wrapper { width:709px; padding:3px; border:1px solid #ddd; background-color:#fff; }
+#right .list-title { color:#fc4303; font-size:16px; font-weight:bold; line-height:40px; float:left;}
+#right .list-search { line-height:40px; float:right;}
+#right .list-wrapper {clear:both; width:709px; padding:3px; border:1px solid #ddd; background-color:#fff; }
 #right .list-item { float:left; width:177px; border-bottom:2px solid #ddd;}
 #right .list-item .title { text-align:center; margin-top:5px;}
 #right .list-item .img { text-align:center; border-right:1px solid #ddd; }
@@ -72,7 +73,7 @@ table.reg th { text-align:right; }
 #right .detail-image { line-height:0; font-size:0; float:left; margin:0 20px 20px 0; _display:inline; border:4px solid #ddd; background-color:#ddd;}
 #right .page-wrapper .price { font-size:20px; color:#fc4303; font-weight:bold; }
 #right .page-wrapper .detail-content { display:block;  clear:both; }
-#right .page-wrapper .detail-info { line-height:50px; }
+#right .page-wrapper .detail-info { line-height:40px; }
 #right ul.detail-thumbs li { float:left; margin:5px 5px 0 0; _display:inline; }
 #cart { empty-cell:show; border-top:1px solid #ddd; border-left:1px solid #ddd; width:90%; }
 #cart td,#cart th{ border-bottom:1px solid #ddd; border-right:1px solid #ddd; text-align:center; padding:3px; }
@@ -85,3 +86,4 @@ table.reg th { text-align:right; }
 .slideshow-image { position:absolute; }
 
 #footer{ clear:both; height:10px; border-top:1px solid #ddd; text-align:center; margin-top:10px; }
+#footer .info a { margin:0 20px;}

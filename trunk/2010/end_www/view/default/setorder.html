@@ -6,8 +6,33 @@
 		<div class="page-title">Pay</div>
 		<div class="page-wrapper">
 			Your order has been accpeted!<br />
-			Please click the paypal button to pay your order.<br />
-			<a href="{$paypal}" target="_blank"><img src="{VIEW_ROOT}images/paypal.gif" /></a>
+			<br />
+			Click the paypal button to pay your order via paypal.<br />
+			<a href="{$paypal}" target="_blank"><img src="{VIEW_ROOT}images/paypal.gif" /></a><br />
+			Or select other payment method below:<br />
+			<select id="payment_method">
+			<?php
+			foreach(explode(',',$config['payment_method']) as $p)
+			{
+				$p = trim($p);
+				if (strtolower($p) == 'paypal') continue;
+				if ($p)
+				{
+					echo "<option value='$p'>$p</option>";
+				}
+			}
+			?>
+			</select> <input type="button" value="Save" onclick="savepayment({$order_id})" />
+			<script>
+			function savepayment(order_id)
+			{
+				$.post('?setorder&action=payment_method',{ order_id: order_id, method: $('#payment_method').val() },function(s)
+				{
+					alert('Saved!');
+					window.location = './';
+				},'text');
+			}
+			</script>
 			<div class="clear"></div>
 		</div>
 	</div>

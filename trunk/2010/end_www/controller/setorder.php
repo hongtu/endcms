@@ -11,6 +11,20 @@ if (!$_SESSION['user']['user_id'])
 	die;
 }
 
+
+if ($_GET['action'] == 'payment_method' && $_POST['order_id'])
+{
+	$id = intval($_POST['order_id']);
+	$method = $_POST['method'];
+	if ($id && $method)
+	{
+		model('order')->update($id,array('payment_method'=>$method));
+	}
+	echo 'ok';
+	die;
+}
+
+
 if (!$_SESSION['cart'] || count($_SESSION['cart']) == 0)
 {
 	header('Location:./');
@@ -67,7 +81,7 @@ if (!$data['coupon_price']) $data['coupon_price'] = 0;
 
 
 
-if (model('order')->add($data))
+if ($id = model('order')->add($data))
 {
 
 	$payment_method = '';
@@ -107,6 +121,7 @@ if (model('order')->add($data))
 	$_SESSION['cart'] = array();
 	$view_data['paypal'] = $links;
 	$view_data['title'] = 'Pay';
+	$view_data['order_id'] = $id;
 }
 else
 {
