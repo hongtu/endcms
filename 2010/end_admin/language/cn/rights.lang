@@ -1,34 +1,26 @@
-title=管理角色/权限
+title=角色/权限
 rights=权限
 rights_group = 角色
-rights_group_new= 新建角色
+rights_group_new= 添加角色
 RIGHTS_GROUP_NAME = 角色名
-NEW_RIGHTS_GROUP= 新建角色
-SUBMIT = 提交
-RIGHTS_ORDER_ID= 排序
 RIGHTS_NAME = 角色
 RIGHTS_DESCRIPTION = 描述
-RIGHTS_OPTIONS = 操作
 CONFIG_RIGHTS = 设置权限
-DELETE_CONFIRM = 确认要删除？
-rights_add_success=添加成功
-rights_add_failed=添加失败
-rights_updated=更新成功
-limit_category_id =只授权部分分类(否则上面的权限设置就适用于所有分类)
+SELECT_ALL=全选
+SELECT_INVERSE=&nbsp;&nbsp;反选
+
+rights_add_success=保存成功
+rights_add_failed=保存失败
+rights_updated=保存成功
+limit_category_id =以上配置只应用于特定的栏目
 
 rights_delete =删除
-rights_add =添加
+rights_add =增加
 rights_update=更新
 rights_view=查看
 
-rights_update_password=修改密码(任何人)
-rights_account=帐号(自己的)
-rights_config=系统设置
-rights_item=内容
-rights_category=栏目
-rights_upload=附件上传
-rights_admin=管理员管理
-rights_rights=权限管理
+rights_update_password=修改密码
+rights_config=设置权限
 
 admins=管理员
-ROLES=角色/权限
+roles=角色

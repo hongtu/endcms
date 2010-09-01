@@ -1,5 +1,5 @@
-ACCESS_DENIED = 权限不足
-CURRENT_LOGIN_USER=当前用户
+ACCESS_DENIED = 没有权限
+CURRENT_LOGIN_USER= 登录为
 HEAD_CHANGE_PASSWORD=&nbsp;&nbsp;&nbsp;修改密码
 HEAD_LOGOUT = &nbsp;&nbsp;&nbsp;注销&nbsp;&nbsp;
 
@@ -8,27 +8,27 @@ Please_select=请选择...
 #导航
 NAVI_CATEGORY = 栏目管理
 navi_ITEM = 内容管理
-navi_admin=管理员
-navi_extension=扩展
-CURRENT_POSITION=当前位置
+navi_admin= 管理员
+navi_extension= 扩展
+CURRENT_POSITION= 当前位置
 INDEX = 后台首页
-RETURN=返回
+RETURN= 返回
 
 #功能
-NOT_ALLOWED= 权限不足
+NOT_ALLOWED= 没有权限
 DELETE = 删除
 DELETING = ...
 UPDATE= 更新
-NEW = 新增
+NEW = 添加
 EDIT = 编辑
-function=操作
-view=查看
+function=功能
+view= 查看
 options=操作
 DELETE_CONFIRM=确定要删除吗？
 
 
 #表单 form
-INPUT_ALL=请填写所有带*的项
+INPUT_ALL=请填写所有要求的项目
 cancel=取消
 submit=提交
 order_id=排序
@@ -36,12 +36,12 @@ order_id=排序
 #sign out
 EXIT_TITLE = 系统消息
 EXIT_CLICK_HERE = 
-LOGIN_FIRST = 请先登录
+LOGIN_FIRST = 请登录！
 LOGOUT = 注销
-LOGOUT_SUCCESS = 成功注销
+LOGOUT_SUCCESS = 注销成功
 
 
-CONFIG = 配置
+CONFIG = 设置
 
 HIGH_LIGHT = #FFFF99
 
@@ -49,12 +49,26 @@ HIGH_LIGHT = #FFFF99
 PAGER_PREV = ◀
 PAGER_NEXT = ►
 PAGER_PER_PAGE = 每页
-PAGER_ITEMS = 条记录
-PAGER_TOTAL = 共
+PAGER_ITEMS = 条
+PAGER_TOTAL = 
 PAGER_PAGE = 页
 
 
 uploaded_file=上传:
 
-UNKNOWN=unknown
-INPUT_VAR_ERROR=input var error
+CONTRACT=收缩
+EXPAND=展开
+UNKNOWN=未知
+INPUT_VAR_ERROR=输入错误！
+
+search=搜索
+search_button=搜
+cancel_search=取消
+star_available = 可用*通配符
+
+Year=年
+Month=月
+Day=日
+Hour=:
+Minute=:
+Second= 
