@@ -1,3 +1,5 @@
+#summary 安装方法
+
 EndCMS的目录结构如下：
 end_admin [目录]  后台模块
 end_system [目录]  核心模块
