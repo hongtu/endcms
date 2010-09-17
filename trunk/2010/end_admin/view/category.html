@@ -14,16 +14,10 @@
 	<div id='admin_left' onselectstart="return false;">
 		<div id="admin_left_b">
 			<div class="module">
-	        	<h2>{CATEGORIES_TREE}</h2>
-				<div id="category_tree" style="display:none">
-					<ul>
-						<li><a href="admin.php?p=category" <!-- IF category_id="0" -->class="tree_on" <!-- ENDIF --> >{ROOT_CATEGORY}</a></li>
-						<li>{all_category}</li>
-					</ul>
-					<div style="clear:both;"></div>
-				</div>
-	        </div>
-		</div>
+	        		<h2>{CATEGORIES_TREE}</h2>
+				
+	        	</div>
+	</div>
     </div>
     <div id='main'>
 		<div id="main_b">
@@ -77,8 +71,11 @@
 	<div style="clear:both;"></div>
 </div>
 <script>
-function delete_category(id,o)
+function delete_category(id,o,name)
 {
+	var msg = "{addslashes(lang("CATEGORY_DELETE"))}";
+	msg = msg.replace('%s',name);
+	if (!confirm(msg)) return;
 	$(o).attr('to_be_delete','yes').html('{DELETING}').unbind('click');
 	$.post('admin.php?p=ajax&m=delete&table=category&id='+id,{ },delete_callback);
 }

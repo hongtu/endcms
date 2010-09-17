@@ -14,6 +14,9 @@ CURRENT_POSITION= 当前位置
 INDEX = 后台首页
 RETURN= 返回
 
+admin_system_config=系统设置
+
+
 #功能
 NOT_ALLOWED= 没有权限
 DELETE = 删除

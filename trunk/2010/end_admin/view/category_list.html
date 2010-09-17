@@ -1,95 +1,132 @@
 <table  class="list_table" id="category_table" >
             	<thead>
                    	<tr>
-						<th style="width:20px;">{CATEGORY_ID}</th>
+                		<th>{lang('category name')}</th>
+			<th style="width:20px;">{CATEGORY_ID}</th>
                 		<th style="width:50px;">{ORDER_ID}</th>
-                		<th>{CATEGORY_NAME}</th>
                    		<th style="width:200px;">{CATEGORY_URL}</th>
                    		<th style="width:100px;">{CATEGORY_STATUS}</th>
-						<!-- IF debug -->
-						<th style="width:30px;">{CATEGORY_SYSTEM}</th>
-						<!-- ENDIF -->
-                        <th style="width:150px;">{OPTIONS}</th>
+			<!-- IF debug -->
+			<th style="width:30px;">{CATEGORY_SYSTEM}</th>
+			<!-- ENDIF -->
+                        		<th style="width:150px;">{OPTIONS}</th>
                     </tr>
                 </thead>
                 <tbody>
-                
-          		  	<!-- BEGIN categories -->
-							<tr>
-								<td style="text-align:center">{category_id}</td>
-		               		 	<td style="text-align:center">
-									<!-- IF system=="a" -->
-									{order_id}
-									<!-- ELSE -->
-									<div admin_type="text"
-		                        	admin_para="m=update&table=category&column=order_id&id={category_id}" 
-									style="text-align:center">{order_id}</div>
-									<!-- ENDIF -->
-								</td>
-		               		 	<td>
-									<!-- IF system=="a" -->
-									{name}
-									<!-- ELSE -->
-									<div admin_type="text"
-		                        	admin_para="m=update&table=category&column=name&id={category_id}">{name}</div>
-									<!-- ENDIF -->
-								</td>
-		               		    <td>
-									<!-- IF system=="yes" -->
-									{url}
-									<!-- ELSE -->
-									<div admin_type="text" 
-		                        	admin_para="m=update&table=category&column=url&id={category_id}">{url}</div>
-									<!-- ENDIF -->
-		                        </td>
-								<td>
-									<!-- IF system=="yes" -->
-									{show_status(status)}
-									<!-- ELSE -->
-									<div admin_type="text"
-					              	admin_para="m=update&table=category&column=status&id={category_id}" 
-					                    admin_select_value="{status}"
-					                    admin_select_source_id="status_select"
-					                    admin_trigger="click" status_category_id="{category_id}"
-										>{show_status(status)}</div>
-									<!-- ENDIF -->
-								</td>
-								<!-- IF parent.debug -->
-								<td>
-									<div admin_type="text"
-					              	admin_para="m=update&table=category&column=system&id={category_id}" 
-					                    admin_select_value="{system}"
-					                    admin_select_source_id="category_system_select"
-					                    admin_trigger="click" status_category_id="{category_id}"
-										>{system}</div>
-								</td>
-								<!-- ENDIF -->
-		                        <td>
-									<a href="admin.php?p=category&category_id={category_id}">{CATEGORY_CHILD}</a> 
-		                          	<?php if (check_show('delete')):?>
-										<!-- IF system=="no" -->
-									<a href="javascript:;" onclick="if (confirm('{DELETE_CONFIRM}')) delete_category({category_id},this);">{DELETE}</a> <!-- ENDIF -->
-									<?php endif;
-									if (check_show('update')):?>
-										<!-- IF system=="no" -->
-		                          	<a href="admin.php?p=category&action=edit_category&category_id={category_id}">{EDIT}</a> <!-- ENDIF -->
-									<?php endif;?>
-									<!-- a href="index.php?p=category&category_id={category_id}" target="_blank">{PREVIEW}</a-->
-		                        </td>
-		               		</tr>
-					
-                    <!-- END -->
-                    
+                	{foreach($tree as $c)}
+		<tr style="display:{if($c['depth'] > 0)}none{/if};"   depth="{$c['depth']}" category_id="{$c['category_id']}" parent_id="{$c['parent_id']}" >
+			<td>
+				<table cellspacing="0" cellpadding="0" border="0" style="border:0; width:100%;">
+				<tr>
+				<td style="border:0; width:{$c['depth']*20+1}px; ">&nbsp;</td>
+				<td style="border:0;width:20px; text-align:center;cursor:pointer" onclick="open_children({$c['category_id']},this)" >
+					<img src="end_admin/view/images/plus.png"  rel="pointer" style="display:none;" />
+				</td>
+				<td style="border:0;">
+				{if ($c['system'] == 'yes')}
+					{$c['name']}
+				{else}
+					<div 
+						admin_type="text" 
+						admin_para="m=update&table=category&column=name&id={$c['category_id']}">{$c['name']}</div>
+				{/if}
+				</td>
+				</tr>
+				</table>
+			</td>
+			<td style="text-align:center">
+				{$c['category_id']}
+			</td>
+		               	<td>
+				<div admin_type="text" admin_para="m=update&table=category&column=order_id&id={$c['category_id']}"  style="text-align:center">{$c['order_id']}</div>
+			</td>
+		               	<td>
+				{if ($c['system'] == 'yes')}
+					{$c['url']}
+				{else}
+					<div admin_type="text"  admin_para="m=update&table=category&column=url&id={$c['category_id']}">{$c['url']}</div>
+				{/if}
+			</td>
+			<td>
+				{if ($c['system'] == 'yes')}
+					{show_status($c['status'])}
+				{else}
+				<div admin_type="text" 
+					admin_para="m=update&table=category&column=status&id={$c['category_id']}" 
+					admin_select_value="{$c['status']}"
+					admin_select_source_id="status_select"
+					admin_trigger="click" status_category_id="{$c['category_id']}">{show_status($c['status'])}</div>
+				{/if}
+			</td>
+			{if ( END_DEBUG == true)}
+				<td>
+					<div admin_type="text"
+						admin_para="m=update&table=category&column=system&id={$c['category_id']}" 
+						admin_select_value="{$c['system']}"
+						admin_select_source_id="category_system_select"
+						admin_trigger="click" status_category_id="{$c['category_id']}">{$c['system']}</div>
+				</td>
+			{/if}
+			<td>
+		                          	{if (check_show('delete'))}
+					{if ($c['system'] == 'no')}
+						<a href="javascript:;" onclick="delete_category({$c['category_id']},this,'{addslashes($c['name'])}');">{DELETE}</a>
+					{/if}
+				{/if}
+				{if (check_show('update'))}
+					{if ($c['system'] == 'no')}
+		                          			<a href="admin.php?p=category&action=edit_category&category_id={$c['category_id']}">{EDIT}</a>
+					{/if}
+				{/if}
+			</td>
+		</tr>
+		{/foreach}
                 </tbody>
                 
 </table>
 
+<script>
+$(function()
+{
+	$('tr[category_id]').mouseenter(function()
+	{
+		$('tr[category_id]').css('background-color','#fff');
+		this.style.backgroundColor = '#eee';
+	}).mouseleave(function()
+	{
+		//this.style.backgroundColor = '#fff';
+	});
+	
+	$('tr[category_id]').each(function()
+	{
+		var cid = $(this).attr('category_id');
+		if ($('tr[parent_id='+cid+']').length > 0)
+		{
+			$(this).find('img[rel=pointer]').show();
+		}
+	});
+	
+});
+function open_children(cid,o)
+{
+	if ($(o).attr('opened') != 'yes')
+	{
+		$(o).attr('opened','yes').find('img').attr('src','end_admin/view/images/minus.png');
+		$('tr[parent_id='+cid+']').fadeIn();
+	}
+	else
+	{
+		$(o).attr('opened','no').find('img').attr('src','end_admin/view/images/plus.png');
+		$('tr[parent_id='+cid+']').hide();
+	}
+}
+</script>
 
 <div style="display:none">
 <select id="status_select">
-	<!-- BEGIN statuses -->
-	<option value="{index}">{value}</option>
-	<!-- END -->
+	{foreach($view_data['statuses'] as $key=>$val)}
+	<option value="{$key}" source="{htmlspecialchars($val['name'])}">{strip_tags($val['name'])}</option>
+	{/foreach}
 </select>
 </div>
 <div style="display:none">
