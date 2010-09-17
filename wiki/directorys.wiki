@@ -1,4 +1,4 @@
-#summary 安装方法
+#summary 目录结构
 
 ===EndCMS的目录结构如下：===
 end_admin [目录]  后台模块<br>
