@@ -15,18 +15,18 @@
 /**
 * 默认语言
 */
-define('END_LANGUAGE','en');
+define('END_LANGUAGE','cn');
 
 /**
 * 默认时区
 */
-define('END_DEFAULT_TIMEZONE','Etc/GMT+9');
+define('END_DEFAULT_TIMEZONE','Etc/GMT-8');
 
 /*
 * 是否使用php压缩页面成gzip，有些IIS会出问题
 * 取值只能是 true/false
 */
-define('END_GZIP_OUTPUT',false);
+define('END_GZIP_OUTPUT',true);
 
 //模板文件所用的字符集，推荐utf-8
 define('END_CHARSET','UTF-8');
@@ -46,7 +46,7 @@ define('END_VIEWER_EXT','html');
 define('END_LANGUAGE_EXT','lang');
 
 //debug模式， 开启之后后台一些危险的操作会打开，模板文件会每次访问都检查是否更新
-define('END_DEBUG',false);
+define('END_DEBUG',true);
 
 //默认数据表前缀
 define('END_MYSQL_PREFIX','end_');
