@@ -5,8 +5,29 @@
 	>
 		<table cellpadding="0" cellspacing="5" border="0" >
 			<tr>
+				<td>{CATEGORY_PARENT}</td>
+				<td>
+					<select name="parent_id" >
+						<option value="0" >{ROOT_CATEGORY}</option>
+                    					{category_tree}
+                   				</select>*
+				</td>
+			</tr>
+			<tr>
 			   	<td>{CATEGORY_NAME}</td>
 			   	<td><input type="text" size="25" class="inputtext" maxlength="200" name="name" value="{category.name}" />*</td>
+			</tr>
+			<tr>
+				<td>
+					{CATEGORY_STATUS}
+				</td>
+				<td>
+					<select name="status">
+					<!-- BEGIN statuses -->
+					<option value="{index}">{value}</option>
+					<!-- END -->
+					</select>
+				</td>
 			</tr>
 			<tr>
 				<td colspan="2" align="center">

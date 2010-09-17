@@ -9,14 +9,14 @@ load_models();
 if ($m == 'new_category')
 {
 	check_allowed('category','add');
-	$data = filter_array($_POST,'name!');
-	$data['parent_id'] = $category_id;
-	if (!$data['parent_id']) $data['parent_id'] = 0;
+	$data = filter_array($_POST,'name!,intval:parent_id,status!');
+	if ($data && !$data['parent_id']) $data['parent_id'] = 0;
 	if ($data)
 	{
-		if ($category->add( $data ) )
+		if ($new_id = $category->add( $data ) )
 		{
-			end_exit(lang('CATEGORY_NEW_SUCCESS'),'admin.php?p=category&category_id='.$data['parent_id'],1);
+			header('Location: admin.php?p=category&action=edit_category&category_id='.$new_id);
+			die;
 		}
 		else
 		{
@@ -60,7 +60,7 @@ else if ($m == 'edit_category')
 		$re = $category->update( $category_id, $data);
 		if ( $re )
 		{ 
-			$return_to = $_SESSION['backurl']?$_SESSION['backurl']:'admin.php?p=category&category_id='.$data['parent_id'];
+			$return_to = $_SESSION['backurl']?$_SESSION['backurl']:'admin.php?p=category';
 			end_exit(lang('CATEGORY_EDIT_SUCCESS'),$return_to,1);
 		}
 		else
@@ -86,11 +86,11 @@ else if ($m == 'edit_category')
 if ($action == "edit_category")
 {
 	$_SESSION['backurl'] = ($_GET['backurl'])?$_GET['backurl']:$_SERVER['HTTP_REFERER'];
-	if (!$category_id)
+	if ($action == "edit_category")
 	{
-		end_exit("need category_id!",'javascript:history.go(-1)',5);
+		if (!$category_id) end_exit("need category_id!",'javascript:history.go(-1)',5);
+		$_category = $category->get_one($category_id);
 	}
-	$_category = $category->get_one($category_id);
 	
 	$edit_view = 'category_edit.html';
 	$temp = template($edit_view);
@@ -126,7 +126,11 @@ if (!$action && !$m)
 
 $categories = $category->get_list( array('parent_id'=>$category_id) );
 $_tree = $category->tree_category(0);
-$view_data['all_category'] = print_category_tree_link('admin.php?p=category&category_id=',$_tree,$category_id);
+$view_data['tree'] = array();
+$category->flat_tree($_tree,$view_data['tree']);
+
+//$view_data['all_category'] = print_category_tree_link('admin.php?p=category&category_id=',$_tree,$category_id);
+$view_data['category_tree'] = print_category_tree($_tree);
 $view_data['categories'] = $categories;
 $view_data['page_description'] = lang('CATEGORIES_LIST');
 $view_data['err_msg'] = $err_msg;
@@ -141,7 +145,7 @@ foreach($end_models as $key=>$val)
 {
 	$statuses[] = array('index'=>$key,'value'=>$val['name']);
 }
-$view_data['statuses'] = $statuses;
+$view_data['statuses'] = $end_models;
 
 
 function show_status($s)
