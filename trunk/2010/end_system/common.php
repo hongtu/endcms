@@ -17,7 +17,7 @@ PHP_VERSION < "4.1.0" && die('Sorry! Your PHP version is too old!');
 if ( function_exists('memory_get_usage') && ( intval(@ini_get('memory_limit')) < 32 ) )
 	@ini_set('memory_limit', '32M');
 
-set_magic_quotes_runtime(0);
+@set_magic_quotes_runtime(0);
 @ini_set('magic_quotes_sybase', 0);
 
 //default time zone
