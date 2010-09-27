@@ -1,6 +1,5 @@
 #summary EndCMS内容管理原理
 
-<pre>
-    对于小型的新闻网站，数据库主要有两个表：新闻栏目表(例如category)和新闻内容表(例如content)。
-content表一般会有一个category_id字段，对应category表的主键。 这样新闻就实现了分类管理和显示。
-</pre>
+<p>
+    对于小型的新闻网站，数据库主要有两个表：新闻栏目表(例如category)和新闻内容表(例如content)。content表一般会有一个category_id字段，对应category表的主键。 这样新闻就实现了分类管理和显示。
+</p>
