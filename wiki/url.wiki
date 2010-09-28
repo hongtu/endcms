@@ -1,0 +1,18 @@
+#summary URL规则
+
+<p>
+EndCMS只使用了一个参数来传递路由信息。"p"。 例如:  admin.php?p=item 。输入这个地址，程序就会执行end_admin/controller/item.php文件，然后这个文件把输出信息写到$view_data数组。这个数组随后会被传递给模板引擎。模板引擎会自动去解析end_admin/view/item.html文件，并把刚刚收到的$view_data数组应用到item.html文件。
+</p>
+<p>
+是的，这就是EndCMS的MVC路由。很简单吧。
+</p>
+<p>
+很多时候，像index.php?p=news&news_id=123这种URL看起来很不舒服。没关系，我们可以通过URLRewrite来实现干净的URL。例如在.htaccess文件中写入
+<pre>
+RewriteEngine On
+RewriteCond $1 !^(images|js|css|public|robots\.txt)$
+RewriteCond $1 !^(end\_)
+RewriteCond $4 !(\.php|\.jpg|\.gif|\.png|\.html|\.htm|\.js)$
+RewriteRule ^([^\/]+)\/?([^\/]+)?\/?([^\/]+)?\/?(.+)?$ index.php?p=$1&argv[]=$2&argv[]=$3&argv[]=$4&%{QUERY_STRING} [L]
+</pre>
+这样，通过访问 yoursite.com/news/123  就相当于访问了 index.php?p=news&argv[]=123，在news.php里面判断$news_id = intval($_GET['argv'][0]); 就可以了。
