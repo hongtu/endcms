@@ -1,0 +1,6 @@
+#summary 程序执行流程
+
+[http://php.js.cn/endcms/endcms_route.gif]
+<pre>
+
+</pre>
