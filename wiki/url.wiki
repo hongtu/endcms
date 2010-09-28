@@ -8,11 +8,11 @@ EndCMS只使用了一个参数来传递路由信息。"p"。 例如:  admin.php?
 </p>
 <p>
 很多时候，像index.php?p=news&news_id=123这种URL看起来很不舒服。没关系，我们可以通过URLRewrite来实现干净的URL。例如在.htaccess文件中写入
-<pre>
+{{{
 RewriteEngine On
 RewriteCond $1 !^(images|js|css|public|robots\.txt)$
 RewriteCond $1 !^(end\_)
 RewriteCond $4 !(\.php|\.jpg|\.gif|\.png|\.html|\.htm|\.js)$
 RewriteRule ^([^\/]+)\/?([^\/]+)?\/?([^\/]+)?\/?(.+)?$ index.php?p=$1&argv[]=$2&argv[]=$3&argv[]=$4&%{QUERY_STRING} [L]
-</pre>
+}}}
 这样，通过访问 yoursite.com/news/123  就相当于访问了 index.php?p=news&argv[]=123，在news.php里面判断$news_id = intval($_GET['argv'][0]); 就可以了。
