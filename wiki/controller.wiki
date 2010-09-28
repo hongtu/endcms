@@ -35,3 +35,10 @@ $view_data['words'] = 'Hello World!';
 }}}
 运行之后就会显示： Longbill said "Hello World!";
 </p>
+
+==安全提示==
+<p>Controller文件是可以直接通过输入 end_www/controller/test.php访问的！ 所以，如果你的Controller做了一些不希望普通用户做的事情，请牢记一定要加入口验证！</p>
+<p>比如 后台的controller前面就都加了一句
+{{{ END_MODULE != 'admin' && die('Access Denied'); }}}
+END_MODULE这个常量是 yoursite.com/admin.php这个入口文件定义的。所以如果用户不是通过访问admin.php?p=xxx页面得到的都会是Access Denied!
+</p>
