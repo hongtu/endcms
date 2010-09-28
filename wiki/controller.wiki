@@ -1,0 +1,37 @@
+#summary EndCMS的控制器
+
+<p>Controller即控制器，是执行一次请求的逻辑操作部分。大部分情况下，控制器做的操作是最重要的。</p>
+
+==Hello World!==
+<p>
+EndCMS的控制器没什么特别。就是一个普通的php文件。不需要写成类什么的。<br />
+例如访问 index.php?p=test ，然后在 end_www/controller/test.php写入:
+{{{
+<?php
+echo 'Hello World!';
+?>
+}}}
+运行之后，我们会看到Hello World!，但是后面会有提示找不到文件错误。这是由于EndCMS的controller和view之间的参数传递只自动的。默认情况下，执行了test.php这个controller之后，会把$view_data这个数组传递给 end_www/view/test.html，但是这个文件不存在，所以报错。</p>
+<p>
+这种情况下，可以这样：
+{{{
+<?php
+echo 'Hello World!';
+die;
+?>
+}}}
+在controller完成echo语句后就用die语句停止执行。后面就不会报错了。
+</p>
+<p>
+或者我们建一个view文件：end_www/view/test.html：
+{{{
+Longbill said  "{$words}".
+}}}
+然后修改 test.php:
+{{{
+<?php
+$view_data['words'] = 'Hello World!';
+?>
+}}}
+运行之后就会显示： Longbill said "Hello World!";
+</p>
