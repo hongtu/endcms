@@ -15,4 +15,4 @@ RewriteCond $1 !^(end\_)
 RewriteCond $4 !(\.php|\.jpg|\.gif|\.png|\.html|\.htm|\.js)$
 RewriteRule ^([^\/]+)\/?([^\/]+)?\/?([^\/]+)?\/?(.+)?$ index.php?p=$1&argv[]=$2&argv[]=$3&argv[]=$4&%{QUERY_STRING} [L]
 }}}
-这样，通过访问 yoursite.com/news/123  就相当于访问了 index.php?p=news&argv[]=123，在news.php里面判断$news_id = intval($_GET['argv'][0]); 就可以了。
+这样，通过访问 yoursite.com/news/123  就相当于访问了 index.php?p=news&argv[]=123，在news.php里面判断{{{$news_id = intval($_GET['argv'][0]); }}}就可以了。
