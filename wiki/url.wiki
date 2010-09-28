@@ -6,6 +6,7 @@ EndCMS只使用了一个参数来传递路由信息。"p"。 例如:  admin.php?
 <p>
 是的，这就是EndCMS的MVC路由。很简单吧。
 </p>
+==URL Rewrite==
 <p>
 很多时候，像index.php?p=news&news_id=123这种URL看起来很不舒服。没关系，我们可以通过URLRewrite来实现干净的URL。例如在.htaccess文件中写入
 {{{
@@ -15,4 +16,18 @@ RewriteCond $1 !^(end\_)
 RewriteCond $4 !(\.php|\.jpg|\.gif|\.png|\.html|\.htm|\.js)$
 RewriteRule ^([^\/]+)\/?([^\/]+)?\/?([^\/]+)?\/?(.+)?$ index.php?p=$1&argv[]=$2&argv[]=$3&argv[]=$4&%{QUERY_STRING} [L]
 }}}
-这样，通过访问 yoursite.com/news/123  就相当于访问了 index.php?p=news&argv[]=123，在news.php里面判断{{{$news_id = intval($_GET['argv'][0]); }}}就可以了。
+<p>这样，通过访问 yoursite.com/news/123  就相当于访问了 {{{index.php?p=news&argv[]=123}}}，在news.php里面判断{{{$news_id = intval($_GET['argv'][0]); }}}就可以了。</p>
+
+==Hook==
+<p>如果你不想用rewrite的方式。那也有很好的办法。   我们可以使用钩子（hook）机制来自己生成p参数。</p>
+<p>比如我们要实现:  {{{ yoursite.com/?news/123 }}}这种URL。可以在  end_www/helper/hooks.php里写入:
+{{{
+function end_on_begin()
+{
+	$arr = explode('/',array_shift(explode('&',$_SERVER['QUERY_STRING'])));
+	if ($arr[0] && !$_GET['p']) $_GET['p'] = $arr[0];
+	if ($arr[1] && !$_GET['id']) $_GET['id'] = $arr[1];
+}
+}}}
+<p>这样，yoursite.com/?news/123这样的url就相当于 yoursite.com/index.php?p=news&id=123 了。</p>
+<p>注: end_on_begin这个函数就是一个钩子（hook）。如果用户定义了这个函数，那么系统在开始绝大部分操作纸钱就会执行这个函数里面的内容。关于钩子函数后面会有详细的说明。</p>
