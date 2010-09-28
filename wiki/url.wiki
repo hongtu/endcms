@@ -30,4 +30,4 @@ function end_on_begin()
 }
 }}}
 <p>这样，yoursite.com/?news/123这样的url就相当于 yoursite.com/index.php?p=news&id=123 了。</p>
-<p>注: end_on_begin这个函数就是一个钩子（hook）。如果用户定义了这个函数，那么系统在开始绝大部分操作纸钱就会执行这个函数里面的内容。关于钩子函数后面会有详细的说明。</p>
+<p>注: end_on_begin这个函数就是一个钩子（hook）。如果用户定义了这个函数，那么系统在开始绝大部分操作之前就会执行这个函数里面的内容。关于钩子函数后面会有详细的说明。</p>
