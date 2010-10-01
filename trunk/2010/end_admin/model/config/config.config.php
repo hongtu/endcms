@@ -36,13 +36,7 @@ $end_models['config'] = array(
 			'sort'=>true
 		),
 		'value'=>array(
-			'name'=>lang('config value'),
-			'edit'=>true,
-			'type'=>'textarea',
-			'height'=>'20',
-			'search'=>true,
-			'sort'=>true,
-			'width'=>400
+			'name'=>lang('config value')
 		),
 		'_options'=>array(
 			'name'=>lang('options'),
@@ -57,14 +51,36 @@ $end_models['config'] = array(
 		),
 		'description'=>array(
 			'name'=>lang('description'),
-			'width'=>200,
-			'type'=>'text'
+			'width'=>400,
+			'height'=>100,
+			'type'=>'textarea'
+		),
+		'type'=>array(
+			'name'=>lang('config type'),
+			'type'=>'select',
+			'width'=>100,
+			'null'=>false,
+			'options'=>array(
+				'text'=>lang('config text'),
+				'textarea'=>lang('config textarea'),
+				'richtext'=>lang('config richtext'),
+				'select'=>lang('config select')
+			)
 		),
 		'value'=>array(
 			'name'=>lang('config value'),
 			'width'=>400,
-			'height'=>200,
+			'height'=>100,
 			'type'=>'textarea',
+			'null'=>true
+		),
+		'options'=>array(
+			'name'=>lang('config options'),
+			'width'=>400,
+			'height'=>100,
+			'null'=>true,
+			'type'=>'textarea',
+			'description'=>lang('config options description')
 		)
 	),
 );

@@ -259,10 +259,9 @@ if ($item_type)
 	else
 	{
 		$list_tmp = template('item_list.html');
-		$list_tmp->assign('item_model',$item);
-		$list_tmp->assign('list_fields',$end_models[$item_type.'_list']['list_fields']);
 	}
-	
+	$list_tmp->assign('item_model',$item);
+	$list_tmp->assign('list_fields',$end_models[$item_type.'_list']['list_fields']);
 	$list_tmp->assign($view_data);
 	$view_data['list_content'] = $list_tmp->result();
 	if (isset($_GET['export']))
