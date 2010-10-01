@@ -1,0 +1,110 @@
+<div >
+	<div style="display:none">
+	<?php
+		//输出 select 类型 字段 的 选择源数据
+		foreach($view_data['items'] as $_key=>$field)
+		{
+			if ($field['type'] == 'select' && $field['options'])
+			{
+				$select_id = 'select_source_'.$field['config_id'];
+				echo '<select id="'.$select_id.'">'."\n";
+				$options = explode('<br>',$field['options']);
+				
+				foreach($options as $line)
+				{
+					list($_key,$_val) = explode('=',$line,2);
+					echo '<option value="'.$_key.'" source="'.htmlspecialchars($_val).'">'.$_val."</option>\n";
+				}
+				echo "</select>\n";
+			}
+		}
+	?>
+	</div>
+	<script>
+	function show_select_value(source,val)
+	{
+		if (!val) return '';
+		var dom = $('#select_source_'+source).find('option[value='+val+']');
+		return dom.attr('source')?dom.attr('source'):dom.html();
+	}
+	</script>
+	<style>
+	.config-table th { text-align:right; padding-right:20px; font-weight:bold; }
+	.config-table tr.odd { background-color:#eee; }
+	.config-table tr.even { background-color:#fff; }
+	.config-name { display:none; }
+	</style>
+	{if(END_DEBUG === true)}<input type="checkbox" id="show_var_name" /><label for="show_var_name">{DEV_MODE}</label><br />{/if}
+	<table class="config-table" width="100%">
+		{foreach($view_data['items'] as $item)}
+		<tr>
+			<th width="200">
+				<div class="config-name">
+					{$item['name']}&nbsp;
+					<a href="javascript:;" onclick="delete_item('{$item['config_id']}',this);">{DELETE}</a>&nbsp;
+					<a href="admin.php?p=item&action=edit_item&category_id={$item['category_id']}&item_id={$item['config_id']}">{EDIT}</a>
+					
+				</div>
+				<div class="config-desc">{$item['description']}</div>
+			</th>
+			<td>
+				<?php
+							echo '<div ';
+							//配置可编辑的单元格
+
+								if ($item['type'] == 'select')
+								{
+									$select_id = 'select_source_'.$item['config_id'];
+									echo ' admin_type="text" ';
+									echo ' admin_select_value="'.$item['value'].'" ';
+				                    			echo ' admin_select_source_id="'.$select_id.'" ';
+			                       				echo ' admin_para="m=update&table=config&column=value&id='.$item['config_id'].'" ';
+			 						echo ' admin_trigger="click" ';
+								}
+								else if ($item['type'] == 'textarea')
+								{
+									echo ' admin_type="textarea" ';
+			                       					echo ' admin_para="m=update&table=config&column=value&id='.$item['config_id'].'" ';
+			 						echo ' admin_trigger="click" ';
+									if ($field['height']) 
+										echo ' style="overflow:hidden;height:'.$field['height'].'px" ';
+								}
+								else
+								{
+									echo ' admin_type="text" ';
+			                       					echo ' admin_para="m=update&table=config&column=value&id='.$item['config_id'].'" ';
+			 						echo ' admin_trigger="click" ';
+								}
+							
+							echo ">";
+							
+							if ($item['type'] == 'select')
+							{
+								echo '<script>document.write(show_select_value("'.$item['config_id'].'","'.$item['value'].'"));</script>';
+							}
+							else
+							//显示数据
+							echo $item['value'];
+							
+							echo "</div>";
+				?>
+			</td>
+		</tr>
+		{/foreach}
+	</table>
+</div>
+<script>
+
+var t = 0;
+$('.config-table tr').each(function()
+{
+	t++;
+	$(this).addClass((t %2)?'even':'odd');
+});
+$('#show_var_name').click(function()
+{
+	$('.config-name').css('display',this.checked?'block':'none');
+});
+
+</script>
+{pager} &nbsp; 

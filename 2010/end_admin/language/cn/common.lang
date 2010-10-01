@@ -2,7 +2,7 @@ ACCESS_DENIED = 没有权限
 CURRENT_LOGIN_USER= 登录为
 HEAD_CHANGE_PASSWORD=&nbsp;&nbsp;&nbsp;修改密码
 HEAD_LOGOUT = &nbsp;&nbsp;&nbsp;注销&nbsp;&nbsp;
-
+DEV_MODE=开发模式
 Description=描述
 Please_select=请选择...
 #导航
