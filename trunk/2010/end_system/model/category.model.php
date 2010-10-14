@@ -16,6 +16,11 @@ class MODEL_CATEGORY extends MODEL
 		return $db->get_all("SELECT * FROM `$this->table` WHERE `parent_id`=(SELECT `$this->id` FROM `$this->table` WHERE `$_key`='$a') ORDER BY `$this->order_id` DESC,`$this->id` ASC");
 	}
 
+	function getbyurl($a)
+	{
+		return parent::get_one(array('url'=>$a));
+	}
+
 	function delete($id)
 	{
 		check_allowed_category($id,END_RESPONSE == 'text');
