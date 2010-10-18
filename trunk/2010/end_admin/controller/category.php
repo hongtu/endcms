@@ -137,15 +137,8 @@ $view_data['err_msg'] = $err_msg;
 $view_data['success_msg'] = $success_msg;
 $view_data['category_id'] = $category_id;
 $view_data['position'] = $category->position_category($category_id);
+$view_data['end_models'] = $end_models;
 unset($view_data['position'][count($view_data['position'])-1]);
-
-
-$statuses = array();
-foreach($end_models as $key=>$val)
-{
-	$statuses[] = array('index'=>$key,'value'=>$val['name']);
-}
-$view_data['statuses'] = $end_models;
 
 
 function show_status($s)

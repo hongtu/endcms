@@ -124,7 +124,7 @@ function open_children(cid,o)
 
 <div style="display:none">
 <select id="status_select">
-	{foreach($view_data['statuses'] as $key=>$val)}
+	{foreach($end_models as $key=>$val)}
 	<option value="{$key}" source="{htmlspecialchars($val['name'])}">{strip_tags($val['name'])}</option>
 	{/foreach}
 </select>

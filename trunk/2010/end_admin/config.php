@@ -14,34 +14,39 @@ $end_models['page'] = array(
 	'name'=>"<span style='color:#49e'>".lang('admin page')."</span>",
 	'category_fields'=>array(
 		'name'=>array(
-			'name'=>lang('page name'),
+			'name'=>'Page Name',
 			'type'=>'text',
 			'null'=>false
 		),
-		'page_title'=> array(
-			'name'=>lang('page title'),
+		'name_cn'=>array(
+			'name'=>'Page Name CN',
 			'type'=>'text',
-			'null'=>false,
+			'null'=>false
 		),
-		'description'=> array(
-			'name'=>lang('page description'),
-			'type'=>'text',
-			'null'=>true,
-		),
-		'keywords'=> array(
-			'name'=>lang('page keywords'),
-			'type'=>'text',
-			'null'=>true,
+		// 'page_title'=> array(
+		// 	'name'=>lang('page title'),
+		// 	'type'=>'text',
+		// 	'null'=>false,
+		// ),
+		// 'page_title_en'=> array(
+		// 	'name'=>'Page Title',
+		// 	'type'=>'text',
+		// 	'null'=>false,
+		// ),
+		'image'=>array(
+			'name'=>'Banner',
+			'type'=>'image',
+			'null'=>true
 		),
 		'content' => array(
-			'name'=>lang('page content'),
+			'name'=>'Content',
 			'type'=>'richtext',
 			'null'=>true,
 		),
-		'update_time'=>array(
-			'name'=>lang('update time'),
-			'type'=>'datetime',
-			'null'=>true
+		'content_cn' => array(
+			'name'=>'Content CN',
+			'type'=>'richtext',
+			'null'=>true,
 		)
 	)
 );
@@ -51,15 +56,27 @@ $end_models['fragment'] = array(
 	'name'=>"<span style='color:#49e'>".lang('fragment')."</span>",
 	'category_fields'=>array(
 		'name'=>array(
-			'name'=>lang('Name'),
+			'name'=>'Name',
 			'type'=>'text',
 			'null'=>false
 		),
+		'name_cn'=>array(
+			'name'=>'Name CN',
+			'type'=>'text',
+			'null'=>false
+		),
+		
 		'content' => array(
-			'name'=>lang('Content'),
+			'name'=>'Content',
+			'type'=>'richtext',
+			'null'=>true,
+		),
+		'content_cn' => array(
+			'name'=>'Content CN',
 			'type'=>'richtext',
 			'null'=>true,
 		)
+		
 	)
 );
 
