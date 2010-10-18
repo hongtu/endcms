@@ -23,9 +23,9 @@
 				</td>
 				<td>
 					<select name="status">
-					<!-- BEGIN statuses -->
-					<option value="{index}">{value}</option>
-					<!-- END -->
+					{foreach($end_models as $key=>$val)}
+					<option value="{$key}">{$val['name']}</option>
+					{/foreach}
 					</select>
 				</td>
 			</tr>
