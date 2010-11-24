@@ -79,6 +79,17 @@ function model($f,$path = false)
 		die("Load model error! Class '$_class_name' not found in file $_file");
 }
 
+function simple_model($table,$id = false)
+{
+	$obj = isset($GLOBALS['end_model_instance_simple_model'])?$GLOBALS['end_model_instance_simple_model']:new MODEL;
+	$GLOBALS['end_model_instance_simple_model'] = $obj;
+	$obj->table = END_MYSQL_PREFIX.$table;
+	if ($id) $id = $table.'_id';
+	$obj->id = $id;
+	$obj->sort_id = NULL;
+	return $obj;
+}
+
 function helper($f,$mute = false)
 {
 	$loaded = false;

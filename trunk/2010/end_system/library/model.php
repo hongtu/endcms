@@ -16,7 +16,7 @@ class MODEL
 	function add( $data = array())
 	{
 		$table = $data['table']?$data['table']:$this->table;
-		unset($data['table']);
+		if (isset($data['table'])) unset($data['table']);
 		$sql = $this->make_insert_sql($table,$data); 
 		if ($GLOBALS['db']->query($sql))
 		{
@@ -177,5 +177,10 @@ class MODEL
 		foreach($cond_arr as $key => $val)
 			$cond[] = "$key = '".mysql_escape_string($val)."'";
 		return "UPDATE ".$this->make_table_sql($table)." SET ".join(',',$values)." WHERE ".join(' AND ',$cond);
+	}
+	
+	function change_table($table)
+	{
+		$this->table = END_MYSQL_PREFIX.$table;
 	}
 }
