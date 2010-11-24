@@ -49,8 +49,8 @@ CONFIG = 设置
 HIGH_LIGHT = #FFFF99
 
 #分页
-PAGER_PREV = ◀
-PAGER_NEXT = ►
+PAGER_PREV = &lt;&lt;
+PAGER_NEXT = &gt;&gt;
 PAGER_PER_PAGE = 每页
 PAGER_ITEMS = 条
 PAGER_TOTAL = 
