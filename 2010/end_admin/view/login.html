@@ -8,9 +8,9 @@
 
 <body>
 <div id="login_logo">
-<h1 class="f_l">EndCMS</h1><h2 class="f_l">{config.site_name}</h2>
+<h1 class="f_l">EndCMS</h1><h2 class="f_l">{$config.site_name}</h2>
 </div>
-<form action="admin.php?p=login&module=admin&m=login&backurl={urlencode(backurl)}" method="post">
+<form action="admin.php?p=login&module=admin&m=login&backurl={urlencode($backurl)}" method="post">
 <div id="login">
 <div id="login_s">{USERNAME}：<input type="text" name="name" id="username" class="login_i" />&nbsp;&nbsp;{PASSWORD}：<input type="password" name="password" class="login_i" /> &nbsp;<input type="submit" class="login_s" name="username" value="{LOGIN_SUBMIT}" /></div>
 </div>

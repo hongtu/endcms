@@ -82,8 +82,17 @@ else if ($m == 'edit_category')
 	}
 }
 
-
-if ($action == "edit_category")
+if($action == 'ajax_get')
+{
+	if (!$category_id) $category_id=0;
+	$data['tree'] = model('category')->get_list(array('parent_id'=>$category_id));
+	$data['depth'] = $_GET['depth']*1;
+	$tmp = template('category_list_item.html');
+	$tmp->assign($data);
+	$tmp->display();
+	die;
+}
+elseif ($action == "edit_category")
 {
 	$_SESSION['backurl'] = ($_GET['backurl'])?$_GET['backurl']:$_SERVER['HTTP_REFERER'];
 	if ($action == "edit_category")
@@ -124,21 +133,22 @@ if (!$action && !$m)
 }
 //显示分类和项目列表
 
-$categories = $category->get_list( array('parent_id'=>$category_id) );
+//$categories = $category->get_list( array('parent_id'=>$category_id) );
 $_tree = $category->tree_category(0);
-$view_data['tree'] = array();
-$category->flat_tree($_tree,$view_data['tree']);
+
+//$view_data['tree'] = $category->get_list(array('parent_id'=>0));
+//$category->flat_tree($_tree,$view_data['tree']);
 
 //$view_data['all_category'] = print_category_tree_link('admin.php?p=category&category_id=',$_tree,$category_id);
 $view_data['category_tree'] = print_category_tree($_tree);
-$view_data['categories'] = $categories;
+//$view_data['categories'] = $categories;
 $view_data['page_description'] = lang('CATEGORIES_LIST');
 $view_data['err_msg'] = $err_msg;
 $view_data['success_msg'] = $success_msg;
 $view_data['category_id'] = $category_id;
-$view_data['position'] = $category->position_category($category_id); 
+//$view_data['position'] = $category->position_category($category_id); 
 $view_data['end_models'] = $end_models;
-unset($view_data['position'][count($view_data['position'])-1]);
+//unset($view_data['position'][count($view_data['position'])-1]);
 
 
 $view_data['statuses'] = $end_models;

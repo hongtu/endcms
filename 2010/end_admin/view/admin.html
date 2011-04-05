@@ -22,17 +22,17 @@
 				{CURRENT_POSITION}: {POSITION}
 			</div>
 			
-	        <!-- IF err_msg -->
+	        {if($err_msg)}
 	        <div class="err_msg pad">
-	        	{err_msg}
+	        	{$err_msg}
 	        </div>
-	        <!-- ENDIF -->
+	        {/if}
         
-	        <!-- IF success_msg -->
+	        {if($success_msg)}
 	        <div class="success_msg pad">
-	        	{success_msg}
+	        	{$success_msg}
 	        </div>
-	        <!-- ENDIF -->
+	        {/if}
         
 	        <div id="admin_content">
 				<div class="nav_wrapper">
@@ -42,24 +42,24 @@
 					<?php };?>
 				</div>
 				
-				<div id="new_admin" class="new-form" style="display:<!-- IF admin --><!-- ELSE -->none<!-- ENDIF -->;width:300px;">
+				<div id="new_admin" class="new-form" style="display:{if($admin)}{else}none{/if};width:300px;">
 	            	<h2>{NEW_ADMIN}</h2>
 	        		<!-- INCLUDE admin_new.html -->
 	            </div>
 				
 				<div class="nav_wrapper">
 					&nbsp;{DISPLAY}:
-					<a href="admin.php?p=admin"  class="nav <!-- IF rights_id="-1" -->nav_on<!-- ENDIF -->">{SHOW_ALL}</a>
-					<a href="admin.php?p=admin&rights_id=0" class="nav <!-- IF rights_id="0" -->nav_on<!-- ENDIF -->">{DEFAULT_RIGHTS_GROUP}</a>
-					<!-- BEGIN rights -->
-					<a href="admin.php?p=admin&rights_id={rights_id}" class="nav <!-- IF rights_id=parent.rights_id -->nav_on<!-- ENDIF -->">{name}</a>
-					<!-- END -->
+					<a href="admin.php?p=admin"  class="nav {if($rights_id=="-1")}nav_on{/if}">{SHOW_ALL}</a>
+					<a href="admin.php?p=admin&rights_id=0" class="nav {if($rights_id=="0")}nav_on{/if}">{DEFAULT_RIGHTS_GROUP}</a>
+					{foreach($rights as $r)}
+					<a href="admin.php?p=admin&rights_id={$r.rights_id}" class="nav {if($r.rights_id == $rights_id)}nav_on{/if}">{$r.name}</a>
+					{/foreach}
 				</div>
 			
 				
 	            <!-- INCLUDE admin_list.html -->
 				<br />
-				{pager}
+				{$pager}
 	        </div>
         </div>
     </div>

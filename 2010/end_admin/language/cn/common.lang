@@ -9,6 +9,7 @@ Please_select=请选择...
 NAVI_CATEGORY = 栏目管理
 navi_ITEM = 内容管理
 navi_admin= 管理员
+navi_config=系统设置
 navi_extension= 扩展
 CURRENT_POSITION= 当前位置
 INDEX = 后台首页

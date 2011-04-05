@@ -67,8 +67,8 @@ $db->connect($mysql['server'],$mysql['username'],$mysql['password'],$mysql['data
 //从数据库中读取config信息，覆盖掉$config变量
 //这样做的好处就是，在config.php中可以写默认值，可以在后台添加一个同名的设置变量，就可以覆盖该值
 if (!is_array($config)) $config = array();
-$r = $db->get_all("SELECT * FROM `".END_MYSQL_PREFIX."config` ORDER BY order_id ASC");
-foreach($r as $arr) trim($arr['name']) && $config[trim($arr['name'])] = $arr['value'];
+$site_config = require_once(END_SYSTEM_DIR.'site_config.php');
+foreach($site_config as $_c) $config[$_c['name']] = $_c['value'];
 
 //钩子
 function_exists('end_on_after_db') && end_on_after_db();
@@ -128,7 +128,7 @@ if (!$view_html)
 	$end_time_used = intval(($_time_end-$_time_start)*1000)/1000;
 	$_template->assign('time_used',$end_time_used);
 	$_template->assign('total_query',$db->query_num);
-	
+	$_template->assign('db',$db);
 	$view_html = $_template->result();
 	unset($_template);
 }

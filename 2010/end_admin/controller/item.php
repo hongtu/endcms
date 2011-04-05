@@ -9,6 +9,12 @@ load_models();
 $category = model('category');
 $err_msg = '';
 $success_msg = '';
+
+if ($action == 'get_tree')
+{
+	
+}
+
 /* 必须传入 category_id*/
 if ($category_id || $item_type)
 {

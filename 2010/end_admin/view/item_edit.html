@@ -1,10 +1,10 @@
 <div id="sys_table">
-<!-- IF item_id -->
-<form action="admin.php?m=edit_item&p=item&item_id={item_id}&category_id={category_id}" method="post" enctype="multipart/form-data">
-<!-- ELSE -->
-<form action="admin.php?m=new_item&p=item&category_id={category_id}" method="post"  enctype="multipart/form-data" >
-<!-- ENDIF -->
-<input type="hidden" name="return_to" value="{content.return_to}" />
+{if($item_id)}
+<form action="admin.php?m=edit_item&p=item&item_id={$item_id}&category_id={$category_id}" method="post" enctype="multipart/form-data">
+{else}
+<form action="admin.php?m=new_item&p=item&category_id={$category_id}" method="post"  enctype="multipart/form-data" >
+{/if}
+<input type="hidden" name="return_to" value="{$content.return_to}" />
 	<table >
 		<tr>
 			<th class="sys_tit_bg" colspan="2">
@@ -18,7 +18,7 @@
         	<td>
 				<div><select name="category_id" >
                 	<option value="0">{PLEASE_SELECT}</option>
-                		{category_tree}
+                		{$category_tree}
                 	</select>
 				</div>
             </td>
@@ -29,11 +29,11 @@
         <tr>
         	<td colspan="2" align="center">
 				<input type="submit" name="save" value="{SAVE}" /> &nbsp;
-				<!-- IF statuses -->
-				<!-- BEGIN statuses -->
-				<input type="submit" name="saveas[{_key}]" value="{SAVE_AS}'{strip_tags(_value)}'" /> &nbsp;
-				<!-- END -->
-				<!-- ENDIF -->
+				{if($statuses)}
+				{foreach($statuses as $key=>$s)}
+					<input type="submit" name="saveas[{$key}]" value="{SAVE_AS}'{strip_tags($s)}'" /> &nbsp;
+				{/foreach}
+				{/if}
 				<input type="button" value="{RETURN}"  onclick="if (confirm('{RETURN_ALERT}')) history.go(-1);" /> &nbsp;
 			</td>
         </tr>

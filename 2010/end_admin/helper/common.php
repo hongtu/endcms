@@ -63,7 +63,7 @@ function end_exit($content,$url='javascript:history.go(-1);',$t = 2)
 		'url' => $url,
 		'time' => $t,
 	));
-	$temp->output();
+	$temp->display();
 	die;
 }
 

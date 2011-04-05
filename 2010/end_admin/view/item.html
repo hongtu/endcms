@@ -17,8 +17,8 @@
 	        	<h2>{CATEGORIES_TREE}</h2>
 				<div id="category_tree" style="display:none">
 					<ul>
-						<li><a href="admin.php?p=item" <!-- IF category_id="0" -->class="tree_on" <!-- ENDIF --> >{ROOT_CATEGORY}</a></li>
-						<li>{all_category}</li>
+						<li><a href="admin.php?p=item" {if($category_id=="0")}class="tree_on" {/if} >{ROOT_CATEGORY}</a></li>
+						<li>{$all_category}</li>
 					</ul>
 					<div style="clear:both;"></div>
 				</div>
@@ -31,74 +31,74 @@
         <div id="main_b">
 			<div id="position">
 				{CURRENT_POSITION}:{NAVI_ITEM} > <a href="admin.php?p=item">{CATEGORY_ROOT}</a> > 
-				<!-- BEGIN position -->
-				 <a href="admin.php?p=item&category_id={category_id}">{name}</a> > 
-				<!-- END -->
+				{foreach($position as $p)}
+				 <a href="admin.php?p=item&category_id={$p.category_id}">{$p.name}</a> > 
+				{/foreach}
 			</div>
 			
-			<!-- IF err_msg -->
+			{if($err_msg)}
 			<div class="error">
-			{err_msg}
+			{$err_msg}
 			</div>
-			<!-- ENDIF -->
+			{/if}
 			
-	  	    <!-- IF page_content -->
-		        	{page_content}
+	  	    {if($page_content)}
+		        	{$page_content}
 					<br />
-		    <!-- ELSE -->
+		    {else}
 			
 			
 			<div id="admin_content">
-			<!-- IF this_category.is_list -->
-				<!-- IF category_id -->
+			{if($this_category.is_list)}
+				{if($category_id)}
 				<div class="nav_wrapper">
 					&nbsp;{FUNCTION}:
 					<?php if(check_show('add')){?>
-					<a class="nav" href="admin.php?p=item&action=new_item&category_id={category_id}">{NEW_ITEM}</a>
+					<a class="nav" href="admin.php?p=item&action=new_item&category_id={$category_id}">{NEW_ITEM}</a>
 					<?php };?>
 				</div>
-				<!-- ENDIF -->
+				{/if}
 				
 				
-				<!-- IF statuses -->
+				{if($statuses)}
 				<div class="nav_wrapper">
 					&nbsp;{DISPLAY}:
 					<a 
-						href="admin.php?p=item&category_id={category_id}"  
-						class="nav <!-- IF current_status_all -->nav_on<!-- ENDIF -->">{SHOW_ALL}</a>
-					<!-- BEGIN statuses -->
+						href="admin.php?p=item&category_id={$category_id}"  
+						class="nav {if($current_status_all)}nav_on{/if}">{SHOW_ALL}</a>
+					{foreach($statuses as $index=>$s)}
 					<a 
-						href="admin.php?p=item&status={index}&category_id={parent.category_id}" 
-						class="nav <!-- IF index==parent.status -->nav_on<!-- ENDIF -->">{strip_tags(value)}</a>
-					<!-- END -->
+						href="admin.php?p=item&status={$s.index}&category_id={$category_id}" 
+						class="nav {if($index==$status)}nav_on{/if}">{strip_tags($s.value)}</a>
+					{/foreach}
 				</div>
-				<!-- ENDIF -->
+				{/if}
 			
-				{list_content}
+				{$list_content}
 			
-			<!-- ELSE -->
-				<!-- IF category_id -->
-					<h2>{CATEGORY_TYPE}: {category_type}</h2>
-					<a href="admin.php?p=category&action=edit_category&category_id={category_id}">{EDIT}</a>
+			{else}
+				{if($category_id)}
+					<h2>{CATEGORY_TYPE}: {$category_type}</h2>
+					<a href="admin.php?p=category&action=edit_category&category_id={$category_id}">{EDIT}</a>
 					<table class="view-table">
 					<?php
-					foreach($view_data['category_fields'] as $key=>$field)
+					foreach($category_fields as $key=>$field)
 					{
 						echo '<tr>';
 						echo '<th>'.$field['name'].'</th>';
-						echo '<td>'.$view_data['category'][$key].'</td>';
+						echo '<td>'.$category[$key].'</td>';
 						echo '</tr>';
 					}
 					?>
 					</table>
-				<!-- ELSE -->
+				{else}
 				<!--
 					TODO 内容管理首页
 				-->
-				<!-- ENDIF -->
-			<!-- ENDIF -->
+				{/if}
+			{/if}
 			</div>
-        <!-- ENDIF -->
+        {/if}
         </div>
     </div>
 	<div style="clear:both;"></div>
@@ -120,7 +120,7 @@ function delete_item(id,o)
 {
 	if (!confirm('{DELETE_CONFIRM}')) return;
 	$(o).attr('to_be_delete','yes').html('{DELETING}').unbind('click');
-	$.post('admin.php?p=ajax&m=delete&table={table}&id='+id,{ },delete_callback);
+	$.post('admin.php?p=ajax&m=delete&table={$table}&id='+id,{ },delete_callback);
 }
 function delete_callback(s)
 {
@@ -142,7 +142,7 @@ function change_category(o)
 function change_status(id,value,o)
 {
 	$(o).attr('to_be_delete','yes').html('{DELETING}').unbind('click');
-	$.post('admin.php?p=ajax&m=update&column=status&table={table}&id='+id,{ value:value },function(s)
+	$.post('admin.php?p=ajax&m=update&column=status&table={$table}&id='+id,{ value:value },function(s)
 	{
 		if (parseInt(s) != s)  alert(s);
 		else

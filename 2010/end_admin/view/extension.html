@@ -121,7 +121,7 @@
 				{else}
 					{if($_GET['action']=='edit')}
 						{foreach($exts as $name=>$attr)}
-						{$icon = thumb_png($attr['icon'],60,60)}
+						<?php $icon = thumb_png($attr['icon'],60,60); ?>
 							<div class="extension2">
 								<div class="icon" 
 									style="background-image:url({$icon});			filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='{$icon}', sizingMethod='image');_background-image:none;">
@@ -182,7 +182,7 @@
 						{/if}
 					{else}
 						{foreach($exts as $name=>$attr)}
-						{$icon = thumb_png($attr['icon'],100,100)}
+						<?php $icon = thumb_png($attr['icon'],100,100);?>
 							<a class="extension" title="{$attr['description']}" href="admin.php?p=extension&extension={$name}">
 								<div class="icon" 
 									style="background-image:url({$icon});			filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='{$icon}', sizingMethod='image');_background-image:none;">
