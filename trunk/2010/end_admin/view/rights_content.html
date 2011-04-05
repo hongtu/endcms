@@ -1,35 +1,35 @@
 <script>
 $('#position').append(' &gt; {TITLE}');
 </script>
-{RIGHTS_GROUP}:{this_group.name}<br />
+{RIGHTS_GROUP}:{$this_group.name}<br />
 <a href="javascript:checkall()">{SELECT_ALL}</a>&nbsp;<a href="javascript:inverse()">{SELECT_INVERSE}</a>
-<form action="admin.php?p=rights&m=config&rights_id={this_group.rights_id}" method="post">
+<form action="admin.php?p=rights&m=config&rights_id={$this_group.rights_id}" method="post">
 <table style="margin:10px;width:500px;" class="list_table" cellspacing="0">
-<?php $this_rights=$view_data['this_rights'];?>
-<!-- BEGIN rights -->
+<?php $this_rights=$this_rights;?>
+{foreach($rights as $r)}
 <tr>
-	<td width="150">{description}</td>
+	<td width="150">{$r.description}</td>
 	<td>
-	<?php foreach($view_data['rights'] as $right)
+	<?php foreach($rights as $right)
 	{
-		$view_data['this_name'] = $view_data['name'].'_'.$right;
+		$this_name = $r['name'].'_'.$right;
 		?>
 	<input 
 		type="checkbox" 
 		right="action"
-		name="{this_name}" 
-		id="{this_name}" 
-		<?php if ($this_rights[$view_data['this_name']]) {?>
+		name="{$this_name}" 
+		id="{$this_name}" 
+		<?php if ($this_rights[$this_name]) {?>
 		checked="checked"
 		<?php }?>
-	><label for="{this_name}"><?php 
+	><label for="{$this_name}"><?php 
 		$_n = 'LANG_'.strtoupper('rights_'.$right);
 		echo (defined($_n))?constant($_n):$right;
 	?></label>
 	<?php }?>
 	</td>
 </tr>
-<!-- END -->
+{/foreach}
 </table>
 	<input type="checkbox" name="limit_category_id" onclick="change_slide(this)" id="limit_category_id"><label for="limit_category_id">{LIMIT_CATEGORY_ID}</label>
 
@@ -38,18 +38,18 @@ $('#position').append(' &gt; {TITLE}');
 		<a href="javascript:;" onclick="$('[right=category]').attr('checked','checked');">{SELECT_ALL}</a> 
 		<a href="javascript:;" onclick="$('[right=category]').each(function(){ this.checked=!this.checked; });">{SELECT_INVERSE}</a>
 		<br />
-		<!-- BEGIN categories -->
-		{print_space(depth)}
-		<input type="checkbox" onclick="check_rights_checked(this)" right="category" categoryid="{category_id}" name="category_{category_id}" depth="{depth}" parentid="{parent_id}"
-		id="category_{category_id}" <?php
-		if ($this_rights['category_'.$view_data['category_id']])
+		{foreach($categories as $c)}
+		{print_space($c.depth)}
+		<input type="checkbox" onclick="check_rights_checked(this)" right="category" categoryid="{$c.category_id}" name="category_{$c.category_id}" depth="{$c.depth}" parentid="{$c.parent_id}"
+		id="category_{$c.category_id}" <?php
+		if ($this_rights['category_'.$c['category_id']])
 		{
 			echo 'checked="checked" ';
 			$some_checked = true;
 		}
 		?> />
-		<label for="category_{category_id}">{name}</label><br />
-		<!-- END -->
+		<label for="category_{$c.category_id}">{$c.name}</label><br />
+		{/foreach}
 	</div>
 	<input type="submit" value="{SUBMIT}" />
 </form>

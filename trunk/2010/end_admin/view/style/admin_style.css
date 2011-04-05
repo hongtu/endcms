@@ -16,8 +16,8 @@ a:hover { color:#c60;}
 
 
 #admin_menu { background: url(../images/admin_menu_bg.png) repeat-x; height:35px;}
-#admin_menu ul li { float:left; background:url(../images/admin_menu_li.png) right center no-repeat; line-height:35px; text-align:center; width:96px; font-size:14px;}
-#admin_menu ul li a{ font-weight:bold; color:#FFF; text-decoration:none; display:block;}
+#admin_menu ul li { float:left; background:url(../images/admin_menu_li.png) right center no-repeat; line-height:35px; text-align:center; font-size:14px;}
+#admin_menu ul li a{ margin:0 20px; padding:0 5px; font-weight:bold; color:#FFF; text-decoration:none; display:block;}
 #admin_menu ul li a:hover,#admin_menu ul li a.hover{  color:#000; background:url(../images/admin_menu_li_hover.png) no-repeat 50% 50%;}
 
 

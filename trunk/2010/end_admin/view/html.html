@@ -20,20 +20,20 @@
     </div>
     <div id='maindiv'>
     	<div class="description">
-			{page_description}
+			{$page_description}
         </div>
         
-        <!-- IF err_msg -->
+        {if($err_msg)}
         <div class="err_msg pad">
-        	{err_msg}
+        	{$err_msg}
         </div>
-        <!-- ENDIF -->
+        {/if}
         
-        <!-- IF success_msg -->
+        {if($success_msg)}
         <div class="success_msg pad">
-        	{success_msg}
+        	{$success_msg}
         </div>
-        <!-- ENDIF -->
+        {/if}
         <div class="real_content">
        		
 			<!-- div style="margin:10px;">
@@ -48,7 +48,7 @@
 			<div style="margin:10px;">
 				<input type="button" onclick="make_pop_search()" value="生成popular search部分" />
 				<div id="make_pop_search_content" style="display:none;margin:10px;">
-					<textarea id='pop_search_content' style="width:400px;height:200px;">{pop_search_content}</textarea><br />
+					<textarea id='pop_search_content' style="width:400px;height:200px;">{$pop_search_content}</textarea><br />
 					<input type="button" onclick="save_pop_search();return false;" value="提交" /> <input type="button" onclick="make_pop_search()" value="关闭" />
 				</div>
 				<div id="make_pop_search_response"></div>
@@ -96,7 +96,7 @@ make_category = function()
 make_directory = function()
 {
 	$('#make_directory_response').html("making...");
-	window.qtotal = parseInt('{total_item_num}');
+	window.qtotal = parseInt('{$total_item_num}');
 	window.qtimes = Math.ceil(total/pertime);
 	window._time = 0;
 	window.made = 0;
@@ -121,7 +121,7 @@ function make_directory_callback(s)
 }
 make_item = function()
 {
-	window.total = parseInt('{total_item_num}');
+	window.total = parseInt('{$total_item_num}');
 	window.pertime = parseInt($('#pages_per_time').val());
 	window.times = Math.ceil(total/pertime);
 	window._time = 0;

@@ -5,17 +5,17 @@
 </head>
 <body style="text-align:left">
 <?php if (check_show('add')){?>
-<form style="border:0" action="admin.php?p=upload&m=upload&for={for}" method="post" ENCTYPE="multipart/form-data" >
-	<input type="file" style="width:150px;" size="10" name="upfile" /> <input type="submit" value="上传" /> <span style="color:orange" id="msg">{msg}</span>
+<form style="border:0" action="admin.php?p=upload&m=upload&for={$for}" method="post" ENCTYPE="multipart/form-data" >
+	<input type="file" style="width:150px;" size="10" name="upfile" /> <input type="submit" value="上传" /> <span style="color:orange" id="msg">{$msg}</span>
 	&nbsp;&nbsp;{CHOOSE_ATTACHMENT}:
 	<select style="height:20px;width:300px;" onchange="insert_file(this)">
 		<option value=''> </option>
-		<!-- BEGIN recent -->
+		{foreach($recent as $r)}
 		<option 
-			value="{myurlencode(filepath)}" fname="{name}">
-			({format_date(mtime)}) {name}
+			value="{myurlencode($r.filepath)}" fname="{$r.name}">
+			({format_date($r.mtime)}) {$r.name}
 		</option>
-		<!-- END -->
+		{/foreach}
 	</select>
 </form>
 
@@ -38,9 +38,9 @@ function insert_file(o)
 
 function ckeditor_insert(html)
 {
-	if ('{for}')
+	if ('{$for}')
 	{
-		var editor = parent.CKEDITOR.instances['editor_{for}'];
+		var editor = parent.CKEDITOR.instances['editor_{$for}'];
 	}
 	else
 	{
@@ -69,13 +69,13 @@ function get_display_html(url,fname)
 	return html;
 }
 
-<!-- IF file_url -->
+{if($file_url)}
 //如果上传成功
-var html = get_display_html('{myurlencode(file_url)}','{filename}');
-var ftype = '{filename}'.split('.');
+var html = get_display_html('{myurlencode(file_url)}','{$filename}');
+var ftype = '{$filename}'.split('.');
 ftype = ftype[ftype.length-1].toLowerCase();
 ckeditor_insert(html);
-<!-- ENDIF -->
+{/if}
 
 setTimeout("document.getElementById('msg').style.display='none'",3000);
 </script>

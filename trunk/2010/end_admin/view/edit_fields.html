@@ -2,8 +2,8 @@
 /*
 根据配置生成编辑页面的各个输入字段
 */
-	if (!$view_data['fields']) $view_data['fields'] = array();
-	foreach($view_data['fields'] as $name=>$data)
+	if (!$fields) $fields = array();
+	foreach($fields as $name=>$data)
 	{
 		if (preg_match('/^__/',$name)) continue;
 		if (!$data['type']) $data['type'] = 'text';
@@ -12,146 +12,24 @@
 		echo "</td>";
 		echo '<td>';
 		
-		$_style = ($data['width'])?'width:'.$data['width'].'px;':'width:600px;';
-		$_style.= ($data['height'])?'height:'.$data['height'].'px;':'';
+		$data['style'] .= ($data['width'])?'width:'.$data['width'].'px;':'';
+		$data['style'] .= ($data['height'])?'height:'.$data['height'].'px;':'';
 		
-		$seperator = $data['seperator']?$data['seperator']:'|';
-		$add_text = $data['add_text']?$data['add_text']:lang('Add row');
+		$data['field_name'] = $name;
+		$data['__orig_content'] = $content[$name];
+		$data['content'] = $content[$name];
 		
-		$view_data['content']['__orig_'.$name] = $view_data['content'][$name];
 		//显示之前的预处理
 		if ($data['prefilter'] && function_exists($data['prefilter']))
 		{
-			$view_data['content'][$name] = $data['prefilter']($view_data['content'][$name]);
+			$data['content'] = $data['prefilter']($data['content']);
 		}
 	
-	
 		
-		//简单文字输入
-		if ($data['type'] == 'text')
+		if (function_exists($_func = 'endcms_input_'.$data['type']))
 		{
-			if ($data['disabled'])
-			{
-				echo "<input type='hidden' name='$name' readonly='readonly' style='$_style' value='$view_data[content][$name]' />";
-			}
-			else
-			{
-				echo "<input type='text' name='$name' style='$_style' value='".$view_data['content'][$name]."' />";
-			}
-		}
-		//复选框
-		elseif ($data['type'] == 'checkbox')
-		{
-			echo "<input type='checkbox' name='$name' ";
-			if ($view_data['content'][$name]) echo " checked='checked' ";
-			if ($data['disabled']) echo ' disabled="disabled" ';
-			echo " />";
-		}
-		//文件
-		elseif ($data['type'] == 'file' || $data['type'] == 'image')
-		{
-			if ($view_data['content'][$name])
-			{
-				echo '<a href="'.$view_data['content'][$name].'" target="_blank">'.lang("uploaded_file").$view_data['content'][$name]."</a><br />";
-				echo "<input type='hidden' name='$name' value='".$view_data['content'][$name]."' />";
-			}
-			echo "<input type='file' name='$name' style='";
-			if ($data['width']) echo $_style;
-			echo "' />";
-			if (!$data['description'] && $data['type'] == 'image')
-				$data['description'] = lang('upload_image_descriptioin');
-		}
-		else if ($data['tpye'] == 'filelist' || $data['type'] == 'imagelist')
-		{
-			$__s = $view_data['content'][$name];
-			$name = $name.'[]';
-			if (is_array($__s))
-				$__arr = $__s;
-			else
-				$__arr = explode($seperator,$__s);
-			if ($__s && $__arr)
-			{
-				foreach($__arr as $__v)
-				{
-					echo '<div class="list-row-wrapper">';
-					echo '<a href="'.$__v.'" target="_blank">'
-						.lang("uploaded_file")
-						.$__v
-						."</a>";
-					echo "<input type='hidden' name='$name' value='".$__v."' />";
-					echo '<span class="del-row-bt">'.lang('Remove').'</span>';
-					echo '</div>';
-				}
-			}
-			echo '<div class="list-row-wrapper">';
-			echo "<input type='file' name='$name' style='";
-			if ($data['width']) echo $_style;
-			echo "' />";
-			echo '<span class="add-row-bt" remove="'.lang('Remove').'">'.$add_text.'</span>';
-			echo "</div>";
-			if (!$data['description'] && $data['type'] == 'imagelist')
-				$data['description'] = lang('upload_image_descriptioin');
-		}
-		//多行文本
-		elseif ($data['type'] == 'textarea')
-		{
-			if (!$data['height']) $_style.='height:300px;';
-			echo "<textarea name='$name' style='$_style'>";
-			$view_data['content'][$name] = str_replace(array("\n","\r"),array("",""),$view_data['content'][$name]);
-			$view_data['content'][$name] = str_replace(array('<br>','&nbsp;'),array("\n",' '),$view_data['content'][$name]);
-			echo htmlspecialchars($view_data['content'][$name]);
-			echo "</textarea>";
-		}
-		//下拉选框
-		elseif ($data['type'] == 'select')
-		{
-			echo "<select name='$name' style='$_style'>";
-			foreach($data['options'] as $_val=>$_name)
-			{
-				echo "<option ";
-				if ($view_data['content'][$name] == $_val) echo " selected='selected' ";
-				echo " value='$_val'>$_name</option>";
-			}
-			echo "</select>";
-		}
-		//日期时间
-		elseif ($data['type'] == 'datetime')
-		{
-			$t = $view_data['content']['__orig_'.$name];
-			if (is_array($t))
-				$t = mktime($t['h'],$t['i'],$t['s'],$t['m'],$t['d'],$t['y']);
-			if (!$t) $t = time();
-			echo "<input type='text' size='4' value='".date('Y',$t)."' name='".$name."[y]'>".lang('Year');
-			echo "<input type='text' size='2' value='".date('m',$t)."' name='".$name."[m]'>".lang('Month');
-			echo "<input type='text' size='2' value='".date('d',$t)."' name='".$name."[d]'>".lang('Day').' ';
-			echo "<input type='text' size='2' value='".date('H',$t)."' name='".$name."[h]'>".lang('Hour');
-			echo "<input type='text' size='2' value='".date('i',$t)."' name='".$name."[i]'>".lang('Minute');
-			echo "<input type='text' size='2' value='".date('s',$t)."' name='".$name."[s]'>".lang('Second');
-		}
-		//超文本编辑器
-		elseif ($data['type'] == 'richtext')
-		{
-			if (!$data['width']) $_style .= 'width:700px;';
-			if (!$data['height']) $_style.= 'height:400px;';
-			?>
-			<textarea style="<?php echo $_style;?>" name="<?php echo $name;?>" id="editor_<?php echo $name;?>" rich="true"><?php
-			echo htmlspecialchars($view_data['content'][$name]);
-			?></textarea>
-			</td></tr>
-			<tr>
-			<Td>{UPLOAD_ATTACHMENT}</td>
-			<td><iframe src="admin.php?p=upload&for=<?php echo $name;?>" style="width:700px;height:30px;border:0;text-align:left;" border="0" frameborder="no" scrolling="no"></iframe>
-			<?php
-		}
-		if ($data['description']) echo $data['description'];
-		
-		/**
-		* 增加按钮
-		*/
-		if ($data['list'] && $data['type'] != 'richtext')
-		{
-			$__t = $data['add_text']?$data['add_text']:lang('Add row');
-			echo '<span class="add-row-bt" remove="'.lang('Remove').'">'.$__t.'</span>';
+			$_func($data); 
+			//这些函数在helper/html.php里面
 		}
 		echo "</td></tr>\n";
 	}

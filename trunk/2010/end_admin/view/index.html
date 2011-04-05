@@ -15,11 +15,11 @@
 		<div id="admin_left_b">
 	    	<div class="module">
 				<h2>{MY_MOST_URL}</h2>
-				{menus=model('log')->count_menu(10)}
+				<?php $menus=model('log')->count_menu(10);?>
 				<ul class="admin-left">
-					<!-- BEGIN menus -->
-					<li><a href="{url}">{info}</a></li>
-					<!-- END -->
+					{foreach($menus as $m)}
+					<li><a href="{$m.url}">{$m.info}</a></li>
+					{/foreach}
 			    </ul>
 			</div>
 		</div>

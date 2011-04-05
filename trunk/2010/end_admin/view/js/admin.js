@@ -1,5 +1,8 @@
 //初始化
-if ($.browser.msie == true) document.execCommand('BackgroundImageCache', false, true);
+if ($.browser.msie == true)
+{
+	try { document.execCommand('BackgroundImageCache', false, true); } catch(e){ }
+}
 
 function init_admin()
 {

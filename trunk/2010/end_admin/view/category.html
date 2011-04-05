@@ -22,18 +22,16 @@
     <div id='main'>
 		<div id="main_b">
 			<div id="position">
-				{CURRENT_POSITION}:{NAVI_CATEGORY} > <a href="admin.php?p=category">{ROOT_CATEGORY}</a> > 
-				<!-- BEGIN position -->
-				 <a href="admin.php?p=category&category_id={category_id}">{name}</a> > 
-				<!-- END -->
-				{this_category.name}
+				{CURRENT_POSITION}:{NAVI_CATEGORY} > 
+
+				{$this_category.name}
 			</div>
 		
 			
         
 	        <div id="admin_content">
 		
-				<!-- IF !page_content -->
+				{if(!$page_content)}
 				<div class="nav_wrapper">
 					&nbsp;{FUNCTION}:
 					<?php if (check_show('add')):?>
@@ -42,28 +40,28 @@
 							{NEW_CHILD_CATEGORY}
 						</a>
 					<?php endif;?>
-					<!-- IF category_id>0 -->
+					{if($category_id>0)}
 					<?php if (check_show('update')):?>
-						<a class="nav" href="admin.php?p=category&action=edit_category&category_id={category_id}" >
+						<a class="nav" href="admin.php?p=category&action=edit_category&category_id={$category_id}" >
 							&nbsp;{EDIT_THIS_CATEGORY}
 						</a>
 					<?php endif;?>
-					<!-- ENDIF -->
+					{/if}
 				</div>
-				<!-- ENDIF -->
+				{/if}
 
-		        <!-- IF err_msg -->
+		        {if($err_msg)}
 		        <div class="error">
-		        	{err_msg}
+		        	{$err_msg}
 		        </div>
-		        <!-- ENDIF -->
+		        {/if}
 		
-	        	<!-- IF page_content -->
-					{page_content}
-				<!-- ELSE -->
+	        	{if($page_content)}
+					{$page_content}
+				{else}
 					<!-- INCLUDE category_new.html -->
 		            <!-- INCLUDE category_list.html -->
-				<!-- ENDIF -->
+				{/if}
 				<br />
 	        </div>
     	</div>

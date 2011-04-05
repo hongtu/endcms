@@ -116,16 +116,22 @@ function helper($f,$mute = false)
  */
 function template($f,$viewdir = false)
 {
-	include_once(END_SYSTEM_DIR.'library/class.quickskin.php');
+	include_once(END_SYSTEM_DIR.'library/endskin.php');
 	if (!$viewdir) $viewdir = END_VIEWER_DIR;
-	$_template = new QuickSkin($f);
-	$_template->set( 'reuse_code', !END_DEBUG );
-	$_template->set( 'extensions_dir', END_SYSTEM_DIR.'library/quickskin_extensions/' );	
-	$_template->set( 'template_dir', $viewdir );
-	$_template->set( 'temp_dir', END_SYSTEM_DIR.'cache/template/' );
-	$_template->set( 'cache_dir', END_SYSTEM_DIR.'cache/' );
-	//$_template->set( 'cache_lifetime', 200 );
+	$_template = new EndSkin($viewdir,END_SYSTEM_DIR.'cache/template/');
+	$_template->compile_hook = 'endskin_replace_language';
+	$_template->default_template = $f;
 	return $_template;
+}
+
+function endskin_replace_language($page)
+{
+	preg_match_all('/\{([A-Z\_][A-Z\_0-9]+)\}/',$page,$ms);
+	foreach($ms[1] as $i=>$v)
+	{
+		$page = str_replace($ms[0][$i],lang($v),$page);
+	}
+	return $page;
 }
 
 /**

@@ -6,81 +6,14 @@
                 		<th style="width:50px;">{ORDER_ID}</th>
                    		<th style="width:200px;">{CATEGORY_URL}</th>
                    		<th style="width:100px;">{CATEGORY_STATUS}</th>
-			<!-- IF debug -->
+			{if($debug)}
 			<th style="width:30px;">{CATEGORY_SYSTEM}</th>
-			<!-- ENDIF -->
+			{/if}
                         		<th style="width:150px;">{OPTIONS}</th>
                     </tr>
                 </thead>
                 <tbody>
-                	{foreach($tree as $c)}
-		<tr style="display:{if($c['depth'] > 0)}none{/if};"   depth="{$c['depth']}" category_id="{$c['category_id']}" parent_id="{$c['parent_id']}" >
-			<td>
-				<table cellspacing="0" cellpadding="0" border="0" style="border:0; width:100%;">
-				<tr>
-				<td style="border:0; width:{$c['depth']*20+1}px; ">&nbsp;</td>
-				<td style="border:0;width:20px; text-align:center;cursor:pointer" onclick="open_children({$c['category_id']},this)" >
-					<img src="end_admin/view/images/plus.png"  rel="pointer" style="display:none;" />
-				</td>
-				<td style="border:0;">
-				{if ($c['system'] == 'yes')}
-					{$c['name']}
-				{else}
-					<div 
-						admin_type="text" 
-						admin_para="m=update&table=category&column=name&id={$c['category_id']}">{$c['name']}</div>
-				{/if}
-				</td>
-				</tr>
-				</table>
-			</td>
-			<td style="text-align:center">
-				{$c['category_id']}
-			</td>
-		               	<td>
-				<div admin_type="text" admin_para="m=update&table=category&column=order_id&id={$c['category_id']}"  style="text-align:center">{$c['order_id']}</div>
-			</td>
-		               	<td>
-				{if ($c['system'] == 'yes')}
-					{$c['url']}
-				{else}
-					<div admin_type="text"  admin_para="m=update&table=category&column=url&id={$c['category_id']}">{$c['url']}</div>
-				{/if}
-			</td>
-			<td>
-				{if ($c['system'] == 'yes')}
-					{show_status($c['status'])}
-				{else}
-				<div admin_type="text" 
-					admin_para="m=update&table=category&column=status&id={$c['category_id']}" 
-					admin_select_value="{$c['status']}"
-					admin_select_source_id="status_select"
-					admin_trigger="click" status_category_id="{$c['category_id']}">{show_status($c['status'])}</div>
-				{/if}
-			</td>
-			{if ( END_DEBUG == true)}
-				<td>
-					<div admin_type="text"
-						admin_para="m=update&table=category&column=system&id={$c['category_id']}" 
-						admin_select_value="{$c['system']}"
-						admin_select_source_id="category_system_select"
-						admin_trigger="click" status_category_id="{$c['category_id']}">{$c['system']}</div>
-				</td>
-			{/if}
-			<td>
-		                          	{if (check_show('delete'))}
-					{if ($c['system'] == 'no')}
-						<a href="javascript:;" onclick="delete_category({$c['category_id']},this,'{addslashes($c['name'])}');">{DELETE}</a>
-					{/if}
-				{/if}
-				{if (check_show('update'))}
-					{if ($c['system'] == 'no')}
-		                          			<a href="admin.php?p=category&action=edit_category&category_id={$c['category_id']}">{EDIT}</a>
-					{/if}
-				{/if}
-			</td>
-		</tr>
-		{/foreach}
+                	
                 </tbody>
                 
 </table>
@@ -106,18 +39,49 @@ $(function()
 		}
 	});
 	
-});
-function open_children(cid,o)
-{
-	if ($(o).attr('opened') != 'yes')
+	$.get('admin.php?p=category&action=ajax_get',{ },function(s)
 	{
-		$(o).attr('opened','yes').find('img').attr('src','end_admin/view/images/minus.png');
-		$('tr[parent_id='+cid+']').fadeIn();
+		$('#category_table tbody').html(s);
+	},'text');	
+});
+function open_children(cid,o,depth)
+{
+	depth++;
+	var s = $(o).attr('status');
+	if (s == 'empty')
+		return;
+	else if (s == 'opened')
+	{
+		$(o).attr('status','closed').find('img').attr('src','end_admin/view/images/plus.png');
+		$('tr[parent_id='+cid+']').hide();
+	}
+	else if (s == 'closed')
+	{
+		$(o).attr('status','opened').find('img').attr('src','end_admin/view/images/minus.png');
+		$('tr[parent_id='+cid+']').show();
+	}
+	else if (s == 'loading')
+	{
+		return;
 	}
 	else
 	{
-		$(o).attr('opened','no').find('img').attr('src','end_admin/view/images/plus.png');
-		$('tr[parent_id='+cid+']').hide();
+		$(o).attr('status','loading').find('img').attr('src','end_admin/view/images/minus.png');
+		var line = $(o).parents('[ntype=line]');
+		$.get('admin.php?p=category&action=ajax_get&category_id='+cid+'&depth='+depth,{ },function(s)
+		{
+			if ($.trim(s) == "")
+			{
+				$(o).attr('status','empty');
+				$(o).find('img').remove();
+			}
+			else
+			{
+				$(o).attr('status','opened');
+				line.after(s);
+				init_admin();
+			}
+		},'text');
 	}
 }
 </script>
