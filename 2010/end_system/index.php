@@ -67,7 +67,7 @@ $db->connect($mysql['server'],$mysql['username'],$mysql['password'],$mysql['data
 //从数据库中读取config信息，覆盖掉$config变量
 //这样做的好处就是，在config.php中可以写默认值，可以在后台添加一个同名的设置变量，就可以覆盖该值
 if (!is_array($config)) $config = array();
-$site_config = require_once(END_SYSTEM_DIR.'site_config.php');
+$site_config = (file_exists(END_SYSTEM_DIR.'site_config.php'))?require_once(END_SYSTEM_DIR.'site_config.php'):array();
 foreach($site_config as $_c) $config[$_c['name']] = $_c['value'];
 
 //钩子
