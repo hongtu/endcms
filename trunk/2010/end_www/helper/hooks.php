@@ -9,15 +9,6 @@ function end_on_begin()
 
 function end_on_after_db()
 {
-	global $db,$config;
-	
-	//get config from database
-	if (!is_array($config)) $config = array();
-	$r = $db->get_all("SELECT `name`,`value` FROM `".END_MYSQL_PREFIX."config`");
-	foreach($r as $arr)
-	{
-		$arr['name'] && $config[$arr['name']] = $arr['value'];
-	}
 }
 
 function end_on_ready()

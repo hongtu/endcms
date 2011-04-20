@@ -42,6 +42,7 @@ $(function()
 	$.get('admin.php?p=category&action=ajax_get',{ },function(s)
 	{
 		$('#category_table tbody').html(s);
+		init_admin();
 	},'text');	
 });
 function open_children(cid,o,depth)

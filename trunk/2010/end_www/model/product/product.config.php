@@ -32,11 +32,6 @@ $end_models['product'] = array(
 			'name'=>'Keywords',
 			'type'=>'text',
 			'null'=>true
-		),
-		'image'=>array(
-			'name'=>'Image file',
-			'type'=>'image',
-			'null'=>false
 		)
 	),
 	'fields' => array(
@@ -45,44 +40,6 @@ $end_models['product'] = array(
 			'type'=>'text', 
 			'null'=>false, 
 			'width'=>600, 
-		),
-		'retail'=>array(
-			'name'=>'Retail Price',
-			'type'=>'text',
-			'null'=>false,
-			'filter'=>'floatval',
-			'width'=>100
-		),
-		'wholesale'=>array(
-			'name'=>'Wholesale Price',
-			'type'=>'text',
-			'null'=>false,
-			'filter'=>'floatval',
-			'width'=>100
-		),
-		'weight'=>array(
-			'name'=>'Weight',
-			'type'=>'text',
-			'null'=>true,
-			'filter'=>'floatval',
-			'width'=>100,
-			'description'=>'lbs'
-		),
-		'brand'=>array(
-			'name'=>'Brand',
-			'width'=>100,
-			'null'=>true
-		),
-		'carrier'=>array(
-			'name'=>'Carrier',
-			'width'=>100,
-			'null'=>true
-		),
-		'image'=>array(
-			'name'=>'Image file',
-			'type'=>'imagelist',
-			'null'=>false,
-			'max_width'=>500
 		),
 		'content'=>array(
 			'name'=>'Description',
@@ -103,28 +60,6 @@ $end_models['product'] = array(
 			'edit'=>true,
 			'sort'=>true,
 			'align'=>'center',
-		),
-		'special'=>array(
-			'name'=>'Special',
-			'width'=>50,
-			'sort'=>true,
-			'edit'=>true,
-			'type'=>'select',
-			'options'=>array(
-				'0'=>'No',
-				'1'=>'Yes'
-			)
-		),
-		'new'=>array(
-			'name'=>'New',
-			'width'=>50,
-			'sort'=>true,
-			'edit'=>true,
-			'type'=>'select',
-			'options'=>array(
-				'0'=>'No',
-				'1'=>'Yes'
-			)
 		),
 		'name'=>array(
 			'name'=>'Title',
