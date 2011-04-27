@@ -1,0 +1,38 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<!-- INCLUDE meta.html -->
+	</head>
+
+	<body>
+		<div id="riest-banner"></div>
+		<ul id="riest-navigator">
+			<?php
+			$navis = model('category')->tree_category(1);
+			?>
+			{foreach($navis as $index=>$c)}
+			<li {if(count($navis) == $index+1)}class="riest-navigator-last"{/if}>
+				<a href="{category_link($c)}">{$c.name}</a>
+				{if(count($c['children'])>0)}
+				<ul>
+					{foreach($c['children'] as $_c)}
+					<li><a href="{category_link($_c)}">{$_c.name}</a></li>
+					{/foreach}
+				</ul>
+				{/if}
+				<div class="clear"></div>
+			<li>
+			{/foreach}
+		</ul>
+<script>
+$(function()
+{
+	$('#riest-navigator > li').mouseenter(function()
+	{
+		$(this).children('ul').slideDown();
+	}).mouseleave(function()
+	{
+		$(this).children('ul').slideUp();
+	});
+});
+</script>
