@@ -1,0 +1,27 @@
+<!-- INCLUDE header.html -->
+
+<div id="riest-content">
+	<div class="navigator-list">
+		<div class="list-panel-top">
+			<li>{$parent.name}</li>
+		</div>
+		<ul class="list-panel-item">
+			{foreach($children as $c)}
+			<li><a href="{category_link($c)}">{$c.name}</a></li>
+			{/foreach}
+		</ul>
+		<div class="list-panel-bottom">
+		</div>
+	</div>
+	<div class="article">
+		<ul>
+			<li class="article-title">{$cat.page_title}</li>
+			<li class="article-sub-title">发布日期：{date('Y年m月d日',$cat['update_time'])}</li>
+		</ul>
+		<div class="article-content">{$cat.content}</div>
+	</div>
+	
+	<div style="clear: both;background-color: white;"></div>
+</div>
+
+<!-- INCLUDE footer.html -->

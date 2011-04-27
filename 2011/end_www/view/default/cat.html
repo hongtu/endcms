@@ -1,0 +1,58 @@
+<!-- INCLUDE header.html -->
+
+<div id="riest-content">
+	<div class="navigator-list">
+		<div class="list-panel-top">
+			<li>{$parent.name}</li>
+		</div>
+		<ul class="list-panel-item">
+			{foreach($children as $c)}
+			<li><a href="{category_link($c)}">{$c.name}</a></li>
+			{/foreach}
+		</ul>
+		<div class="list-panel-bottom">
+		</div>
+	</div>
+	<div class="article-list">
+		<div class="article-list-title"><li>{$cat.name}</li></div>
+		{if($is_gallery)}
+		<table class="article-images-list">
+			<tbody>
+				<?php
+				for($i=0,$len=count($items);$i<$len;$i+=3)
+				{
+					echo '<tr>';
+					for($j=$i;$j<$i+3;$j++)
+					{
+						if ($j < $len)
+						{
+							echo '<td><a href="?article/'.$items[$j]['article_id'].'"><img src="'.thumb($items[$j]['img'],210,210).'" /><br />'.$items[$j]['name'].'</a></td>';
+						}
+						else
+						{
+							echo '<td></td>';
+						}
+					}
+					echo '</tr>';
+				}
+				?>
+			</tbody>
+		</table>
+		{else}
+		<ul class="article-list-content">
+			{foreach($items as $a)}
+			<li><a href="{item_link($a)}">{$a.name}</a></li>
+			{/foreach}
+		</ul>
+		{/if}
+		<div class="article-list-pagination">
+			{pager_prev("上一页")}
+			{pager_numbers()}
+			{pager_next("下一页")}
+		</div>
+	</div>
+	
+	<div style="clear: both;background-color: white;"></div>
+</div>
+
+<!-- INCLUDE footer.html -->
